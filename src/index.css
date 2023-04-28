@@ -1,0 +1,211 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  padding-top: 60px;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 30px 50px;
+  /* display: flex; */
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #0de5a8;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #14c3a2;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #1a5f7a;
+  }
+  button:hover {
+    background-color: #002b5b;
+  }
+}
+
+.navbar {
+  /* background-color: #ccd5ae; */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.sign-in {
+  position: absolute;
+  width: 450px;
+  height: 500px;
+  background-color: white;
+  border-radius: 25px;
+  padding: 20px 30px;
+  margin: 20px;
+}
+
+.signin-text {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 31px;
+  line-height: 37px;
+  margin-top: 25px;
+  /* color: white; */
+  text-align: center;
+}
+
+.register-text {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 31px;
+  line-height: 37px;
+  margin-top: 10px;
+  /* color: white; */
+  text-align: center;
+}
+
+.btn,
+.btn > .btn-signin {
+  background-color: #1a5f7a;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn:hover {
+  background-color: #002b5b;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .carousel-item {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 85vh;  
+  object-position: 0 80%;
+} */
+
+.carousel-item,
+.carousel-item > .carousel-img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  min-height: 240px;
+  border-radius: 2.5em;
+  /* padding: 10px 20px; */
+  /* width: 100%;
+  height: 300px; */
+  object-position: 0 85%;
+  object-fit: cover;
+  /* width: auto; */
+  /* height: auto; */
+}
+/* .carousel-overlay {
+  position: absolute;
+  bottom: 0;
+  height: 30vw;
+  width: 100%;
+  margin-top: 0;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent);
+  border-radius: 2%;
+  padding: 10px 20px;
+} */
+
+.carousel-detail {
+  color: white;
+  text-shadow: 1px 1px #000;
+  font-size: 4vw;
+  font-weight: 100;
+  text-align: left;
+}
+
+.carousel-text {
+  text-align: left;
+  padding-right: 30%;
+  font-size: 1.5vw;
+}
+
+.carousel-btn {
+  padding-bottom: 30px;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.carousel .carousel-indicators button {
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+}
+.search-bar {
+  position: relative;
+  width: 240px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid white;
+  font-size: 16px;
+  outline: 0;
+  background: none;
+  margin: 0 5px;
+  color: white;
+  margin-right: 10px;
+}
+
+.bi-search {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.admin-page {
+  margin: 30px 40px;
+}
