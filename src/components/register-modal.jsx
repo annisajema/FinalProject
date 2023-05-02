@@ -9,16 +9,6 @@ const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 // function SigninModal() {
 
 const RegisterModal = () => {
-  // const [profilePicture, setProfilePicture] = useState(null)
-  // const [data, setData] = useState([]);
-  // const [emailCreate, setEmailCreate] = useState("");
-  // const [nameCreate, setNameCreate] = useState("");
-  // const [passwordCreate, setPasswordCreate] = useState("");
-  // const [passRepeatCreate, setPassRepeatCreate] = useState("");
-  // const [roleCreate, setRoleCreate] = useState("");
-  // const [profilePictureCreate, setProfilePictureCreate] = useState("");
-  // const [phoneNumberCreate, setPhoneNumberCreate] = useState("");
-
   const formik = useFormik({
     initialValues: {
       email: "",

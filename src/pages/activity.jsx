@@ -6,42 +6,47 @@ import { useFormik, Formik, Field, Form } from "formik";
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
+const categoryId = localStorage.getItem("categoryId");
+const imageUrl = localStorage.getItem("imageUrl");
 
 const Activity = () => {
     const handleActivity = (values) => {
-       axios.post(
-          `${base_url}/api/v1/create-activity`,
-          {
-            categoryId: values.categoryId,
-            title: values.title,
-            description: values.description,
-            imageUrls: values.imageUrls,
-            price: values.price,
-            price_discount: values.price_discount,
-            rating: values.rating,
-            total_reviews: values.total_reviews,
-            facilities: values.facilities,
-            address: values.address,
-            province: values.province,
-            city: values.city,
-            location_maps: values.location_maps,
-          },
-          {
-            headers: {
-              apiKey: `${api_key}`,
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-        console.log(response);
-        alert("Activity Created!");
-        window.location.reload();
-      })
-       .catch ((error) => {
-        alert("Failed!");
-      })
+       axios
+         .post(
+           `${base_url}/api/v1/create-activity`,
+           {
+             categoryId: categoryId,
+             title: values.title,
+             description: values.description,
+             imageUrls: [imageUrl],
+             price: values.price,
+             price_discount: values.price_discount,
+             rating: values.rating,
+             total_reviews: values.total_reviews,
+             facilities: values.facilities,
+             address: values.address,
+             province: values.province,
+             city: values.city,
+             location_maps: values.location_maps,
+           },
+           {
+             headers: {
+               apiKey: `${api_key}`,
+               Authorization: `Bearer ${token}`,
+             },
+           }
+         )
+         .then((response) => {
+           console.log(response);
+           alert("Activity Created!");
+           window.location.reload();
+         })
+         .catch((error) => {
+           alert("Failed!");
+         });
     };
+
+    console.log(categoryId);
 // const activity = useFormik({
 //   initialValues: {
 //     categoryId: "",
@@ -116,7 +121,7 @@ const Activity = () => {
           categoryId: "",
           title: "",
           description: "",
-          imageUrls: "",
+          imageUrls: [],
           price: "",
           price_discount: "",
           rating: "",
@@ -166,11 +171,11 @@ const Activity = () => {
           <div className="row mb-2 ">
             <label
               htmlFor="description"
-              className="col-sm-5 col-form-label ps-0"
+              className="col-sm-2 col-form-label ps-0"
             >
               description
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="description"
@@ -182,10 +187,10 @@ const Activity = () => {
             </div>
           </div>
           <div className="row mb-2 ">
-            <label htmlFor="imageUrls" className="col-sm-5 col-form-label ps-0">
+            <label htmlFor="imageUrls" className="col-sm-2 col-form-label ps-0">
               Image
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="imageUrls"
@@ -197,10 +202,10 @@ const Activity = () => {
             </div>
           </div>
           <div className="row mb-2 ">
-            <label htmlFor="price" className="col-sm-5 col-form-label ps-0">
+            <label htmlFor="price" className="col-sm-2 col-form-label ps-0">
               Price
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="price"
@@ -214,11 +219,11 @@ const Activity = () => {
           <div className="row mb-2 ">
             <label
               htmlFor="price_discount"
-              className="col-sm-5 col-form-label ps-0"
+              className="col-sm-2 col-form-label ps-0"
             >
               Price Discount
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="price_discount"
@@ -230,10 +235,10 @@ const Activity = () => {
             </div>
           </div>
           <div className="row mb-2 ">
-            <label htmlFor="rating" className="col-sm-5 col-form-label ps-0">
+            <label htmlFor="rating" className="col-sm-2 col-form-label ps-0">
               rating
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="rating"
@@ -247,11 +252,11 @@ const Activity = () => {
           <div className="row mb-2 ">
             <label
               htmlFor="total_reviews"
-              className="col-sm-5 col-form-label ps-0"
+              className="col-sm-2 col-form-label ps-0"
             >
               total_reviews
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="total_reviews"
@@ -265,11 +270,11 @@ const Activity = () => {
           <div className="row mb-2 ">
             <label
               htmlFor="facilities"
-              className="col-sm-5 col-form-label ps-0"
+              className="col-sm-2 col-form-label ps-0"
             >
               facilities
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="facilities"
@@ -281,10 +286,10 @@ const Activity = () => {
             </div>
           </div>
           <div className="row mb-2 ">
-            <label htmlFor="address" className="col-sm-5 col-form-label ps-0">
+            <label htmlFor="address" className="col-sm-2 col-form-label ps-0">
               address
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="address"
@@ -296,10 +301,10 @@ const Activity = () => {
             </div>
           </div>
           <div className="row mb-2 ">
-            <label htmlFor="province" className="col-sm-5 col-form-label ps-0">
+            <label htmlFor="province" className="col-sm-2 col-form-label ps-0">
               province
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="province"
@@ -311,10 +316,10 @@ const Activity = () => {
             </div>
           </div>
           <div className="row mb-2 ">
-            <label htmlFor="city" className="col-sm-5 col-form-label ps-0">
+            <label htmlFor="city" className="col-sm-2 col-form-label ps-0">
               city
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="city"
@@ -329,11 +334,11 @@ const Activity = () => {
           <div className="row mb-2 ">
             <label
               htmlFor="location_maps"
-              className="col-sm-5 col-form-label ps-0"
+              className="col-sm-2 col-form-label ps-0"
             >
               location_maps
             </label>
-            <div className="col-sm-7">
+            <div className="col-sm-10">
               <Field
                 className="form-control"
                 id="location_maps"

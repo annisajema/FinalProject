@@ -5,6 +5,7 @@ import './index.css'
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Activity from './pages/activity';
 import Category from './pages/category';
+import TesCategory from './pages/tes-category';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
   {
     path: "/category",
     element: <Category />,
+    errorElement: <p>Page Not Found</p>,
+  },
+  {
+    path: "/tes-category",
+    element: <TesCategory />,
     errorElement: <p>Page Not Found</p>,
   },
 ]);
