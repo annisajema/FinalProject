@@ -41,9 +41,13 @@ const SigninModal = () => {
 
   // const [login, setLogin] = useState(localStorage.getItem("token"));
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [userId, setUserId] = useState(
+    JSON.parse(localStorage.getItem("userId"))
+  );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -114,30 +118,81 @@ const SigninModal = () => {
     }
   };
 
-  const handleLogout = () => {
-    setToken(null);
-    localStorage.removeItem("token", token);
+  const handleLoggedUser = async () => {
+    if (token) {
+      const getLoggedUser = await url.get("api/v1/user", {
+        headers: {
+          apiKey: `${api_key}`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const userId = getLoggedUser.data.data.id;
+      localStorage.setItem("userId", JSON.stringify(userId));
+      setUserId(getLoggedUser.data.data.id);
+      setName(getLoggedUser.data.data.name);
+      // console.log(response.data.data.name);
+      setEmail(getLoggedUser.data.data.email);
+      // console.log(response.data.data.email);
+      setProfilePictureUrl(getLoggedUser.data.data.profilePictureUrl);
+      // console.log(response.data.data.profilePictureUrl);
+      setPhoneNumber(getLoggedUser.data.data.phoneNumber);
+      // console.log(response.data.data.phoneNumber);
+    }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (token) {
-        const response = await url.get("api/v1/user", {
+  const handleUpdate = () => {
+    axios
+      .post(
+        `${base_url}/api/v1/update-profile`,
+        {
+          name,
+          email,
+          profilePictureUrl,
+          phoneNumber,
+        },
+        {
           headers: {
             apiKey: `${api_key}`,
             Authorization: `Bearer ${token}`,
           },
-        });
-        setName(response.data.data.name);
-        // console.log(response.data.data.name);
-        setEmail(response.data.data.email);
-        // console.log(response.data.data.email);
-        setProfilePicture(response.data.data.profilePictureUrl);
-        // console.log(response.data.data.profilePictureUrl);
-      }
-    };
-    fetchData();
-  }, [token]);
+        }
+      )
+      .then(() => {
+        handleLoggedUser();
+        alert("Profile Updated!");
+        window.location.reload();
+        // return response;
+      })
+      .catch(() => {
+        alert("Failed!");
+      });
+  };
+
+  // const handleLogout = () => {
+  //   setToken(null);
+  //   localStorage.removeItem("token", token);
+  // };
+
+  const handleLogout = () => {
+    axios
+      .get(`${base_url}/api/v1/logout`, {
+        headers: {
+          apiKey: `${api_key}`,
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setToken(null);
+        localStorage.removeItem("token", token);
+        handleLogin();
+        alert("Logout Success!");
+        window.location.reload();
+        // return response;
+      })
+      .catch(() => {
+        alert("Failed!");
+      });
+  };
 
   const register = useFormik({
     initialValues: {
@@ -191,6 +246,10 @@ const SigninModal = () => {
         });
     },
   });
+
+  useEffect(() => {
+    handleLoggedUser();
+  }, [token]);
 
   return (
     <>
@@ -287,22 +346,38 @@ const SigninModal = () => {
                   </Formik>
                 )}
                 {token && (
-                  <div className="mt-4">
-                    <ul>
-                      {name && email && profilePicture && (
+                  <div>
+                    <ul className="mt-4">
+                      {name && email && profilePictureUrl && phoneNumber && (
                         <div className="d-flex justify-content-center mt-5 text-dark">
                           <img
                             className="me-3 rounded-2 h-25 w-25"
-                            src={profilePicture}
+                            src={profilePictureUrl}
                           />
                           Name: {name}
                           <br />
                           Email: {email}
+                          <br />
+                          Phone Number: {phoneNumber}
                         </div>
                       )}
                     </ul>
                     <button
-                      className="btn btn-secondary mt-5 mb-3"
+                      className="btn btn-secondary mt-5 mb-2"
+                      data-bs-toggle="modal"
+                      data-bs-target={`#modal${token}`}
+                      // style={{
+                      //   width: "100%",
+                      //   display: "flex",
+                      //   justifyContent: "center",
+                      //   alignItems: "center",
+                      // }}
+                      onClick={handleLoggedUser}
+                    >
+                      Update Profile
+                    </button>
+                    <button
+                      className="btn btn-secondary mb-2"
                       // style={{
                       //   width: "100%",
                       //   display: "flex",
@@ -323,7 +398,7 @@ const SigninModal = () => {
         </div>
       </div>
 
-      {/* Modal 2 */}
+      {/* Modal Register */}
       <div
         className="modal fade"
         id="registerModal"
@@ -592,6 +667,126 @@ const SigninModal = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Modal Update */}
+      <div>
+        {/* {bannersById.map((bannerById, i) => {
+              return ( */}
+        <div>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              profilePictureUrl: "",
+              phoneNumber: "",
+            }}
+            // onSubmit={handleEdit(category.id)}
+          >
+            <div className="modal fade" tabIndex="-1" id={`modal${token}`}>
+              <div className="modal-dialog bg-light rounded-3">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Update Profile</h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <Form>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="name"
+                          className="col-sm-2 col-form-label ps-0"
+                        >
+                          Name
+                        </label>
+                        <div className="col-sm-10">
+                          <Field
+                            className="form-control"
+                            id="username"
+                            name="name"
+                            type="text"
+                            onChange={(e) => setName(e.target.value)}
+                            value={name || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="email"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          Email
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="useremail"
+                            name="email"
+                            type="text"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="profilePictureUrl"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          Profile Picture
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="userprofilePictureUrl"
+                            name="profilePictureUrl"
+                            type="text"
+                            onChange={(e) =>
+                              setProfilePictureUrl(e.target.value)
+                            }
+                            value={profilePictureUrl || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="email"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          Phone Number
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="userphoneNumber"
+                            name="phoneNumber"
+                            type="text"
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            value={phoneNumber || ""}
+                          />
+                        </div>
+                      </div>
+                      <button
+                        className="btn mt-3"
+                        type="submit"
+                        onClick={() => handleUpdate()}
+                      >
+                        Submit
+                      </button>
+                    </Form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Formik>
+        </div>
+        {/* );
+            })} */}
       </div>
     </>
   );

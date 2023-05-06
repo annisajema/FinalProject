@@ -49,13 +49,23 @@ function Navbar() {
                     </a>
                   </li>
                   <li>
+                    <a className="dropdown-item" href="/banner">
+                      Banner
+                    </a>
+                  </li>
+                  <li>
                     <a className="dropdown-item" href="/category">
                       Category
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="/promo">
                       Promo
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="/user">
+                      User
                     </a>
                   </li>
                 </ul>

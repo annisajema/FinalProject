@@ -9,21 +9,31 @@ const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
 
-function Category() {
-  const [categories, setCategories] = useState([]);
-  const [categoriesById, setCategoryById] = useState([]);
-  const [categoryId, setCategoryId] = useState(JSON.parse(localStorage.getItem("categoryId")));
-  const [categoriesId, setCategoriesId] = useState(JSON.parse(localStorage.getItem("categoriesId")));
+function Promo() {
+  const [promos, setPromos] = useState([]);
+  const [promosById, setPromosById] = useState([]);
+  const [promoId, setPromoId] = useState(JSON.parse(localStorage.getItem("promoId")));
   const [imageUrl, setImageUrl] = useState(JSON.parse(localStorage.getItem("imageUrl")));
-  const [name, setName] = useState(JSON.parse(localStorage.getItem("name")));
+  const [title, setTitle] = useState(JSON.parse(localStorage.getItem("title")));
+  const [description, setDescription] = useState("");
+  const [termsCondition, setTermsCondition] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  const [promoDiscountPrice, setPromoDiscountPrice] = useState(0);
+  const [minimumClaimPrice, setMinimumClaimPrice] = useState(0);
 
-  const handleCategory = (values) => {
+
+  const handlePromo = (values) => {
     axios
       .post(
-        `${base_url}/api/v1/create-category`,
+        `${base_url}/api/v1/create-promo`,
         {
-          name: values.name,
+          title: values.title,
+          description: values.description,
           imageUrl: values.imageUrl,
+          terms_condition: values.terms_condition,
+          promo_code: values.promo_code,
+          promo_discount_price: values.promo_discount_price,
+          minimum_claim_price: values.minimum_claim_price,
         },
         {
           headers: {
@@ -33,7 +43,7 @@ function Category() {
         }
       )
       .then((response) => {
-        alert("Category Created!");
+        alert("Promo Created!");
         window.location.reload();
         return response;
       })
@@ -42,48 +52,52 @@ function Category() {
       });
   };
 
-  const handleGetCategories = async () => {
+  const handleGetPromos = async () => {
     try {
-      const getCategory = await axios.get(`${base_url}/api/v1/categories`, {
+      const getPromo = await axios.get(`${base_url}/api/v1/promos`, {
         headers: {
           apiKey: `${api_key}`,
         },
       });
-      const categoriesId = getCategory.data.data.map(({ id }) => id);
-      localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
-      setCategoriesId(categoriesId);
-      // console.log(categoryId);
-      setCategories(getCategory.data.data);
+      setPromos(getPromo.data.data);
+      console.log(getPromo.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
     }
   };
 
-  const handleCategoryById = async (id) => {
+  const handlePromoById = async (id) => {
     try {
-      const getCategoryById = await axios.get(
-        `${base_url}/api/v1/category/${id}`,
-        {
-          headers: {
-            apiKey: `${api_key}`,
-          },
-        }
-      );
-      const categoryId = getCategoryById.data.data.id;
-      const imageUrl = getCategoryById.data.data.imageUrl;
-      const name = getCategoryById.data.data.name;
-      localStorage.setItem("categoryId", JSON.stringify(categoryId));
+      const getPromoById = await axios.get(`${base_url}/api/v1/promo/${id}`, {
+        headers: {
+          apiKey: `${api_key}`,
+        },
+      });
+      const promoId = getPromoById.data.data.id;
+      const title = getPromoById.data.data.title;
+      const description = getPromoById.data.data.description;
+      const imageUrl = getPromoById.data.data.imageUrl;
+      const terms_condition = getPromoById.data.data.terms_condition;
+      const promo_code = getPromoById.data.data.promo_code;
+      const promo_discount_price = getPromoById.data.data.promo_discount_price;
+      const minimum_claim_price = getPromoById.data.data.minimum_claim_price;
+      localStorage.setItem("promoId", JSON.stringify(promoId));
       localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
-      localStorage.setItem("name", JSON.stringify(name));
-      setName(name);
-      // console.log(name);
+      localStorage.setItem("title", JSON.stringify(title));
+      setTitle(title);
+      // console.log(title);
       setImageUrl(imageUrl);
       // console.log(imageUrl);
-      setCategoryId(categoryId);
+      setPromoId(promoId);
       // console.log(categoryId);
-      setCategoryById(getCategoryById.data.data);
-      // console.log(getCategoryById.data.data);
+      setDescription(description);
+      setTermsCondition(terms_condition);
+      setPromoCode(promo_code);
+      setPromoDiscountPrice(promo_discount_price);
+      setMinimumClaimPrice(minimum_claim_price);
+      setPromosById(getPromoById.data.data);
+      console.log(getPromoById.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
@@ -93,10 +107,15 @@ function Category() {
   const handleEdit = (id) => {
     axios
       .post(
-        `${base_url}/api/v1/update-category/${id}`,
+        `${base_url}/api/v1/update-promo/${id}`,
         {
-          name,
+          title,
+          description,
           imageUrl,
+          termsCondition,
+          promoCode,
+          promoDiscountPrice,
+          minimumClaimPrice,
         },
         {
           headers: {
@@ -106,8 +125,8 @@ function Category() {
         }
       )
       .then(() => {
-        handleGetCategories();
-        alert("Category Updated!");
+        handleGetPromos();
+        alert("Promo Updated!");
         window.location.reload();
         // return response;
       })
@@ -118,27 +137,27 @@ function Category() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`${base_url}/api/v1/delete-category/${id}`, {
+      .delete(`${base_url}/api/v1/delete-promo/${id}`, {
         headers: {
           apiKey: `${api_key}`,
           Authorization: `Bearer ${token}`,
         },
       })
       .then(function (response) {
-        //  console.log(response.data.data);
-        handleGetCategories();
-        alert("Category Deleted!");
+         console.log(response.data.data);
+        handleGetPromos();
+        alert("Promo Deleted!");
         window.location.reload();
       });
   };
 
   useEffect(() => {
-    handleGetCategories();
+    handleGetPromos();
   }, []);
 
   return (
     <div className="admin-page">
-      <div className="fs-2 text-center m-2">Categories</div>
+      <div className="fs-2 text-center m-2">Promo</div>
       <button
         className="d-flex text-light mb-3"
         data-bs-toggle="modal"
@@ -152,8 +171,13 @@ function Category() {
             <tr>
               <th scope="col">No.</th>
               <th scope="col">ID</th>
-              <th scope="col">Name</th>
+              <th scope="col">Title</th>
+              <th scope="col">description</th>
               <th scope="col">Image URL</th>
+              <th scope="col">terms_condition</th>
+              <th scope="col">promo_code</th>
+              <th scope="col">promo_discount_price</th>
+              <th scope="col">minimum_claim_price</th>
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -161,25 +185,27 @@ function Category() {
           </thead>
 
           <tbody className="table-group-divider">
-            {categories.map((category, i) => {
+            {promos.map((promo, i) => {
               return (
                 <tr key={i}>
                   <th scope="row">{i + 1}</th>
-                  <td>{categoriesId}</td>
-                  <td>{category.name}</td>
-                  <td style={{ wordBreak: "break-all" }}>
-                    {category.imageUrl}
-                  </td>
-                  <td className="d-table-cell">{category.createdAt}</td>
-                  <td className="d-table-cell">{category.updatedAt}</td>
-                  {/* <span className="row" scope="row"> */}
+                  <td>{promo.id}</td>
+                  <td>{promo.title}</td>
+                  <td>{promo.description}</td>
+                  <td style={{ wordBreak: "break-all" }}>{promo.imageUrl}</td>
+                  <td>{promo.terms_condition}</td>
+                  <td>{promo.promo_code}</td>
+                  <td>{promo.promo_discount_price}</td>
+                  <td>{promo.minimum_claim_price}</td>
+                  <td className="d-table-cell">{promo.createdAt}</td>
+                  <td className="d-table-cell">{promo.updatedAt}</td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
-                    data-bs-target={`#modal${categoryId}`}
+                    data-bs-target={`#modal${promoId}`}
                   >
                     {/* <a href="#" className="me-2 "> */}
-                    <button onClick={() => handleCategoryById(category.id)}>
+                    <button onClick={() => handlePromoById(promo.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -199,7 +225,7 @@ function Category() {
                   </td>
                   <td className="">
                     {/* <a href="#"> */}
-                    <button onClick={() => handleDelete(category.id)}>
+                    <button onClick={() => handleDelete(promo.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -213,7 +239,6 @@ function Category() {
                     </button>
                     {/* </a> */}
                   </td>
-                  {/* </span> */}
                 </tr>
               );
             })}
@@ -228,16 +253,16 @@ function Category() {
         <div>
           <Formik
             initialValues={{
-              name: categoriesById.name,
-              imageUrl: categoriesById.imageUrl,
+              title: promosById.title,
+              imageUrl: promosById.imageUrl,
             }}
             // onSubmit={handleEdit(category.id)}
           >
-            <div className="modal fade" tabIndex="-1" id={`modal${categoryId}`}>
+            <div className="modal fade" tabIndex="-1" id={`modal${promoId}`}>
               <div className="modal-dialog bg-light rounded-3">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title">Update Category</h5>
+                    <h5 className="modal-title">Update Promo</h5>
                     <button
                       type="button"
                       className="btn-close"
@@ -249,7 +274,7 @@ function Category() {
                     <Form>
                       <div className="row mb-2 ">
                         <label
-                          htmlFor="name"
+                          htmlFor="title"
                           className="col-sm-2 col-form-label ps-0"
                         >
                           name
@@ -257,11 +282,29 @@ function Category() {
                         <div className="col-sm-10">
                           <Field
                             className="form-control"
-                            id="idname"
-                            name="name"
+                            id="title"
+                            name="title"
                             type="text"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name || ""}
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="title"
+                          className="col-sm-2 col-form-label ps-0"
+                        >
+                          Description
+                        </label>
+                        <div className="col-sm-10">
+                          <Field
+                            className="form-control"
+                            id="description"
+                            name="description"
+                            type="text"
+                            onChange={(e) => setDescription(e.target.value)}
+                            value={description || ""}
                           />
                         </div>
                       </div>
@@ -275,7 +318,7 @@ function Category() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="idimageUrl"
+                            id="promoimageUrl"
                             name="imageUrl"
                             type="text"
                             onChange={(e) => setImageUrl(e.target.value)}
@@ -283,10 +326,87 @@ function Category() {
                           />
                         </div>
                       </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="termsCondition"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          Terms Condition
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="termsCondition"
+                            name="termsCondition"
+                            type="text"
+                            onChange={(e) => setTermsCondition(e.target.value)}
+                            value={termsCondition || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="promoCode"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          promo Code
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="promoCode"
+                            name="promoCode"
+                            type="text"
+                            onChange={(e) => setPromoCode(e.target.value)}
+                            value={promoCode || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="promoDiscountPrice"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          promo Discount Price
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="promoDiscountPrice"
+                            name="promoDiscountPrice"
+                            type="number"
+                            onChange={(e) =>
+                              setPromoDiscountPrice(e.target.value)
+                            }
+                            value={promoDiscountPrice || ""}
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-2 ">
+                        <label
+                          htmlFor="minimumClaimPrice"
+                          className="col-2 col-form-label ps-0"
+                        >
+                          minimum ClaimPrice
+                        </label>
+                        <div className="col-10">
+                          <Field
+                            className="form-control"
+                            id="minimumClaimPrice"
+                            name="minimumClaimPrice"
+                            type="number"
+                            onChange={(e) =>
+                              setMinimumClaimPrice(e.target.value)
+                            }
+                            value={minimumClaimPrice || ""}
+                          />
+                        </div>
+                      </div>
+
                       <button
                         className="btn mt-3"
                         type="submit"
-                        onClick={() => handleEdit(categoriesById.id)}
+                        onClick={() => handleEdit(promosById.id)}
                       >
                         Submit
                       </button>
@@ -325,7 +445,7 @@ function Category() {
                   name: "",
                   imageUrl: "",
                 }}
-                onSubmit={handleCategory}
+                onSubmit={handlePromo}
               >
                 <Form>
                   <div className="row mb-2 ">
@@ -389,4 +509,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Promo;

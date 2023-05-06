@@ -9,18 +9,24 @@ const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
 
-function Category() {
-  const [categories, setCategories] = useState([]);
-  const [categoriesById, setCategoryById] = useState([]);
-  const [categoryId, setCategoryId] = useState(JSON.parse(localStorage.getItem("categoryId")));
-  const [categoriesId, setCategoriesId] = useState(JSON.parse(localStorage.getItem("categoriesId")));
-  const [imageUrl, setImageUrl] = useState(JSON.parse(localStorage.getItem("imageUrl")));
-  const [name, setName] = useState(JSON.parse(localStorage.getItem("name")));
+function Banner() {
+  const [banners, setBanners] = useState([]);
+  const [bannersById, setBannersById] = useState([]);
+  const [bannerId, setBannerId] = useState(
+    JSON.parse(localStorage.getItem("bannerId"))
+  );
+  const [bannersId, setBannersId] = useState(
+    JSON.parse(localStorage.getItem("bannersId"))
+  );
+  const [imageUrl, setImageUrl] = useState(
+    JSON.parse(localStorage.getItem("Banner Image Url"))
+  );
+  const [name, setName] = useState(JSON.parse(localStorage.getItem("Banner Name")));
 
-  const handleCategory = (values) => {
+  const handleBanner = (values) => {
     axios
       .post(
-        `${base_url}/api/v1/create-category`,
+        `${base_url}/api/v1/create-banner`,
         {
           name: values.name,
           imageUrl: values.imageUrl,
@@ -33,7 +39,7 @@ function Category() {
         }
       )
       .then((response) => {
-        alert("Category Created!");
+        alert("BannerCreated!");
         window.location.reload();
         return response;
       })
@@ -42,48 +48,45 @@ function Category() {
       });
   };
 
-  const handleGetCategories = async () => {
+  const handleGetBanners = async () => {
     try {
-      const getCategory = await axios.get(`${base_url}/api/v1/categories`, {
+      const getBanner = await axios.get(`${base_url}/api/v1/banners`, {
         headers: {
           apiKey: `${api_key}`,
         },
       });
-      const categoriesId = getCategory.data.data.map(({ id }) => id);
-      localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
-      setCategoriesId(categoriesId);
-      // console.log(categoryId);
-      setCategories(getCategory.data.data);
+      const bannersId = getBanner.data.data.map(({ id }) => id);
+      localStorage.setItem("bannersId", JSON.stringify(bannersId));
+      setBannersId(bannersId);
+      // console.log(bannerId);
+      setBanners(getBanner.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
     }
   };
 
-  const handleCategoryById = async (id) => {
+  const handleBannerById = async (id) => {
     try {
-      const getCategoryById = await axios.get(
-        `${base_url}/api/v1/category/${id}`,
-        {
-          headers: {
-            apiKey: `${api_key}`,
-          },
-        }
-      );
-      const categoryId = getCategoryById.data.data.id;
-      const imageUrl = getCategoryById.data.data.imageUrl;
-      const name = getCategoryById.data.data.name;
-      localStorage.setItem("categoryId", JSON.stringify(categoryId));
-      localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
-      localStorage.setItem("name", JSON.stringify(name));
+      const getBannerById = await axios.get(`${base_url}/api/v1/banner/${id}`, {
+        headers: {
+          apiKey: `${api_key}`,
+        },
+      });
+      const bannerId = getBannerById.data.data.id;
+      const imageUrl = getBannerById.data.data.imageUrl;
+      const name = getBannerById.data.data.name;
+      localStorage.setItem("bannerId", JSON.stringify(bannerId));
+      //   localStorage.setItem("imageUrl", JSON.stringify(Banner Image Url));
+      //   localStorage.setItem("name", JSON.stringify(Banner Name));
       setName(name);
       // console.log(name);
       setImageUrl(imageUrl);
       // console.log(imageUrl);
-      setCategoryId(categoryId);
-      // console.log(categoryId);
-      setCategoryById(getCategoryById.data.data);
-      // console.log(getCategoryById.data.data);
+      setBannerId(bannerId);
+      // console.log(bannerId);
+      setBannersById(getBannerById.data.data);
+      // console.log(getBannerById.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
@@ -93,7 +96,7 @@ function Category() {
   const handleEdit = (id) => {
     axios
       .post(
-        `${base_url}/api/v1/update-category/${id}`,
+        `${base_url}/api/v1/update-banner/${id}`,
         {
           name,
           imageUrl,
@@ -106,8 +109,8 @@ function Category() {
         }
       )
       .then(() => {
-        handleGetCategories();
-        alert("Category Updated!");
+        handleGetBanners();
+        alert("Banner Updated!");
         window.location.reload();
         // return response;
       })
@@ -118,7 +121,7 @@ function Category() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`${base_url}/api/v1/delete-category/${id}`, {
+      .delete(`${base_url}/api/v1/delete-banner/${id}`, {
         headers: {
           apiKey: `${api_key}`,
           Authorization: `Bearer ${token}`,
@@ -126,19 +129,19 @@ function Category() {
       })
       .then(function (response) {
         //  console.log(response.data.data);
-        handleGetCategories();
-        alert("Category Deleted!");
+        handleGetBanners();
+        alert("Banner Deleted!");
         window.location.reload();
       });
   };
 
   useEffect(() => {
-    handleGetCategories();
+    handleGetBanners();
   }, []);
 
   return (
     <div className="admin-page">
-      <div className="fs-2 text-center m-2">Categories</div>
+      <div className="fs-2 text-center m-2">Banners</div>
       <button
         className="d-flex text-light mb-3"
         data-bs-toggle="modal"
@@ -161,25 +164,23 @@ function Category() {
           </thead>
 
           <tbody className="table-group-divider">
-            {categories.map((category, i) => {
+            {banners.map((banner, i) => {
               return (
                 <tr key={i}>
                   <th scope="row">{i + 1}</th>
-                  <td>{categoriesId}</td>
-                  <td>{category.name}</td>
-                  <td style={{ wordBreak: "break-all" }}>
-                    {category.imageUrl}
-                  </td>
-                  <td className="d-table-cell">{category.createdAt}</td>
-                  <td className="d-table-cell">{category.updatedAt}</td>
+                  <td>{bannersId}</td>
+                  <td>{banner.name}</td>
+                  <td style={{ wordBreak: "break-all" }}>{banner.imageUrl}</td>
+                  <td className="d-table-cell">{banner.createdAt}</td>
+                  <td className="d-table-cell">{banner.updatedAt}</td>
                   {/* <span className="row" scope="row"> */}
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
-                    data-bs-target={`#modal${categoryId}`}
+                    data-bs-target={`#modal${bannerId}`}
                   >
                     {/* <a href="#" className="me-2 "> */}
-                    <button onClick={() => handleCategoryById(category.id)}>
+                    <button onClick={() => handleBannerById(banner.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -199,7 +200,7 @@ function Category() {
                   </td>
                   <td className="">
                     {/* <a href="#"> */}
-                    <button onClick={() => handleDelete(category.id)}>
+                    <button onClick={() => handleDelete(banner.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -223,21 +224,21 @@ function Category() {
 
       {/* MODAL */}
       <div>
-        {/* {categoriesById.map((categoryById, i) => {
+        {/* {bannersById.map((bannerById, i) => {
               return ( */}
         <div>
           <Formik
             initialValues={{
-              name: categoriesById.name,
-              imageUrl: categoriesById.imageUrl,
+              name: bannersById.name,
+              imageUrl: bannersById.imageUrl,
             }}
             // onSubmit={handleEdit(category.id)}
           >
-            <div className="modal fade" tabIndex="-1" id={`modal${categoryId}`}>
+            <div className="modal fade" tabIndex="-1" id={`modal${bannerId}`}>
               <div className="modal-dialog bg-light rounded-3">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title">Update Category</h5>
+                    <h5 className="modal-title">Update Banner</h5>
                     <button
                       type="button"
                       className="btn-close"
@@ -286,7 +287,7 @@ function Category() {
                       <button
                         className="btn mt-3"
                         type="submit"
-                        onClick={() => handleEdit(categoriesById.id)}
+                        onClick={() => handleEdit(bannersById.id)}
                       >
                         Submit
                       </button>
@@ -311,7 +312,7 @@ function Category() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Create Category</h5>
+              <h5 className="modal-title">Create Banner</h5>
               <button
                 type="button"
                 className="btn-close"
@@ -325,7 +326,7 @@ function Category() {
                   name: "",
                   imageUrl: "",
                 }}
-                onSubmit={handleCategory}
+                onSubmit={handleBanner}
               >
                 <Form>
                   <div className="row mb-2 ">
@@ -342,7 +343,7 @@ function Category() {
                         name="name"
                         type="text"
                         // onChange={activity.handleChange}
-                        // value={activity.values.categoryId}
+                        // value={activity.values.bannerId}
                       />
                     </div>
                   </div>
@@ -389,4 +390,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Banner;
