@@ -46,8 +46,8 @@ function Home() {
     <div className="App">
       <div className="container-fluid p-0">
         <div>
-          {/* Card New Releases */}
-          <div className="row g-3 d-inline-flex" >
+          {/* Card Promo */}
+          <div className="row g-3 d-inline-flex">
             <h4 id="dark-switch" className="pt-3 mb-0">
               Promo
             </h4>
@@ -58,15 +58,25 @@ function Home() {
                   key={i}
                   className="col-4 col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-1"
                 >
-                  <div className="movie-container">
+                  {/* <div className="card" style={{width: "18rem"}} data-bs-toggle="modal"
+                      data-bs-target={`#modal${promo.id}`}>
+  <img className="card-img" src={promo.imageUrl} alt="..."/>
+  <div className="card-body">
+    <h5 className="card-title">{promo.code}</h5>
+    <p className="card-text">{promo.title}</p>
+    <a href="#" className="btn btn-primary">Go somewhere</a>
+  </div>
+</div> */}
+                  <div className="card">
                     <div
-                      className="card-body"
+                      className="card-body p-0"
                       data-bs-toggle="modal"
                       data-bs-target={`#modal${promo.id}`}
                     >
                       <img className="card-img" src={promo.imageUrl} />
-                      <div className="overlay-grid"></div>
-                      <div className="movie-title">{promo.title}</div>
+                      <div className="card-body">
+                        <div className="card-title">{promo.title}</div>
+                      </div>
                     </div>
                   </div>
 

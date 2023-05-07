@@ -16,10 +16,10 @@ function Promo() {
   const [imageUrl, setImageUrl] = useState(JSON.parse(localStorage.getItem("imageUrl")));
   const [title, setTitle] = useState(JSON.parse(localStorage.getItem("title")));
   const [description, setDescription] = useState("");
-  const [termsCondition, setTermsCondition] = useState("");
-  const [promoCode, setPromoCode] = useState("");
-  const [promoDiscountPrice, setPromoDiscountPrice] = useState(0);
-  const [minimumClaimPrice, setMinimumClaimPrice] = useState(0);
+  const [terms_condition, setTermsCondition] = useState("");
+  const [promo_code, setPromoCode] = useState("");
+  const [promo_discount_price, setPromoDiscountPrice] = useState(0);
+  const [minimum_claim_price, setMinimumClaimPrice] = useState(0);
 
 
   const handlePromo = (values) => {
@@ -35,21 +35,25 @@ function Promo() {
           promo_discount_price: values.promo_discount_price,
           minimum_claim_price: values.minimum_claim_price,
         },
+        
         {
           headers: {
             apiKey: `${api_key}`,
             Authorization: `Bearer ${token}`,
           },
         }
+        
       )
       .then((response) => {
         alert("Promo Created!");
         window.location.reload();
+        console.log(response);
         return response;
       })
       .catch(() => {
         alert("Failed!");
       });
+      
   };
 
   const handleGetPromos = async () => {
@@ -93,6 +97,7 @@ function Promo() {
       // console.log(categoryId);
       setDescription(description);
       setTermsCondition(terms_condition);
+      console.log(terms_condition);
       setPromoCode(promo_code);
       setPromoDiscountPrice(promo_discount_price);
       setMinimumClaimPrice(minimum_claim_price);
@@ -112,10 +117,10 @@ function Promo() {
           title,
           description,
           imageUrl,
-          termsCondition,
-          promoCode,
-          promoDiscountPrice,
-          minimumClaimPrice,
+          terms_condition,
+          promo_code,
+          promo_discount_price,
+          minimum_claim_price,
         },
         {
           headers: {
@@ -166,7 +171,7 @@ function Promo() {
         Create
       </button>
       <div className="table-responsive">
-        <table className="table table-hover">
+        <table className="table table-sm table-hover">
           <thead>
             <tr>
               <th scope="col">No.</th>
@@ -246,7 +251,7 @@ function Promo() {
         </table>
       </div>
 
-      {/* MODAL */}
+      {/* Modal Update*/}
       <div>
         {/* {categoriesById.map((categoryById, i) => {
               return ( */}
@@ -328,7 +333,7 @@ function Promo() {
                       </div>
                       <div className="row mb-2 ">
                         <label
-                          htmlFor="termsCondition"
+                          htmlFor="terms_condition"
                           className="col-2 col-form-label ps-0"
                         >
                           Terms Condition
@@ -337,16 +342,16 @@ function Promo() {
                           <Field
                             className="form-control"
                             id="termsCondition"
-                            name="termsCondition"
+                            name="terms_condition"
                             type="text"
                             onChange={(e) => setTermsCondition(e.target.value)}
-                            value={termsCondition || ""}
+                            value={terms_condition || ""}
                           />
                         </div>
                       </div>
                       <div className="row mb-2 ">
                         <label
-                          htmlFor="promoCode"
+                          htmlFor="promo_code"
                           className="col-2 col-form-label ps-0"
                         >
                           promo Code
@@ -355,16 +360,16 @@ function Promo() {
                           <Field
                             className="form-control"
                             id="promoCode"
-                            name="promoCode"
+                            name="promo_code"
                             type="text"
                             onChange={(e) => setPromoCode(e.target.value)}
-                            value={promoCode || ""}
+                            value={promo_code || ""}
                           />
                         </div>
                       </div>
                       <div className="row mb-2 ">
                         <label
-                          htmlFor="promoDiscountPrice"
+                          htmlFor="promo_discount_price"
                           className="col-2 col-form-label ps-0"
                         >
                           promo Discount Price
@@ -373,18 +378,18 @@ function Promo() {
                           <Field
                             className="form-control"
                             id="promoDiscountPrice"
-                            name="promoDiscountPrice"
+                            name="promo_discount_price"
                             type="number"
                             onChange={(e) =>
                               setPromoDiscountPrice(e.target.value)
                             }
-                            value={promoDiscountPrice || ""}
+                            value={promo_discount_price || ""}
                           />
                         </div>
                       </div>
                       <div className="row mb-2 ">
                         <label
-                          htmlFor="minimumClaimPrice"
+                          htmlFor="minimum_claim_price"
                           className="col-2 col-form-label ps-0"
                         >
                           minimum ClaimPrice
@@ -393,12 +398,12 @@ function Promo() {
                           <Field
                             className="form-control"
                             id="minimumClaimPrice"
-                            name="minimumClaimPrice"
+                            name="minimum_claim_price"
                             type="number"
                             onChange={(e) =>
                               setMinimumClaimPrice(e.target.value)
                             }
-                            value={minimumClaimPrice || ""}
+                            value={minimum_claim_price || ""}
                           />
                         </div>
                       </div>
@@ -442,27 +447,46 @@ function Promo() {
             <div className="modal-body">
               <Formik
                 initialValues={{
-                  name: "",
+                  title: "",
+                  description: "",
                   imageUrl: "",
+                  terms_condition: "",
+                  promo_code: "",
+                  promo_discount_price: 0,
+                  minimum_claim_price: 0,
                 }}
                 onSubmit={handlePromo}
               >
                 <Form>
                   <div className="row mb-2 ">
                     <label
-                      htmlFor="name"
+                      htmlFor="title"
                       className="col-sm-2 col-form-label ps-0"
                     >
-                      name
+                      Title
                     </label>
                     <div className="col-sm-10">
                       <Field
                         className="form-control"
-                        id="name-id"
-                        name="name"
+                        id="promoTitle"
+                        name="title"
                         type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.categoryId}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-2 ">
+                    <label
+                      htmlFor="description"
+                      className="col-sm-2 col-form-label ps-0"
+                    >
+                      Description
+                    </label>
+                    <div className="col-sm-10">
+                      <Field
+                        className="form-control"
+                        id="promoDescription"
+                        name="description"
+                        type="text"
                       />
                     </div>
                   </div>
@@ -471,16 +495,78 @@ function Promo() {
                       htmlFor="imageUrl"
                       className="col-2 col-form-label ps-0"
                     >
-                      imageUrl
+                      image Url
                     </label>
                     <div className="col-10">
                       <Field
                         className="form-control"
-                        id="imageUrlid"
+                        id="promoImageUrl"
                         name="imageUrl"
                         type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.title}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-2 ">
+                    <label
+                      htmlFor="terms_condition"
+                      className="col-2 col-form-label ps-0"
+                    >
+                      termsCondition
+                    </label>
+                    <div className="col-10">
+                      <Field
+                        className="form-control"
+                        id="promoTermsCondition"
+                        name="terms_condition"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-2 ">
+                    <label
+                      htmlFor="promo_code"
+                      className="col-2 col-form-label ps-0"
+                    >
+                      promoCode
+                    </label>
+                    <div className="col-10">
+                      <Field
+                        className="form-control"
+                        id="promoCodeId"
+                        name="promo_code"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-2 ">
+                    <label
+                      htmlFor="promo_discount_price"
+                      className="col-2 col-form-label ps-0"
+                    >
+                      promoDiscountPrice
+                    </label>
+                    <div className="col-10">
+                      <Field
+                        className="form-control"
+                        id="promoDiscountPriceId"
+                        name="promo_discount_price"
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-2 ">
+                    <label
+                      htmlFor="minimum_claim_price"
+                      className="col-2 col-form-label ps-0"
+                    >
+                      minimumClaimPrice
+                    </label>
+                    <div className="col-10">
+                      <Field
+                        className="form-control"
+                        id="promoMinimumClaimPrice"
+                        name="minimum_claim_price"
+                        type="number"
                       />
                     </div>
                   </div>

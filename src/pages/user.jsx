@@ -73,7 +73,7 @@ function User() {
     <div className="admin-page">
       <div className="fs-2 text-center m-2">Users</div>
       <div className="table-responsive">
-        <table className="table table-hover">
+        <table className="table table-sm table-hover">
           <thead>
             <tr>
               <th scope="col">No.</th>
@@ -83,6 +83,7 @@ function User() {
               <th scope="col">Role</th>
               <th scope="col">Profile Picture</th>
               <th scope="col">Phone Number</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
 
@@ -134,67 +135,67 @@ function User() {
       {/* MODAL */}
       <div>
         {users.map((user, i) => {
-              return (
-                <div key={i}>
-                  <Formik
-                    initialValues={{
-                      name: "name",
-                      role: "role",
-                    }}
-                    // onSubmit={handleEdit(category.id)}
-                  >
-                    <div
-                      className="modal fade"
-                      tabIndex="-1"
-                      id={`modal${user.id}`}
-                    >
-                      <div className="modal-dialog bg-light rounded-3">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title">Update Role</h5>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            ></button>
+          return (
+            <div key={i}>
+              <Formik
+                initialValues={{
+                  name: "name",
+                  role: "role",
+                }}
+                // onSubmit={handleEdit(category.id)}
+              >
+                <div
+                  className="modal fade"
+                  tabIndex="-1"
+                  id={`modal${user.id}`}
+                >
+                  <div className="modal-dialog bg-light rounded-3">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">Update Role</h5>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div className="modal-body">
+                        <Form>
+                          <div className="row mb-2 ">
+                            <label
+                              htmlFor="role"
+                              className="col-sm-2 col-form-label ps-0"
+                            >
+                              Role
+                            </label>
+                            <div className="col-sm-10">
+                              <Field
+                                className="form-control"
+                                id={`role${user.id}`}
+                                name="role"
+                                type="text"
+                                onChange={(e) => setRole(e.target.value)}
+                                value={role || ""}
+                              />
+                            </div>
                           </div>
-                          <div className="modal-body">
-                            <Form>
-                              <div className="row mb-2 ">
-                                <label
-                                  htmlFor="role"
-                                  className="col-sm-2 col-form-label ps-0"
-                                >
-                                  Role
-                                </label>
-                                <div className="col-sm-10">
-                                  <Field
-                                    className="form-control"
-                                    id={`role${user.id}`}
-                                    name="role"
-                                    type="text"
-                                    onChange={(e) => setRole(e.target.value)}
-                                    value={role || ""}
-                                  />
-                                </div>
-                              </div>
-                              <button
-                                className="btn mt-3"
-                                type="submit"
-                                onClick={() => handleEdit(user.id)}
-                              >
-                                Submit
-                              </button>
-                            </Form>
-                          </div>
-                        </div>
+                          <button
+                            className="btn mt-3"
+                            type="submit"
+                            onClick={() => handleEdit(user.id)}
+                          >
+                            Submit
+                          </button>
+                        </Form>
                       </div>
                     </div>
-                  </Formik>
+                  </div>
                 </div>
-              );
-            })}
+              </Formik>
+            </div>
+          );
+        })}
       </div>
 
       <Navbar />

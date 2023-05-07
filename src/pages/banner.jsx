@@ -39,7 +39,7 @@ function Banner() {
         }
       )
       .then((response) => {
-        alert("BannerCreated!");
+        alert("Banner Created!");
         window.location.reload();
         return response;
       })
@@ -58,7 +58,7 @@ function Banner() {
       const bannersId = getBanner.data.data.map(({ id }) => id);
       localStorage.setItem("bannersId", JSON.stringify(bannersId));
       setBannersId(bannersId);
-      // console.log(bannerId);
+      console.log(bannersId);
       setBanners(getBanner.data.data);
     } catch (error) {
       console.log(error.message);
@@ -150,7 +150,7 @@ function Banner() {
         Create
       </button>
       <div className="table-responsive">
-        <table className="table table-hover">
+        <table className="table table-sm table-hover">
           <thead>
             <tr>
               <th scope="col">No.</th>

@@ -7,7 +7,7 @@ function Navbar() {
       <nav className="navbar fixed-top navbar-expand-lg bg-light text-center">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-            Navbar
+            ROUTE 62
           </a>
           <button
             className="navbar-toggler"

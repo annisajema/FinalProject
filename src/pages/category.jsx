@@ -50,6 +50,10 @@ function Category() {
         },
       });
       const categoriesId = getCategory.data.data.map(({ id }) => id);
+      const imageUrl = getCategory.data.data.map(({ imageUrl }) => imageUrl);
+      const name = getCategory.data.data.map(({ name }) => name);
+      localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
+      localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
       setCategoriesId(categoriesId);
       // console.log(categoryId);
@@ -73,9 +77,9 @@ function Category() {
       const categoryId = getCategoryById.data.data.id;
       const imageUrl = getCategoryById.data.data.imageUrl;
       const name = getCategoryById.data.data.name;
-      localStorage.setItem("categoryId", JSON.stringify(categoryId));
-      localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
-      localStorage.setItem("name", JSON.stringify(name));
+      // localStorage.setItem("categoryId", JSON.stringify(categoryId));
+      // localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
+      // localStorage.setItem("name", JSON.stringify(name));
       setName(name);
       // console.log(name);
       setImageUrl(imageUrl);
@@ -147,7 +151,7 @@ function Category() {
         Create
       </button>
       <div className="table-responsive">
-        <table className="table table-hover">
+        <table className="table table-sm table-hover">
           <thead>
             <tr>
               <th scope="col">No.</th>

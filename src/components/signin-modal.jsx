@@ -12,34 +12,6 @@ const url = axios.create({ baseURL: base_url });
 // function SigninModal() {
 
 const SigninModal = () => {
-  // const getLogin = url.post(
-  //   "api/v1/login",
-  //   {
-  //     email: values.email,
-  //     password: values.password,
-  //     passwordRepeat: values.passwordRepeat,
-  //     role: values.role,
-  //     profilePictureUrl: values.profilePictureUrl,
-  //     phoneNumber: values.phoneNumber,
-  //   },
-  //   {
-  //     headers: {
-  //       apiKey: `${api_key}`,
-  //     },
-  //   }
-  // );
-  // const [profilePicture, setProfilePicture] = useState(null)
-
-  // const [data, setData] = useState([]);
-  // const [emailCreate, setEmailCreate] = useState("");
-  // const [nameCreate, setNameCreate] = useState("");
-  // const [passwordCreate, setPasswordCreate] = useState("");
-  // const [passRepeatCreate, setPassRepeatCreate] = useState("");
-  // const [roleCreate, setRoleCreate] = useState("");
-  // const [profilePictureCreate, setProfilePictureCreate] = useState("");
-  // const [phoneNumberCreate, setPhoneNumberCreate] = useState("");
-
-  // const [login, setLogin] = useState(localStorage.getItem("token"));
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [userId, setUserId] = useState(
     JSON.parse(localStorage.getItem("userId"))
