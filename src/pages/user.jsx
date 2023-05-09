@@ -81,7 +81,9 @@ function User() {
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Role</th>
-              <th scope="col">Profile Picture</th>
+              <th className="text-center" scope="col">
+                Profile Picture
+              </th>
               <th scope="col">Phone Number</th>
               <th scope="col">Action</th>
             </tr>
@@ -96,8 +98,11 @@ function User() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  <td style={{ wordBreak: "break-all" }}>
-                    {user.profilePictureUrl}
+                  <td className="text-center">
+                    <img
+                      className="w-50 h-50 rounded-3"
+                      src={user.profilePictureUrl}
+                    />
                   </td>
                   <td>{user.phoneNumber}</td>
                   {/* <span className="row" scope="row"> */}

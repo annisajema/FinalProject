@@ -23,13 +23,38 @@ function Banner() {
   );
   const [name, setName] = useState(JSON.parse(localStorage.getItem("Banner Name")));
 
+  const handleImageUrl = async (e) => {
+    try {
+      // const image =  e.target.files[0];
+      const formData = new FormData();
+      formData.append("image", e.target.files[0]);
+      const getImageUrl = await axios.post(
+        `${base_url}/api/v1/upload-image`,
+        formData,
+        {
+          headers: {
+            apiKey: `${api_key}`,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const imageUrl = getImageUrl.data.url;
+      setImageUrl(imageUrl);
+      console.log(imageUrl);
+    } catch (error) {
+      console.log(error.message);
+      alert("Failed!");
+    }
+  };
+
   const handleBanner = (values) => {
     axios
       .post(
         `${base_url}/api/v1/create-banner`,
         {
           name: values.name,
-          imageUrl: values.imageUrl,
+          imageUrl: imageUrl,
         },
         {
           headers: {
@@ -156,7 +181,9 @@ function Banner() {
               <th scope="col">No.</th>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <th scope="col">Image URL</th>
+              <th className="text-center" scope="col">
+                Image URL
+              </th>
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -168,9 +195,14 @@ function Banner() {
               return (
                 <tr key={i}>
                   <th scope="row">{i + 1}</th>
-                  <td>{bannersId}</td>
+                  <td>{banner.id}</td>
                   <td>{banner.name}</td>
-                  <td style={{ wordBreak: "break-all" }}>{banner.imageUrl}</td>
+                  <td className="text-center">
+                    <img
+                      className="w-50 h-50 rounded-3"
+                      src={banner.imageUrl}
+                    />
+                  </td>
                   <td className="d-table-cell">{banner.createdAt}</td>
                   <td className="d-table-cell">{banner.updatedAt}</td>
                   {/* <span className="row" scope="row"> */}
@@ -230,7 +262,7 @@ function Banner() {
           <Formik
             initialValues={{
               name: bannersById.name,
-              imageUrl: bannersById.imageUrl,
+              imageUrl: imageUrl,
             }}
             // onSubmit={handleEdit(category.id)}
           >
@@ -248,41 +280,40 @@ function Banner() {
                   </div>
                   <div className="modal-body">
                     <Form>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="name"
-                          className="col-sm-2 col-form-label ps-0"
-                        >
-                          name
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            className="form-control"
-                            id="idname"
-                            name="name"
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="idname"
+                          name="name"
+                          placeholder="name"
+                          type="text"
+                          onChange={(e) => setName(e.target.value)}
+                          value={name || ""}
+                        />
+                        <label htmlFor="idname">Name</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
+                      <div className="mb-2 ">
+                        {/* <label
                           htmlFor="imageUrl"
                           className="col-2 col-form-label ps-0"
                         >
-                          imageUrl
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="idimageUrl"
-                            name="imageUrl"
-                            type="text"
-                            onChange={(e) => setImageUrl(e.target.value)}
-                            value={imageUrl || ""}
-                          />
+                          Image
+                        </label> */}
+
+                        <input
+                          className="form-control"
+                          id="idimageUrl"
+                          name="imageUrl"
+                          type="file"
+                          onChange={handleImageUrl}
+                          // value={imageUrl || ""}
+                        />
+                        <div className="text-muted">
+                          <small>
+                            <em>*)Displayed Image</em>
+                          </small>
                         </div>
+                        <img className="w-25 h-50 mt-1" src={imageUrl} />
                       </div>
                       <button
                         className="btn mt-3"
@@ -324,46 +355,39 @@ function Banner() {
               <Formik
                 initialValues={{
                   name: "",
-                  imageUrl: "",
+                  imageUrl: imageUrl,
                 }}
                 onSubmit={handleBanner}
               >
                 <Form>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="name"
-                      className="col-sm-2 col-form-label ps-0"
-                    >
-                      name
-                    </label>
-                    <div className="col-sm-10">
-                      <Field
-                        className="form-control"
-                        id="name-id"
-                        name="name"
-                        type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.bannerId}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="name-id"
+                      name="name"
+                      placeholder="Name"
+                      type="text"
+                      // onChange={activity.handleChange}
+                      // value={activity.values.bannerId}
+                    />
+                    <label htmlFor="name-id">Name</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
+                  <div className="mb-2 ">
+                    {/* <label
                       htmlFor="imageUrl"
                       className="col-2 col-form-label ps-0"
                     >
                       imageUrl
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="imageUrlid"
-                        name="imageUrl"
-                        type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.title}
-                      />
-                    </div>
+                    </label> */}
+                    <input
+                      className="form-control"
+                      id="imageUrlid"
+                      name="imageUrl"
+                      type="file"
+                      onChange={handleImageUrl}
+                      alt={imageUrl}
+                      // value={activity.values.title}
+                    />
                   </div>
                   <button className="btn mt-3" type="submit">
                     Submit

@@ -81,6 +81,45 @@ function Home() {
                   </div>
 
                   {/* Modal */}
+                  {/* <div
+                    className="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1
+                            className="modal-title fs-5"
+                            id="exampleModalLabel"
+                          >
+                            Modal title
+                          </h1>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">...</div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button type="button" class="btn btn-primary">
+                            Save changes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
                   <div
                     className="modal fade "
                     id={`modal${promo.id}`}
@@ -93,17 +132,15 @@ function Home() {
                         className="modal-content"
                         // style={{ backgroundColor: "rgba(13, 13, 13, 0.9)" }}
                       >
-                        <img
+                        {/* <img
                           src={promo.imageUrl}
                           alt={promo.title}
                           style={{ filter: "brightness(25%)" }}
-                        />
-                        <div className="overview text-light">
-                          {promo.description}
-                        </div>
+                        /> */}
+                        <div className="overview">{promo.description}</div>
                         <div className="modal-header border-0 pt-4 pb-0">
                           <div
-                            className="modal-title fs-5 text-light"
+                            className="modal-title fs-5"
                             id="exampleModalLabel"
                           >
                             <div className="modal-movie-title">
@@ -116,7 +153,7 @@ function Home() {
                                 </div>
                               </li>
                               <li>
-                                <div className="modal-movie-score text-light">
+                                <div className="modal-movie-score">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="12"
@@ -140,7 +177,7 @@ function Home() {
                           </div>
                           <button
                             type="button"
-                            className="btn-close btn-close-signin-modal btn-close-white"
+                            className="btn-close btn-close-signin-modal"
                             data-bs-dismiss="modal"
                             aria-label="Close"
                           ></button>

@@ -157,7 +157,9 @@ function Category() {
               <th scope="col">No.</th>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <th scope="col">Image URL</th>
+              <th className="text-center" scope="col">
+                Image URL
+              </th>
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -169,10 +171,13 @@ function Category() {
               return (
                 <tr key={i}>
                   <th scope="row">{i + 1}</th>
-                  <td>{categoriesId}</td>
+                  <td>{category.id}</td>
                   <td>{category.name}</td>
-                  <td style={{ wordBreak: "break-all" }}>
-                    {category.imageUrl}
+                  <td className="text-center">
+                    <img
+                      className="w-50 h-50 rounded-3"
+                      src={category.imageUrl}
+                    />
                   </td>
                   <td className="d-table-cell">{category.createdAt}</td>
                   <td className="d-table-cell">{category.updatedAt}</td>
@@ -182,7 +187,6 @@ function Category() {
                     data-bs-toggle="modal"
                     data-bs-target={`#modal${categoryId}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handleCategoryById(category.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -199,10 +203,8 @@ function Category() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   <td className="">
-                    {/* <a href="#"> */}
                     <button onClick={() => handleDelete(category.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +217,6 @@ function Category() {
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   {/* </span> */}
                 </tr>
@@ -332,41 +333,27 @@ function Category() {
                 onSubmit={handleCategory}
               >
                 <Form>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="name"
-                      className="col-sm-2 col-form-label ps-0"
-                    >
-                      name
-                    </label>
-                    <div className="col-sm-10">
-                      <Field
-                        className="form-control"
-                        id="name-id"
-                        name="name"
-                        type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.categoryId}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="name-id"
+                      name="name"
+                      type="text"
+                      // onChange={activity.handleChange}
+                      // value={activity.values.categoryId}
+                    />
+                    <label htmlFor="name-id">Name</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="imageUrl"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      imageUrl
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="imageUrlid"
-                        name="imageUrl"
-                        type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.title}
-                      />
-                    </div>
+                  <div className="rform-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="imageUrlid"
+                      name="imageUrl"
+                      type="file"
+                      // onChange={activity.handleChange}
+                      // value={activity.values.title}
+                    />
+                    {/* <label htmlFor="imageUrlid">imageUrl</label> */}
                   </div>
                   <button className="btn mt-3" type="submit">
                     Submit

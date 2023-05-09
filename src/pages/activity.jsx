@@ -3,6 +3,7 @@ import Navbar from "../components/navbar";
 import axios from "axios";
 import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
+// import NavbarAdmin from "../components/navbar-admin";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const url = axios.create({ baseURL: base_url });
@@ -166,7 +167,7 @@ function Activity() {
       const city = getActivitiesById.data.data.city;
       const location_maps = getActivitiesById.data.data.location_maps;
       localStorage.setItem("activityId", JSON.stringify(activityId));
-      localStorage.setItem("imageUrls", JSON.stringify(imageUrls));
+      // localStorage.setItem("imageUrls", JSON.stringify(imageUrls));
       setImageUrls(imageUrls);
       // console.log(imageUrl);
       setActivityId(activityId);
@@ -271,6 +272,7 @@ function Activity() {
 
   return (
     <div className="admin-page">
+      {/* <NavbarAdmin /> */}
       <div className="fs-2 text-center m-2">Activities</div>
       <button
         className="d-flex text-light mb-3"
@@ -287,7 +289,7 @@ function Activity() {
               <th scope="col">ID</th>
               <th scope="col">Category ID</th>
               <th scope="col">Title</th>
-              <th scope="col">Description</th>
+              {/* <th scope="col">Description</th>
               <th scope="col">Image URL</th>
               <th scope="col">Price</th>
               <th scope="col">Price Discount</th>
@@ -297,7 +299,7 @@ function Activity() {
               <th scope="col">Address</th>
               <th scope="col">Province</th>
               <th scope="col">City</th>
-              <th scope="col">Location Maps</th>
+              <th scope="col">Location Maps</th> */}
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -312,9 +314,9 @@ function Activity() {
                   <td>{activity.id}</td>
                   <td>{activity.categoryId}</td>
                   <td>{activity.title}</td>
-                  <td>{activity.description}</td>
-                  <td style={{ wordBreak: "break-all" }}>
-                    {activity.imageUrls}
+                  {/* <td>{activity.description}</td>
+                  <td className="text-center">
+                    <img className="w-50 h-50" src={activity.imageUrls} />
                   </td>
                   <td>{activity.price}</td>
                   <td>{activity.price_discount}</td>
@@ -324,12 +326,35 @@ function Activity() {
                   <td>{activity.address}</td>
                   <td>{activity.province}</td>
                   <td>{activity.city}</td>
-                  <td style={{ wordBreak: "break-all" }}>
-                    {activity.location_maps}
-                  </td>
-                  <td className="d-table-cell">{activity.createdAt}</td>
-                  <td className="d-table-cell">{activity.updatedAt}</td>
+                  <td>
+                    <iframe src={activity.location_maps}></iframe>
+                  </td> */}
+                  <td>{activity.createdAt}</td>
+                  <td>{activity.updatedAt}</td>
                   {/* <span className="row" scope="row"> */}
+                  <td
+                    className="pe-0"
+                    data-bs-toggle="modal"
+                    data-bs-target={`#detail${activityId}`}
+                  >
+                    {/* <a href="#" className="me-2 "> */}
+                    <button onClick={() => handleActivitiesById(activity.id)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-list text-light"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                        />
+                      </svg>
+                    </button>
+                    {/* </a> */}
+                  </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -378,6 +403,73 @@ function Activity() {
         </table>
       </div>
 
+      {/* Modal Detail */}
+      {/* MOdal Lama */}
+      <div
+        className="modal fade"
+        id={`detail${activityId}`}
+        tabIndex="-1"
+        aria-labelledby="movie1Label"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div
+            className="modal-content"
+            // style="background-color: rgba(13, 13, 13, 0.9)"
+          >
+            <div className="modal-header border-0 pt-4 pb-0">
+              <h1 className="modal-title fs-5 " id="exampleModalLabel">
+                <strong className="ps-3">{title}</strong>
+              </h1>
+              <button
+                type="button"
+                className="btn-close btn-close-signin-modal"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body m-3 mt-0">
+              <hr className="pt-0 mt-0" />
+              <img
+                className="float-start rounded-3 me-3 w-50 h-50"
+                src={imageUrls}
+              />
+              {/* <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
+              >
+                Drama
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
+              >
+                Romance
+              </button> */}
+              <p>
+                <b>Description</b>
+                <br />
+                {description}
+              </p>
+              <div className="w-100 float-start mt-3">
+                <b>Detail</b>
+                <div className="w-100">Price: {price}</div>
+                <div className="w-100">Price Discount: {price_discount}</div>
+                <div className="w-100">Rating: {rating}</div>
+                <div className="w-100">Total Reviews: {total_reviews}</div>
+                <div className="w-100">Facilities: {facilities}</div>
+                <div className="w-100">Address: {address}</div>
+                <div className="w-100">Province: {province}</div>
+                <div className="w-100">City: {city}</div>
+                <iframe className="w-100 p-3" src={location_maps}>
+                  Location Maps:{" "}
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Modal Update */}
       <div>
         {/* {activitiesById.map((categoryById, i) => {
@@ -385,10 +477,10 @@ function Activity() {
         <div>
           <Formik
             initialValues={{
-              categoryId: "",
+              categoryId: categoryId,
               title: "",
               description: "",
-              imageUrls: imageUrls,
+              imageUrls: "",
               price: 0,
               price_discount: 0,
               rating: 0,
@@ -427,16 +519,22 @@ function Activity() {
                             as="select"
                             className="form-control"
                             id="categoryId"
-                            name="categoryId"
+                            name="categoriesId"
                             type="text"
                             onChange={(e) => setCategoryId(e.target.value)}
-                            value={categoryId || ""}
+                            // value={categoryId || ""}
                           >
-                            <option>{categoriesId[0]}</option>
+                            {categoriesId.map((categoryId, i) => {
+                              return (
+                                <option key={categoryId} value={categoryId}>
+                                  {categoryId}
+                                </option>
+                              );
+                            })}
                           </Field>
                         </div>
                       </div>
-                      <div className="row mb-2 ">
+                      <div className="row mb-2 form-floating">
                         <label
                           htmlFor="title"
                           className="col-2 col-form-label ps-0"
@@ -446,7 +544,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityTitle"
+                            id="activityTitleId"
                             name="title"
                             type="text"
                             onChange={(e) => setTitle(e.target.value)}
@@ -464,7 +562,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityDescription"
+                            id="activityDescriptionId"
                             name="description"
                             type="text"
                             onChange={(e) => setDescription(e.target.value)}
@@ -485,9 +583,10 @@ function Activity() {
                             id="idimageUrl"
                             name="imageUrl"
                             type="file"
-                            onChange={handleImageUrl}
+                            onChange={(e) => setImageUrls(e.target.value)}
                             // value={imageUrls || ""}
                           />
+                          <img className="w-25 h-50" src={imageUrls} />
                         </div>
                       </div>
                       <div className="row mb-2 ">
@@ -500,7 +599,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityPrice"
+                            id="activityPriceId"
                             name="price"
                             type="number"
                             onChange={(e) => setPrice(e.target.value)}
@@ -518,7 +617,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityPriceDiscount"
+                            id="activityPriceDiscountId"
                             name="price_discount"
                             type="number"
                             onChange={(e) => setPriceDiscount(e.target.value)}
@@ -536,7 +635,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityRating"
+                            id="activityRatingId"
                             name="rating"
                             type="number"
                             onChange={(e) => setRating(e.target.value)}
@@ -554,7 +653,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityTotalReviews"
+                            id="activityTotalReviewsId"
                             name="total_reviews"
                             type="number"
                             onChange={(e) => setTotalReviews(e.target.value)}
@@ -572,7 +671,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityFacilities"
+                            id="activityFacilitiesId"
                             name="facilities"
                             type="text"
                             onChange={(e) => setFacilities(e.target.value)}
@@ -590,7 +689,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityAddress"
+                            id="activityAddressId"
                             name="address"
                             type="text"
                             onChange={(e) => setAddress(e.target.value)}
@@ -608,7 +707,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityProvince"
+                            id="activityProvinceId"
                             name="province"
                             type="text"
                             onChange={(e) => setProvince(e.target.value)}
@@ -626,7 +725,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityCity"
+                            id="activityCityId"
                             name="city"
                             type="text"
                             onChange={(e) => setCity(e.target.value)}
@@ -644,7 +743,7 @@ function Activity() {
                         <div className="col-10">
                           <Field
                             className="form-control"
-                            id="activityLocationMaps"
+                            id="activityLocationMapsId"
                             name="location_maps"
                             type="text"
                             onChange={(e) => setLocationMaps(e.target.value)}
@@ -678,7 +777,7 @@ function Activity() {
 
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Create Category</h5>
@@ -711,227 +810,171 @@ function Activity() {
                 {/* {newCategoriesId.map((newCategoryId, i) => {
                   return ( */}
                 <Form>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="categoryId"
-                      className="col-sm-2 col-form-label ps-0"
+                  <div className="form-floating">
+                    <Field
+                      as="select"
+                      className="form-select"
+                      id="categoriesId"
+                      name="categoriesId"
+                      placeholder="Category Id"
+                      type="text"
+                      onChange={onChange}
+                      // onChange={handleActivitiesByCategoryId(
+                      //   newCategoryId[i]
+                      // )}
                     >
-                      categoryId
-                    </label>
+                      <option select="true">
+                        Open this select menu
+                      </option>
+                      {categoriesId.map((categoryId, i) => {
+                        return (
+                          <option key={categoryId} value={categoryId}>
+                            {categoryId}
+                          </option>
+                        );
+                      })}
+                    </Field>
+                    <label htmlFor="categoriesId">Category Id</label>
+                  </div>
+                  {/* <div className="form-floating mb-3 mt-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="email"
+                      placeholder="Enter email"
+                      name="email"
+                    />
+                    <label for="email">Email</label>
+                  </div> */}
 
-                    <div className="col-sm-10">
-                      <Field
-                        as="select"
-                        className="form-control"
-                        id="categoriesId"
-                        name="categoriesId"
-                        type="text"
-                        onChange={onChange}
-                        // onChange={handleActivitiesByCategoryId(
-                        //   newCategoryId[i]
-                        // )}
-                      >
-                        {categoriesId.map((categoryId, i) => {
-                        return ( 
-                        <option key={categoryId} value={categoryId}>
-                          {categoryId}
-                        </option>
-                         );
-                        })}
-                      </Field>
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityTitle"
+                      name="title"
+                      type="text"
+                      placeholder="Title"
+                    />
+                    <label htmlFor="activityTitle">Title</label>
                   </div>
-
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="title"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      title
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityTitle"
-                        name="title"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityDescription"
+                      name="description"
+                      type="text"
+                      placeholder="Description"
+                    />
+                    <label htmlFor="activityDescription">Description</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="description"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      description
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityDescription"
-                        name="description"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  <div className="row mb-2 ">
-                    <label
+                  <div className="mb-2 mt-2">
+                    {/* <label
                       htmlFor="imageUrls"
                       className="col-2 col-form-label ps-0"
                     >
-                      imageUrls
-                    </label>
-                    <div className="col-10">
-                      <input
-                        className="form-control"
-                        id="idimageUrl"
-                        name="imageUrls"
-                        type="file"
-                        onChange={handleImageUrl}
-                        // value={imageUrls}
-                      />
-                    </div>
+                    </label> */}
+                    <input
+                      className="form-control"
+                      id="idimageUrl"
+                      name="imageUrls"
+                      type="file"
+                      onChange={handleImageUrl}
+                      // value={imageUrls}
+                    />
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="price"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      price
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityPrice"
-                        name="price"
-                        type="number"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityPrice"
+                      name="price"
+                      type="number"
+                      placeholder="Price"
+                    />
+                    <label htmlFor="activityPrice">Price</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="price_discount"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      price_discount
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityPriceDiscount"
+                      name="price_discount"
+                      type="number"
+                      placeholder="PriceVDiscount"
+                    />
+                    <label htmlFor="activityPriceDiscount">
+                      Price Discount
                     </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityPriceDiscount"
-                        name="price_discount"
-                        type="number"
-                      />
-                    </div>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="rating"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      rating
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityRating"
-                        name="rating"
-                        type="number"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityRating"
+                      name="rating"
+                      placeholder="Rating"
+                      type="number"
+                    />
+                    <label htmlFor="activityRating">Rating</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="total_reviews"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      total_reviews
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityTotalReviews"
-                        name="total_reviews"
-                        type="number"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityTotalReviews"
+                      name="total_reviews"
+                      placeholder="Total Reviews"
+                      type="number"
+                    />
+                    <label htmlFor="activityTotalReviews">Total Reviews</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="facilities"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      facilities
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityFacilities"
-                        name="facilities"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    {/* <div className="col-10"> */}
+                    <Field
+                      className="form-control"
+                      id="activityFacilities"
+                      name="facilities"
+                      type="text"
+                      placeholder="Facilities"
+                    />
+                    <label htmlFor="activityFacilities">Facilities</label>
+                    {/* </div> */}
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="address"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      address
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityAddress"
-                        name="address"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityAddress"
+                      name="address"
+                      placeholder="Address"
+                      type="text"
+                    />
+                    <label htmlFor="adactivityAddressdress">Address</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="province"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      province
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityProvince"
-                        name="province"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityProvince"
+                      name="province"
+                      placeholder="Province"
+                      type="text"
+                    />
+                    <label htmlFor="proactivityProvincevince">Province</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label htmlFor="city" className="col-2 col-form-label ps-0">
-                      city
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityCity"
-                        name="city"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityCity"
+                      name="city"
+                      placeholder="City"
+                      type="text"
+                    />
+                    <label htmlFor="activityCity">City</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="location_maps"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      location_maps
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="activityLocationMaps"
-                        name="location_maps"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="activityLocationMaps"
+                      name="location_maps"
+                      type="text"
+                      placeholder="location_maps"
+                    />
+                    <label htmlFor="activityLocationMaps">Location Maps</label>
                   </div>
                   <button className="btn mt-3" type="submit">
                     Submit

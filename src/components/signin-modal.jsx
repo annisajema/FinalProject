@@ -23,41 +23,51 @@ const SigninModal = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
-  // const upload_img = axios.post(
-  //   `${base_url}/api/v1/upload-image`,
-  //   {
-  //     data: {
-  //       image: image,
-  //     },
-  //   },
-  //   {
-  //     headers: {
-  //       apiKey: `${api_key}`,
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   }
-  // );
+const handleProfilePictureUrl = async (e) => {
+  try {
+    // const image =  e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    const getProfilePictureUrl = await axios.post(
+      `${base_url}/api/v1/upload-image`,
+      formData,
+      {
+        headers: {
+          apiKey: `${api_key}`,
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    const profilePictureUrls = getProfilePictureUrl.data.url;
+    setProfilePictureUrl(profilePictureUrls);
+    console.log(profilePictureUrls);
+  } catch (error) {
+    console.log(error.message);
+    alert("Failed!");
+  }
+};
 
-  const handleUploadImage = () => {
-    const data = new FormData();
-    data.append("files[]", previewImage);
+  // const handleUploadImage = () => {
+  //   const data = new FormData();
+  //   data.append("files[]", previewImage);
 
-    fetch(axios.post(`${base_url}/api/v1/upload-image`, { body: image }))
-      .then(async (response) => {
-        const imageResponse = await response.json();
-        setUploadedImage(imageResponse);
-      })
-      .catch((err) => {});
-  };
+  //   fetch(axios.post(`${base_url}/api/v1/upload-image`, { body: image }))
+  //     .then(async (response) => {
+  //       const imageResponse = await response.json();
+  //       setUploadedImage(imageResponse);
+  //     })
+  //     .catch((err) => {});
+  // };
 
-  const handleSelectImage = (event) => {
-    const file = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.addEventListener("load", () => {
-      setPreviewImage(fileReader.result);
-    });
-    fileReader.readAsDataURL(file);
-  };
+  // const handleSelectImage = (event) => {
+  //   const file = event.target.files[0];
+  //   const fileReader = new FileReader();
+  //   fileReader.addEventListener("load", () => {
+  //     setPreviewImage(fileReader.result);
+  //   });
+  //   fileReader.readAsDataURL(file);
+  // };
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
@@ -155,7 +165,7 @@ const SigninModal = () => {
       })
       .then(() => {
         setToken(null);
-        localStorage.removeItem("token", token);
+        localStorage.clear();
         handleLogin();
         alert("Logout Success!");
         window.location.reload();
@@ -173,7 +183,7 @@ const SigninModal = () => {
       password: "",
       passwordRepeat: "",
       role: "",
-      // profilePictureUrl: "",
+      profilePictureUrl: "",
       phoneNumber: "",
     },
     // validationSchema: Yup.object({
@@ -202,7 +212,7 @@ const SigninModal = () => {
             password: values.password,
             passwordRepeat: values.passwordRepeat,
             role: values.role,
-            profilePictureUrl: values.profilePictureUrl,
+            profilePictureUrl: profilePictureUrl,
             phoneNumber: values.phoneNumber,
           },
           {
@@ -527,8 +537,8 @@ const SigninModal = () => {
                         id="profilePictureUrl"
                         name="profilePictureUrl"
                         type="file"
-                        onChange={register.handleChange}
-                        value={register.values.profilePictureUrl}
+                        onChange={handleProfilePictureUrl}
+                        // value={register.values.profilePictureUrl}
                       />
                     </div>
                   </div>

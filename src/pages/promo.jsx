@@ -119,8 +119,8 @@ function Promo() {
           imageUrl,
           terms_condition,
           promo_code,
-          promo_discount_price,
-          minimum_claim_price,
+          promo_discount_price: parseInt(promo_discount_price),
+          minimum_claim_price: parseInt(minimum_claim_price),
         },
         {
           headers: {
@@ -177,12 +177,14 @@ function Promo() {
               <th scope="col">No.</th>
               <th scope="col">ID</th>
               <th scope="col">Title</th>
-              <th scope="col">description</th>
-              <th scope="col">Image URL</th>
+              {/* <th scope="col">description</th>
+              <th className="text-center" scope="col">
+                Image URL
+              </th>
               <th scope="col">terms_condition</th>
               <th scope="col">promo_code</th>
               <th scope="col">promo_discount_price</th>
-              <th scope="col">minimum_claim_price</th>
+              <th scope="col">minimum_claim_price</th> */}
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -196,14 +198,39 @@ function Promo() {
                   <th scope="row">{i + 1}</th>
                   <td>{promo.id}</td>
                   <td>{promo.title}</td>
-                  <td>{promo.description}</td>
-                  <td style={{ wordBreak: "break-all" }}>{promo.imageUrl}</td>
+                  {/* <td>{promo.description}</td>
+                  <td className="text-center">
+                    <img className="w-50 h-50" src={promo.imageUrl} />
+                  </td>
                   <td>{promo.terms_condition}</td>
                   <td>{promo.promo_code}</td>
                   <td>{promo.promo_discount_price}</td>
-                  <td>{promo.minimum_claim_price}</td>
+                  <td>{promo.minimum_claim_price}</td> */}
                   <td className="d-table-cell">{promo.createdAt}</td>
                   <td className="d-table-cell">{promo.updatedAt}</td>
+                  <td
+                    className="pe-0"
+                    data-bs-toggle="modal"
+                    data-bs-target={`#detail${promoId}`}
+                  >
+                    {/* <a href="#" className="me-2 "> */}
+                    <button onClick={() => handlePromoById(promo.id)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-list text-light"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                        />
+                      </svg>
+                    </button>
+                    {/* </a> */}
+                  </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -249,6 +276,65 @@ function Promo() {
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* Modal Detail */}
+      {/* MOdal Lama */}
+      <div
+        className="modal fade"
+        id={`detail${promoId}`}
+        tabIndex="-1"
+        aria-labelledby="movie1Label"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div
+            className="modal-content"
+            // style="background-color: rgba(13, 13, 13, 0.9)"
+          >
+            <div className="modal-header border-0 pt-4 pb-0">
+              <h1 className="modal-title fs-5 " id="exampleModalLabel">
+                <strong className="ps-3">{title}</strong>
+              </h1>
+              <button
+                type="button"
+                className="btn-close btn-close-signin-modal"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body m-3 mt-0">
+              <hr className="pt-0 mt-0" />
+              <img
+                className="float-start rounded-3 me-3 w-50 h-50"
+                src={imageUrl}
+              />
+              {/* <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
+              >
+                Drama
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
+              >
+                Romance
+              </button> */}
+              <p>
+                <b>Description</b>
+                <br />
+                {description}
+              </p>
+              <div className="w-100 float-start mt-3">
+                <b>Detail</b>
+                <div className="w-100">Terms Condition: {terms_condition}</div>
+                <div className="w-100">Promo Code: {promo_code}</div>
+                <div className="w-100">Minimum Claim Price: {minimum_claim_price}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Modal Update*/}

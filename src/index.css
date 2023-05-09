@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   padding-top: 60px;
@@ -75,6 +75,16 @@ button:focus-visible {
 .navbar {
   /* background-color: #ccd5ae; */
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+  font-family: 'Alfa Slab One', cursive;
+  color:#090e49de
+}
+
+.navbar-brand:hover {
+  font-family: 'Alfa Slab One', cursive;
+  color:#1a5f7a
 }
 
 .sign-in {
@@ -210,66 +220,25 @@ button:focus-visible {
   margin: 30px 40px;
 }
 
-/* .table {
-display: table;
+.card-body {
+  height: 13rem;
 }
 
-.table-header {
-display: table-header-group;
-font-weight: bold;
-vertical-align: bottom;
+.modal-body {
+  margin: 0 2rem;;
 }
 
-.table-body {
-display: table-row-group;
-display: inline;
+.form-floating>.form-control, .form-floating>.form-control-plaintext {
+    height: calc(2.5rem + calc(var(--bs-border-width) * 2));
+    line-height: 1.25;
+    padding-top: 0;
+    font-size: 1rem;
 }
 
-.table-row {
-display: table-row;
+.form-floating>.form-select{
+   height: calc(3.3rem + calc(var(--bs-border-width) * 2));
 }
 
-.table-header div,
-.table-row div {
-display: table-cell;
-padding: 0 3px;
+.form-floating>label {
+  padding-top: 0.5rem;
 }
-
-.table-body div,
-.table-row div {
-display: table-cell;
-padding: 0 6px;
-}
-
-.table-body div {
-  padding: 0 8px;
-}
-
-.table-header div {
-text-align: center;
-padding: 0 50px;
-border: 1px solid rgb(255, 255, 255);
-}
-
-
-.thead {
-    vertical-align: bottom;
-    display: table-header-group;
-}
-
-tbody, td, tfoot, th, thead, tr {
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-}
-
-.table>tbody {
-    vertical-align: inherit;
-}
-
-.table>:not(caption)>*>* {
-    padding: 0.5rem 0.5rem;
-    background-color: var(--bs-table-bg);
-    border-bottom-width: var(--bs-border-width);
-    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
-} */

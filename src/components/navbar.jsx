@@ -1,4 +1,4 @@
-import RegisterModal from "./register-modal";
+// import RegisterModal from "./register-modal";
 import SigninModal from "./signin-modal";
 
 function Navbar() {
@@ -44,11 +44,6 @@ function Navbar() {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="/activity">
-                      Activity
-                    </a>
-                  </li>
-                  <li>
                     <a className="dropdown-item" href="/banner">
                       Banner
                     </a>
@@ -56,6 +51,11 @@ function Navbar() {
                   <li>
                     <a className="dropdown-item" href="/category">
                       Category
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="/activity">
+                      Activity
                     </a>
                   </li>
                   <li>
