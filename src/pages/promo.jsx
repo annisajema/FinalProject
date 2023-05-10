@@ -21,6 +21,30 @@ function Promo() {
   const [promo_discount_price, setPromoDiscountPrice] = useState(0);
   const [minimum_claim_price, setMinimumClaimPrice] = useState(0);
 
+ const handleImageUrl = async (e) => {
+   try {
+     // const image =  e.target.files[0];
+     const formData = new FormData();
+     formData.append("image", e.target.files[0]);
+     const getImageUrl = await axios.post(
+       `${base_url}/api/v1/upload-image`,
+       formData,
+       {
+         headers: {
+           apiKey: `${api_key}`,
+           Authorization: `Bearer ${token}`,
+           "Content-Type": "multipart/form-data",
+         },
+       }
+     );
+     const imageUrl = getImageUrl.data.url;
+     setImageUrl(imageUrl);
+     console.log(imageUrl);
+   } catch (error) {
+     console.log(error.message);
+     alert("Failed!");
+   }
+ };
 
   const handlePromo = (values) => {
     axios
@@ -330,7 +354,9 @@ function Promo() {
                 <b>Detail</b>
                 <div className="w-100">Terms Condition: {terms_condition}</div>
                 <div className="w-100">Promo Code: {promo_code}</div>
-                <div className="w-100">Minimum Claim Price: {minimum_claim_price}</div>
+                <div className="w-100">
+                  Minimum Claim Price: {minimum_claim_price}
+                </div>
               </div>
             </div>
           </div>
@@ -363,135 +389,98 @@ function Promo() {
                   </div>
                   <div className="modal-body">
                     <Form>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="title"
-                          className="col-sm-2 col-form-label ps-0"
-                        >
-                          name
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            className="form-control"
-                            id="title"
-                            name="title"
-                            type="text"
-                            onChange={(e) => setTitle(e.target.value)}
-                            value={title || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 ">
+                        <Field
+                          className="form-control"
+                          id="title"
+                          name="title"
+                          placeholder="title"
+                          type="text"
+                          onChange={(e) => setTitle(e.target.value)}
+                          value={title || ""}
+                        />
+                        <label htmlFor="title">Name</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="title"
-                          className="col-sm-2 col-form-label ps-0"
-                        >
-                          Description
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            className="form-control"
-                            id="description"
-                            name="description"
-                            type="text"
-                            onChange={(e) => setDescription(e.target.value)}
-                            value={description || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="description"
+                          name="description"
+                          placeholder="description"
+                          type="text"
+                          onChange={(e) => setDescription(e.target.value)}
+                          value={description || ""}
+                        />
+                        <label htmlFor="description">Description</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
+                      <div className="mb-2 mt-2">
+                        {/* <label
                           htmlFor="imageUrl"
                           className="col-2 col-form-label ps-0"
                         >
                           imageUrl
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="promoimageUrl"
-                            name="imageUrl"
-                            type="text"
-                            onChange={(e) => setImageUrl(e.target.value)}
-                            value={imageUrl || ""}
-                          />
-                        </div>
+                        </label> */}
+                        <input
+                          className="form-control"
+                          id="promoimageUrl"
+                          name="imageUrl"
+                          type="file"
+                          onChange={handleImageUrl}
+                        />
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="terms_condition"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          Terms Condition
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="termsCondition"
-                            name="terms_condition"
-                            type="text"
-                            onChange={(e) => setTermsCondition(e.target.value)}
-                            value={terms_condition || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="termsCondition"
+                          name="terms_condition"
+                          placeholder="terms_condition"
+                          type="text"
+                          onChange={(e) => setTermsCondition(e.target.value)}
+                          value={terms_condition || ""}
+                        />
+                        <label htmlFor="termsCondition">Terms Condition</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="promo_code"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          promo Code
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="promoCode"
-                            name="promo_code"
-                            type="text"
-                            onChange={(e) => setPromoCode(e.target.value)}
-                            value={promo_code || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="promoCode"
+                          name="promo_code"
+                          placeholder="promo_code"
+                          type="text"
+                          onChange={(e) => setPromoCode(e.target.value)}
+                          value={promo_code || ""}
+                        />
+                        <label htmlFor="promoCode">Promo Code</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="promo_discount_price"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          promo Discount Price
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="promoDiscountPrice"
+                          name="promo_discount_price"
+                          pla="promo_discount_price"
+                          type="number"
+                          onChange={(e) =>
+                            setPromoDiscountPrice(e.target.value)
+                          }
+                          value={promo_discount_price || ""}
+                        />
+                        <label htmlFor="promoDiscountPrice">
+                          Promo Discount Price
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="promoDiscountPrice"
-                            name="promo_discount_price"
-                            type="number"
-                            onChange={(e) =>
-                              setPromoDiscountPrice(e.target.value)
-                            }
-                            value={promo_discount_price || ""}
-                          />
-                        </div>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="minimum_claim_price"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          minimum ClaimPrice
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="minimumClaimPrice"
+                          name="minimum_claim_price"
+                          placeholder="minimum_claim_price"
+                          type="number"
+                          onChange={(e) => setMinimumClaimPrice(e.target.value)}
+                          value={minimum_claim_price || ""}
+                        />
+                        <label htmlFor="minimumClaimPrice">
+                          Minimum Claim Price
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="minimumClaimPrice"
-                            name="minimum_claim_price"
-                            type="number"
-                            onChange={(e) =>
-                              setMinimumClaimPrice(e.target.value)
-                            }
-                            value={minimum_claim_price || ""}
-                          />
-                        </div>
                       </div>
 
                       <button
@@ -544,117 +533,84 @@ function Promo() {
                 onSubmit={handlePromo}
               >
                 <Form>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="title"
-                      className="col-sm-2 col-form-label ps-0"
-                    >
-                      Title
-                    </label>
-                    <div className="col-sm-10">
-                      <Field
-                        className="form-control"
-                        id="promoTitle"
-                        name="title"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 ">
+                    <Field
+                      className="form-control"
+                      id="promoTitle"
+                      name="title"
+                      placeholder="title"
+                      type="text"
+                    />
+                    <label htmlFor="promoTitle">Title</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="description"
-                      className="col-sm-2 col-form-label ps-0"
-                    >
-                      Description
-                    </label>
-                    <div className="col-sm-10">
-                      <Field
-                        className="form-control"
-                        id="promoDescription"
-                        name="description"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="promoDescription"
+                      name="description"
+                      placeholder="description"
+                      type="text"
+                    />
+                    <label htmlFor="promoDescription">Description</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
+                  <div className="mb-2 mt-2">
+                    {/* <label
                       htmlFor="imageUrl"
                       className="col-2 col-form-label ps-0"
                     >
                       image Url
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="promoImageUrl"
-                        name="imageUrl"
-                        type="text"
-                      />
-                    </div>
+                    </label> */}
+                    <input
+                      className="form-control"
+                      id="promoImageUrl"
+                      name="imageUrl"
+                      type="file"
+                      onChange={handleImageUrl}
+                    />
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="terms_condition"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      termsCondition
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="promoTermsCondition"
-                        name="terms_condition"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="promoTermsCondition"
+                      name="terms_condition"
+                      placeholder="terms_condition"
+                      type="text"
+                    />
+                    <label htmlFor="promoTermsCondition">Terms Condition</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="promo_code"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      promoCode
-                    </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="promoCodeId"
-                        name="promo_code"
-                        type="text"
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="promoCodeId"
+                      name="promo_code"
+                      placeholder="promo_code"
+                      type="text"
+                    />
+                    <label htmlFor="promoCodeId">Promo Code</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="promo_discount_price"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      promoDiscountPrice
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="promoDiscountPriceId"
+                      name="promo_discount_price"
+                      placeholder="promo_discount_price"
+                      type="number"
+                    />
+                    <label htmlFor="promoDiscountPriceId">
+                      Promo Discount Price
                     </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="promoDiscountPriceId"
-                        name="promo_discount_price"
-                        type="number"
-                      />
-                    </div>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="minimum_claim_price"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      minimumClaimPrice
+                  <div className="form-floating mb-2 mt-2">
+                    <Field
+                      className="form-control"
+                      id="promoMinimumClaimPrice"
+                      name="minimum_claim_price"
+                      placeholder="minimum_claim_price"
+                      type="number"
+                    />
+                    <label htmlFor="promoMinimumClaimPrice">
+                      Minimum Claim Price
                     </label>
-                    <div className="col-10">
-                      <Field
-                        className="form-control"
-                        id="promoMinimumClaimPrice"
-                        name="minimum_claim_price"
-                        type="number"
-                      />
-                    </div>
                   </div>
                   <button className="btn mt-3" type="submit">
                     Submit

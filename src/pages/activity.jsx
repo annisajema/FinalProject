@@ -9,11 +9,12 @@ const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
-const categoryId = localStorage.getItem("categoryId");
-const categoriesId = localStorage.getItem("categoriesId");
+// const categoryId = localStorage.getItem("categoryId");
+// const categoriesId = localStorage.getItem("categoriesId");
 
 function Activity() {
   const [activities, setActivities] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [activitiesById, setActivitiesById] = useState([]);
   const [activityId, setActivityId] = useState(JSON.parse(localStorage.getItem("activityId")));
   const [categoryId, setCategoryId] = useState(JSON.parse(localStorage.getItem("categoryId")));
@@ -265,9 +266,37 @@ function Activity() {
         window.location.reload();
       });
   };
+  
+  const handleGetCategories = async () => {
+    try {
+      const getCategory = await axios.get(`${base_url}/api/v1/categories`, {
+        headers: {
+          apiKey: `${api_key}`,
+        },
+      });
+      const categoriesId = getCategory.data.data.map(({ id }) => id);
+      localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
+      setCategoriesId(categoriesId);
+      console.log(categoriesId);
+      setCategories(getCategory.data.data);
+    } catch (error) {
+      console.log(error.message);
+      alert("Failed!");
+    }
+  };
+
+  const handleActivityCategory = () => {
+    try {
+      handleGetActivities();
+      handleGetCategories();
+    } catch (error) {
+      console.log(error.message);
+      alert("Failed!");
+    }
+  };
 
   useEffect(() => {
-    handleGetActivities();
+    handleActivityCategory();
   }, []);
 
   return (
@@ -524,10 +553,10 @@ function Activity() {
                             onChange={(e) => setCategoryId(e.target.value)}
                             // value={categoryId || ""}
                           >
-                            {categoriesId.map((categoryId, i) => {
+                            {categories.map((categoryId, i) => {
                               return (
-                                <option key={categoryId} value={categoryId}>
-                                  {categoryId}
+                                <option key={categoryId.id} value={categoryId.id}>
+                                  {categoryId.id}
                                 </option>
                               );
                             })}
@@ -826,10 +855,10 @@ function Activity() {
                       <option select="true">
                         Open this select menu
                       </option>
-                      {categoriesId.map((categoryId, i) => {
+                      {categories.map((categoryId, i) => {
                         return (
-                          <option key={categoryId} value={categoryId}>
-                            {categoryId}
+                          <option key={categoryId.id} value={categoryId.id}>
+                            {categoryId.id}
                           </option>
                         );
                       })}

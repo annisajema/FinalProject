@@ -13,9 +13,8 @@ const userId = localStorage.getItem("userId");
 function User() {
   const [users, setAllUser] = useState([]);
   const [role, setRole] = useState("")
-  const [usersId, setUsersId] = useState(
-    JSON.parse(localStorage.getItem("usersId"))
-  );
+  const [usersId, setUsersId] = useState(JSON.parse(localStorage.getItem("usersId")));
+  const [imageUrl, setImageUrl] = useState("");
 //   const [userId, setUserId] = useState(
 //     JSON.parse(localStorage.getItem("userId"))
 //   );

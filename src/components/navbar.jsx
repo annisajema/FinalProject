@@ -6,7 +6,7 @@ function Navbar() {
     <div className="App">
       <nav className="navbar fixed-top navbar-expand-lg bg-light text-center">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             ROUTE 62
           </a>
           <button
@@ -23,7 +23,7 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <a className="nav-link active" aria-current="page" href="/">
                   Home
                 </a>
               </li>
@@ -78,7 +78,7 @@ function Navbar() {
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" type="submit">
+              <button className="btn btn-outline-light" type="submit">
                 Search
               </button>
             </form>

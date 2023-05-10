@@ -17,6 +17,31 @@ function Category() {
   const [imageUrl, setImageUrl] = useState(JSON.parse(localStorage.getItem("imageUrl")));
   const [name, setName] = useState(JSON.parse(localStorage.getItem("name")));
 
+  const handleImageUrl = async (e) => {
+    try {
+      // const image =  e.target.files[0];
+      const formData = new FormData();
+      formData.append("image", e.target.files[0]);
+      const getImageUrl = await axios.post(
+        `${base_url}/api/v1/upload-image`,
+        formData,
+        {
+          headers: {
+            apiKey: `${api_key}`,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const imageUrl = getImageUrl.data.url;
+      setImageUrl(imageUrl);
+      console.log(imageUrl);
+    } catch (error) {
+      console.log(error.message);
+      alert("Failed!");
+    }
+  };
+
   const handleCategory = (values) => {
     axios
       .post(
@@ -226,7 +251,7 @@ function Category() {
         </table>
       </div>
 
-      {/* MODAL */}
+      {/* Modal Update */}
       <div>
         {/* {categoriesById.map((categoryById, i) => {
               return ( */}
@@ -252,41 +277,35 @@ function Category() {
                   </div>
                   <div className="modal-body">
                     <Form>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="name"
-                          className="col-sm-2 col-form-label ps-0"
-                        >
-                          name
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            className="form-control"
-                            id="idname"
-                            name="name"
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2">
+                        <input
+                          className="form-control"
+                          id="idname"
+                          name="name"
+                          placeholder="name"
+                          type="text"
+                          onChange={(e) => setName(e.target.value)}
+                          value={name || ""}
+                        />
+                        <label htmlFor="idname">Name</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
+                      <div>
+                        {/* <label
                           htmlFor="imageUrl"
                           className="col-2 col-form-label ps-0"
                         >
                           imageUrl
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="idimageUrl"
-                            name="imageUrl"
-                            type="text"
-                            onChange={(e) => setImageUrl(e.target.value)}
-                            value={imageUrl || ""}
-                          />
-                        </div>
+                        </label> */}
+                        {/* <div className="col-10"> */}
+                        <Field
+                          className="form-control"
+                          id="idimageUrl"
+                          name="imageUrl"
+                          type="file"
+                          onChange={handleImageUrl}
+                          // value={imageUrl || ""}
+                        />
+                        {/* </div> */}
                       </div>
                       <button
                         className="btn mt-3"
@@ -333,24 +352,25 @@ function Category() {
                 onSubmit={handleCategory}
               >
                 <Form>
-                  <div className="form-floating mb-2 mt-2">
+                  <div className="form-floating mb-2">
                     <Field
                       className="form-control"
                       id="name-id"
                       name="name"
+                      placeholder="name"
                       type="text"
                       // onChange={activity.handleChange}
                       // value={activity.values.categoryId}
                     />
                     <label htmlFor="name-id">Name</label>
                   </div>
-                  <div className="rform-floating mb-2 mt-2">
-                    <Field
+                  <div className="floating mb-2 mt-2">
+                    <input
                       className="form-control"
                       id="imageUrlid"
                       name="imageUrl"
                       type="file"
-                      // onChange={activity.handleChange}
+                      onChange={handleImageUrl}
                       // value={activity.values.title}
                     />
                     {/* <label htmlFor="imageUrlid">imageUrl</label> */}

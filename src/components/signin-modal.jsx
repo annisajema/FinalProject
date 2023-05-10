@@ -23,6 +23,8 @@ const SigninModal = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
+
+  
 const handleProfilePictureUrl = async (e) => {
   try {
     // const image =  e.target.files[0];
@@ -186,21 +188,22 @@ const handleProfilePictureUrl = async (e) => {
       profilePictureUrl: "",
       phoneNumber: "",
     },
-    // validationSchema: Yup.object({
-    //   name: Yup.string().required("Username is required"),
-    //   email: Yup.string()
-    //     .email("Input valid email address")
-    //     .required("Email is Required"),
-    //   password: Yup.string().required("Password is required"),
-    //   passwordRepeat: Yup.string().required(
-    //     "Password confirmation is required"
-    //   ),
-    //   role: Yup.string().required("Role is required"),
-    //   profilePictureUrl: Yup.string().required(
-    //     "Profile Image URL is required"
-    //   ),
-    //   phoneNumber: Yup.number().required("Phone number is required"),
-    // }),
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string()
+        .min(6, "Must be 6 characters or more")
+        .required("Required"),
+      passwordRepeat: Yup.string()
+        .required("Required")
+        .oneOf([Yup.ref("password"), null], "Password must match"),
+      role: Yup.string()
+        .oneOf(["user", "admin"], "Select Role")
+        .required("Required"),
+      phoneNumber: Yup.string()
+        .matches(/^[0-9]{10,14}$/, "Phone number is not valid")
+        .required("Required"),
+    }),
     onSubmit: (values) => {
       axios
         .post(
@@ -268,9 +271,10 @@ const handleProfilePictureUrl = async (e) => {
                             className="form-control mt-1 w-100"
                             type="email"
                             name="email"
-                            placeholder="email"
+                            placeholder="Email"
                           />
                           <ErrorMessage
+                            className="error-text"
                             name="email"
                             component="div"
                             style={{ color: "red" }}
@@ -283,9 +287,10 @@ const handleProfilePictureUrl = async (e) => {
                             className="form-control mt-1 w-100"
                             type="password"
                             name="password"
-                            placeholder="password"
+                            placeholder="Password"
                           />
                           <ErrorMessage
+                            className="error-text"
                             name="password"
                             component="div"
                             style={{ color: "red" }}
@@ -388,7 +393,7 @@ const handleProfilePictureUrl = async (e) => {
         aria-labelledby="registerModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered ">
           <div className="modal-content border-0">
             <div className="sign-in">
               <button
@@ -398,94 +403,96 @@ const handleProfilePictureUrl = async (e) => {
                 aria-label="Close"
               ></button>
               <div className="register-text">Register</div>
-              <div className="m-4">
+              <div className="m-3">
                 <form onSubmit={register.handleSubmit}>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="email"
-                      className="col-sm-5 col-form-label ps-0"
-                    >
-                      Email Address
-                    </label>
-                    <div className="col-sm-7">
-                      <input
-                        className="form-control"
-                        id="email"
-                        name="email"
-                        type="email"
-                        onChange={register.handleChange}
-                        value={register.values.email}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 ">
+                    <input
+                      className="form-control"
+                      id="email"
+                      name="email"
+                      placeholder="email"
+                      type="email"
+                      onChange={register.handleChange}
+                      value={register.values.email}
+                    />
+                    <label htmlFor="email">Email Address</label>
+                    {register.touched.email && register.errors.email ? (
+                      <div className="error-text" style={{ color: "red" }}>
+                        {register.errors.email}
+                      </div>
+                    ) : null}
                   </div>
-                  <div className="row mb-2 ">
-                    <label htmlFor="name" className="col-5 col-form-label ps-0">
-                      Name
-                    </label>
-                    <div className="col-7">
-                      <input
-                        className="form-control"
-                        id="name"
-                        name="name"
-                        type="text"
-                        onChange={register.handleChange}
-                        value={register.values.name}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <input
+                      className="form-control"
+                      id="name"
+                      name="name"
+                      placeholder="name"
+                      type="text"
+                      onChange={register.handleChange}
+                      value={register.values.name}
+                    />
+                    {register.touched.name && register.errors.name ? (
+                      <span className="error-text" style={{ color: "red" }}>
+                        {register.errors.name}
+                      </span>
+                    ) : null}
+                    <label htmlFor="name">Name</label>
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="password"
-                      className="col-sm-5 col-form-label ps-0"
-                    >
-                      Password
-                    </label>
-                    <div className="col-sm-7">
-                      <input
-                        className="form-control"
-                        id="password"
-                        name="password"
-                        type="password"
-                        onChange={register.handleChange}
-                        value={register.values.password}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <input
+                      className="form-control"
+                      id="password"
+                      name="password"
+                      placeholder="password"
+                      type="password"
+                      onChange={register.handleChange}
+                      value={register.values.password}
+                    />
+                    <label htmlFor="password">Password</label>
+                    {register.touched.password && register.errors.password ? (
+                      <div className="error-text" style={{ color: "red" }}>
+                        {register.errors.password}
+                      </div>
+                    ) : null}
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="passwordRepeat"
-                      className="col-sm-5 col-form-label ps-0"
-                    >
-                      Confirm Password
-                    </label>
-                    <div className="col-sm-7">
-                      <input
-                        className="form-control"
-                        id="passwordRepeat"
-                        name="passwordRepeat"
-                        type="password"
-                        onChange={register.handleChange}
-                        value={register.values.passwordRepeat}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <input
+                      className="form-control"
+                      id="passwordRepeat"
+                      name="passwordRepeat"
+                      placeholder="passwordRepeat"
+                      type="password"
+                      onChange={register.handleChange}
+                      value={register.values.passwordRepeat}
+                    />
+                    <label htmlFor="passwordRepeat">Confirm Password</label>
+                    {register.touched.passwordRepeat &&
+                    register.errors.passwordRepeat ? (
+                      <div className="error-text" style={{ color: "red" }}>
+                        {register.errors.passwordRepeat}
+                      </div>
+                    ) : null}
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="role"
-                      className="col-sm-5 col-form-label ps-0"
+                  <div className="form-floating mb-2 mt-2">
+                    <select
+                      className="form-select"
+                      id="role"
+                      name="role"
+                      type="text"
+                      onChange={register.handleChange}
+                      value={register.values.role}
                     >
-                      Role
-                    </label>
-                    <div className="col-sm-7">
-                      <input
-                        className="form-control"
-                        id="role"
-                        name="role"
-                        type="text"
-                        onChange={register.handleChange}
-                        value={register.values.role}
-                      />
-                    </div>
+                      <option select="true">Select Role</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
+                    </select>
+                    <label htmlFor="role">Role</label>
+                    {register.touched.role && register.errors.role ? (
+                      <div className="error-text" style={{ color: "red" }}>
+                        {register.errors.role}
+                      </div>
+                    ) : null}
                   </div>
                   {/* <div className="row mb-2 ">
                       <label
@@ -525,40 +532,45 @@ const handleProfilePictureUrl = async (e) => {
                         </label>
                       </div>
                     </div> */}
-                  <div className="row mb-2 ">
-                    <label
+                  <div className="mb-2 mt-2">
+                    {/* <label
                       htmlFor="profilePictureUrl"
                       className="col-sm-5 col-form-label ps-0"
                     >
                       Profile Picture
-                    </label>
-                    <div className="col-sm-7">
-                      <input
-                        id="profilePictureUrl"
-                        name="profilePictureUrl"
-                        type="file"
-                        onChange={handleProfilePictureUrl}
-                        // value={register.values.profilePictureUrl}
-                      />
-                    </div>
+                    </label> */}
+                    <input
+                      className="form-control"
+                      id="profilePictureUrl"
+                      name="profilePictureUrl"
+                      type="file"
+                      onChange={handleProfilePictureUrl}
+                      // value={register.values.profilePictureUrl}
+                    />
+                    {register.touched.profilePictureUrl &&
+                    register.errors.profilePictureUrl ? (
+                      <div className="error-text" style={{ color: "red" }}>
+                        {register.errors.profilePictureUrl}
+                      </div>
+                    ) : null}
                   </div>
-                  <div className="row mb-2 ">
-                    <label
-                      htmlFor="phoneNumber"
-                      className="col-sm-5 col-form-label ps-0"
-                    >
-                      Phone Number
-                    </label>
-                    <div className="col-sm-7">
-                      <input
-                        className="form-control"
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        type="text"
-                        onChange={register.handleChange}
-                        value={register.values.phoneNumber}
-                      />
-                    </div>
+                  <div className="form-floating mb-2 mt-2">
+                    <input
+                      className="form-control"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="phoneNumber"
+                      type="text"
+                      onChange={register.handleChange}
+                      value={register.values.phoneNumber}
+                    />
+                    <label htmlFor="phoneNumber">Phone Number</label>
+                    {register.touched.phoneNumber &&
+                    register.errors.phoneNumber ? (
+                      <div className="error-text" style={{ color: "red" }}>
+                        {register.errors.phoneNumber}
+                      </div>
+                    ) : null}
                   </div>
                   {/* <div className="col-auto">
                       <label htmlFor="email">Email Address</label>
