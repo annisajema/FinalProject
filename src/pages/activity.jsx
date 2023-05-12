@@ -23,7 +23,7 @@ function Activity() {
   const [activitiesId, setActivitiesId] = useState("");
   const [activityCategoryId, setActivityCategoryId] = useState("");
   // const [imageUrls, setImageUrls] = useState(JSON.parse(localStorage.getItem("imageUrl")));
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -222,7 +222,7 @@ function Activity() {
           categoryId,
           title,
           description,
-          imageUrls: [imageUrls],
+          imageUrls: imageUrls,
           price: parseInt(price),
           price_discount: parseInt(price_discount),
           rating: parseInt(rating),
@@ -526,7 +526,7 @@ function Activity() {
               <div className="modal-dialog bg-light rounded-3">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title">Update Category</h5>
+                    <h5 className="modal-title">Update Activity</h5>
                     <button
                       type="button"
                       className="btn-close"
@@ -536,249 +536,191 @@ function Activity() {
                   </div>
                   <div className="modal-body">
                     <Form>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="categoryId"
-                          className="col-sm-2 col-form-label ps-0"
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          as="select"
+                          className="form-select"
+                          id="categoryId"
+                          name="categoriesId"
+                          placeholder="categoriesId"
+                          type="text"
+                          onChange={(e) => setCategoryId(e.target.value)}
+                          // value={categoryId || ""}
                         >
-                          categoryId
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            as="select"
-                            className="form-control"
-                            id="categoryId"
-                            name="categoriesId"
-                            type="text"
-                            onChange={(e) => setCategoryId(e.target.value)}
-                            // value={categoryId || ""}
-                          >
-                            {categories.map((categoryId, i) => {
-                              return (
-                                <option key={categoryId.id} value={categoryId.id}>
-                                  {categoryId.id}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </div>
+                          {/* <option select="true">Open this select menu</option> */}
+                          {categories.map((categoryId, i) => {
+                            return (
+                              <option
+                                select={categoryId.id}
+                                key={categoryId.id}
+                                value={categoryId.id}
+                              >
+                                {categoryId.id}
+                              </option>
+                            );
+                          })}
+                        </Field>
+                        <label htmlFor="categoryId">Category Id</label>
                       </div>
-                      <div className="row mb-2 form-floating">
-                        <label
-                          htmlFor="title"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          title
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityTitleId"
-                            name="title"
-                            type="text"
-                            onChange={(e) => setTitle(e.target.value)}
-                            value={title || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityTitleId"
+                          name="title"
+                          placeholder="title"
+                          type="text"
+                          onChange={(e) => setTitle(e.target.value)}
+                          value={title || ""}
+                        />
+                        <label htmlFor="activityTitleId">Title</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="description"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          description
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityDescriptionId"
+                          name="description"
+                          placeholder="description"
+                          type="text"
+                          onChange={(e) => setDescription(e.target.value)}
+                          value={description || ""}
+                        />
+                        <label htmlFor="activityDescriptionId">
+                          Description
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityDescriptionId"
-                            name="description"
-                            type="text"
-                            onChange={(e) => setDescription(e.target.value)}
-                            value={description || ""}
-                          />
-                        </div>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
+                      <div className="mb-2 mt-2">
+                        {/* <label
                           htmlFor="imageUrl"
                           className="col-2 col-form-label ps-0"
                         >
                           imageUrl
-                        </label>
-                        <div className="col-10">
-                          <input
-                            className="form-control"
-                            id="idimageUrl"
-                            name="imageUrl"
-                            type="file"
-                            onChange={(e) => setImageUrls(e.target.value)}
-                            // value={imageUrls || ""}
-                          />
-                          <img className="w-25 h-50" src={imageUrls} />
-                        </div>
+                        </label> */}
+                        <input
+                          className="form-control"
+                          id="activityImageUrl"
+                          name="imageUrl"
+                          type="file"
+                          onChange={handleImageUrl}
+                          // value={imageUrls || ""}
+                        />
+                        {/* <img className="w-25 h-50" src={imageUrls} /> */}
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="price"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          price
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityPriceId"
-                            name="price"
-                            type="number"
-                            onChange={(e) => setPrice(e.target.value)}
-                            value={price || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityPriceId"
+                          name="price"
+                          placeholder="price"
+                          type="number"
+                          onChange={(e) => setPrice(e.target.value)}
+                          value={price || ""}
+                        />
+                        <label htmlFor="activityPriceId">Price</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="price_discount"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          price_discount
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityPriceDiscountId"
+                          name="price_discount"
+                          placeholder="price_discount"
+                          type="number"
+                          onChange={(e) => setPriceDiscount(e.target.value)}
+                          value={price_discount || ""}
+                        />
+                        <label htmlFor="activityPriceDiscountId">
+                          Price Discount
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityPriceDiscountId"
-                            name="price_discount"
-                            type="number"
-                            onChange={(e) => setPriceDiscount(e.target.value)}
-                            value={price_discount || ""}
-                          />
-                        </div>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="rating"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          rating
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityRatingId"
-                            name="rating"
-                            type="number"
-                            onChange={(e) => setRating(e.target.value)}
-                            value={rating || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityRatingId"
+                          name="rating"
+                          placeholder="rating"
+                          type="number"
+                          onChange={(e) => setRating(e.target.value)}
+                          value={rating || ""}
+                        />
+                        <label htmlFor="activityRatingId">Rating</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="total_reviews"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          total_reviews
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityTotalReviewsId"
+                          name="total_reviews"
+                          placeholder="total_reviews"
+                          type="number"
+                          onChange={(e) => setTotalReviews(e.target.value)}
+                          value={total_reviews || ""}
+                        />
+                        <label htmlFor="activityTotalReviewsId">
+                          Total Reviews
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityTotalReviewsId"
-                            name="total_reviews"
-                            type="number"
-                            onChange={(e) => setTotalReviews(e.target.value)}
-                            value={total_reviews || ""}
-                          />
-                        </div>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="facilities"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          facilities
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityFacilitiesId"
+                          name="facilities"
+                          placeholder="facilities"
+                          type="text"
+                          onChange={(e) => setFacilities(e.target.value)}
+                          value={facilities || ""}
+                        />
+
+                        <label htmlFor="facilactivityFacilitiesIdities">
+                          Facilities
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityFacilitiesId"
-                            name="facilities"
-                            type="text"
-                            onChange={(e) => setFacilities(e.target.value)}
-                            value={facilities || ""}
-                          />
-                        </div>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="address"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          address
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityAddressId"
-                            name="address"
-                            type="text"
-                            onChange={(e) => setAddress(e.target.value)}
-                            value={address || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityAddressId"
+                          name="address"
+                          placeholder="address"
+                          type="text"
+                          onChange={(e) => setAddress(e.target.value)}
+                          value={address || ""}
+                        />
+                        <label htmlFor="activityAddressId">Address</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="province"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          province
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityProvinceId"
-                            name="province"
-                            type="text"
-                            onChange={(e) => setProvince(e.target.value)}
-                            value={province || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityProvinceId"
+                          name="province"
+                          placeholder="province"
+                          type="text"
+                          onChange={(e) => setProvince(e.target.value)}
+                          value={province || ""}
+                        />
+                        <label htmlFor="activityProvinceId">Province</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="city"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          city
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityCityId"
-                            name="city"
-                            type="text"
-                            onChange={(e) => setCity(e.target.value)}
-                            value={city || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityCityId"
+                          name="city"
+                          placeholder="city"
+                          type="text"
+                          onChange={(e) => setCity(e.target.value)}
+                          value={city || ""}
+                        />
+                        <label htmlFor="citactivityCityIdy">City</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="location_maps"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          location_maps
+                      <div className="form-floating mb-2 mt-2">
+                        <Field
+                          className="form-control"
+                          id="activityLocationMapsId"
+                          name="location_maps"
+                          placeholder="location_maps"
+                          type="text"
+                          onChange={(e) => setLocationMaps(e.target.value)}
+                          value={location_maps || ""}
+                        />
+                        <label htmlFor="activityLocationMapsId">
+                          Location Maps
                         </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="activityLocationMapsId"
-                            name="location_maps"
-                            type="text"
-                            onChange={(e) => setLocationMaps(e.target.value)}
-                            value={location_maps || ""}
-                          />
-                        </div>
                       </div>
 
                       <button
@@ -809,7 +751,7 @@ function Activity() {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Create Category</h5>
+              <h5 className="modal-title">Create Activity</h5>
               <button
                 type="button"
                 className="btn-close"
@@ -852,9 +794,7 @@ function Activity() {
                       //   newCategoryId[i]
                       // )}
                     >
-                      <option select="true">
-                        Open this select menu
-                      </option>
+                      <option select="true">Open this select menu</option>
                       {categories.map((categoryId, i) => {
                         return (
                           <option key={categoryId.id} value={categoryId.id}>

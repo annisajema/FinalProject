@@ -53,7 +53,7 @@ function Promo() {
         {
           title: values.title,
           description: values.description,
-          imageUrl: values.imageUrl,
+          imageUrl: imageUrl,
           terms_condition: values.terms_condition,
           promo_code: values.promo_code,
           promo_discount_price: values.promo_discount_price,

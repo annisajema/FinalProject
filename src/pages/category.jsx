@@ -12,9 +12,16 @@ const token = localStorage.getItem("token");
 function Category() {
   const [categories, setCategories] = useState([]);
   const [categoriesById, setCategoryById] = useState([]);
-  const [categoryId, setCategoryId] = useState(JSON.parse(localStorage.getItem("categoryId")));
-  const [categoriesId, setCategoriesId] = useState(JSON.parse(localStorage.getItem("categoriesId")));
-  const [imageUrl, setImageUrl] = useState(JSON.parse(localStorage.getItem("imageUrl")));
+  const [categoryId, setCategoryId] = useState(
+    JSON.parse(localStorage.getItem("categoryId"))
+  );
+  const [categoriesId, setCategoriesId] = useState(
+    JSON.parse(localStorage.getItem("categoriesId"))
+  );
+  const [imageUrl, setImageUrl] = useState(
+    JSON.parse(localStorage.getItem("imageUrl"))
+  );
+  const [imageUrls, setImageUrls] = useState("");
   const [name, setName] = useState(JSON.parse(localStorage.getItem("name")));
 
   const handleImageUrl = async (e) => {
@@ -48,7 +55,7 @@ function Category() {
         `${base_url}/api/v1/create-category`,
         {
           name: values.name,
-          imageUrl: values.imageUrl,
+          imageUrl: imageUrl,
         },
         {
           headers: {
@@ -80,6 +87,7 @@ function Category() {
       localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
+      // setImageUrl(imageUrl)
       setCategoriesId(categoriesId);
       // console.log(categoryId);
       setCategories(getCategory.data.data);
@@ -297,14 +305,21 @@ function Category() {
                           imageUrl
                         </label> */}
                         {/* <div className="col-10"> */}
-                        <Field
+                        <input
                           className="form-control"
                           id="idimageUrl"
                           name="imageUrl"
                           type="file"
                           onChange={handleImageUrl}
+                          alt={imageUrl}
                           // value={imageUrl || ""}
                         />
+                        <div className="text-muted">
+                          <small>
+                            <em>*Uploaded Image</em>
+                          </small>
+                        </div>
+                        <img className="w-25 h-50 mt-1" src={imageUrl} />
                         {/* </div> */}
                       </div>
                       <button
@@ -364,15 +379,27 @@ function Category() {
                     />
                     <label htmlFor="name-id">Name</label>
                   </div>
-                  <div className="floating mb-2 mt-2">
+                  <div className="mb-2 mt-2">
                     <input
                       className="form-control"
-                      id="imageUrlid"
+                      id="idimageUrl"
                       name="imageUrl"
                       type="file"
                       onChange={handleImageUrl}
                       // value={activity.values.title}
                     />
+                    <div className="text-muted">
+                      <small>
+                        <em>*Uploaded Image</em>
+                      </small>
+                    </div>
+                    <img className="w-25 h-50 mt-1" src={imageUrl} />
+                    {/* <div className="text-muted">
+                      <small>
+                        <em>*Displayed Image</em>
+                      </small>
+                    </div>
+                    <img className="w-25 h-50 mt-1" src={imageUrl} /> */}
                     {/* <label htmlFor="imageUrlid">imageUrl</label> */}
                   </div>
                   <button className="btn mt-3" type="submit">

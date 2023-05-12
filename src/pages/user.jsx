@@ -136,7 +136,7 @@ function User() {
         </table>
       </div>
 
-      {/* MODAL */}
+      {/* Modal Update */}
       <div>
         {users.map((user, i) => {
           return (
@@ -166,23 +166,21 @@ function User() {
                       </div>
                       <div className="modal-body">
                         <Form>
-                          <div className="row mb-2 ">
-                            <label
-                              htmlFor="role"
-                              className="col-sm-2 col-form-label ps-0"
-                            >
-                              Role
-                            </label>
-                            <div className="col-sm-10">
+                          <div className="form-floating">
                               <Field
-                                className="form-control"
+                                className="form-select"
+                                as="select"
                                 id={`role${user.id}`}
                                 name="role"
                                 type="text"
                                 onChange={(e) => setRole(e.target.value)}
                                 value={role || ""}
-                              />
-                            </div>
+                              >
+                                <option select="true">Select Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                              </Field>
+                              <label htmlFor="role">Role</label>
                           </div>
                           <button
                             className="btn mt-3"

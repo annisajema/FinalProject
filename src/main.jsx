@@ -9,11 +9,29 @@ import Category from './pages/category';
 // import TesCategory from './pages/tes-category';
 import Promo from './pages/promo';
 import User from './pages/user';
+import PromoPage from './pages/promo-page';
+import CategoryPage from './pages/category-page';
+import ActivityPage from './pages/activity-page';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <p>Page Not Found</p>,
+  },
+  {
+    path: "/promo-page",
+    element: <PromoPage />,
+    errorElement: <p>Page Not Found</p>,
+  },
+  {
+    path: "/category-page",
+    element: <CategoryPage />,
+    errorElement: <p>Page Not Found</p>,
+  },
+  {
+    path: "/activities/:id",
+    element: <ActivityPage />,
     errorElement: <p>Page Not Found</p>,
   },
   {

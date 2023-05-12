@@ -25,7 +25,8 @@ a:hover {
 }
 
 body {
-  margin: 30px 50px;
+  /* padding: 30px 80px; */
+  padding: 1.5rem 3rem;
   /* display: flex; */
   place-items: center;
   min-width: 320px;
@@ -65,7 +66,7 @@ button:focus-visible {
     color: #747bff;
   }
   button {
-    background-color: #1a5f7a;
+    background-color: #5581be;
   }
   /* button:hover {
     background-color: #002b5b;
@@ -74,17 +75,18 @@ button:focus-visible {
 
 .navbar {
   /* background-color: #ccd5ae; */
+  padding: 0.5rem 1.5rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand {
   font-family: 'Alfa Slab One', cursive;
-  color:#5581be 
+  color:#090e49de 
 }
 
 .navbar-brand:hover {
   font-family: 'Alfa Slab One', cursive;
-  color:#090e49de
+  color:#5581be
 }
 
 .sign-in {
@@ -98,13 +100,15 @@ button:focus-visible {
 }
 
 .signin-text {
+  display: flex;
+  justify-content: center;
   font-style: normal;
   font-weight: 300;
   font-size: 31px;
   line-height: 37px;
   margin-top: 25px;
   /* color: white; */
-  text-align: center;
+  /* text-align: center; */
 }
 
 .register-text {
@@ -254,6 +258,10 @@ button:focus-visible {
     border-bottom-left-radius: 0;
 }
 
+.category-img {
+    filter: brightness(50%);
+}
+
 .error-text {
   font-size: 12px;
   font-style: italic;
@@ -314,32 +322,37 @@ button:focus-visible {
     display: flex;
 } */
 
-.category-overlay{
+/* .category-overlay{
     position: absolute;
     bottom: 0;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.906), transparent);
     width: 100%;
     transition: 0.5s ease;
-    opacity: 0;
+    opacity: 1;
     font-size: 20px;
     padding: 80px;
-}
+} */
 
-.card-body:hover .category-overlay {
+/* .card-body:hover .category-overlay {
   opacity: 0.8;
   transition: 0.3s;
   
-}
+} */
 
 .card:hover {
   transform: scale(1.05);
 }
 
 .category-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
     color: white;
-    font-size: 20px;
+    font-size: 13px;
     font-weight: 600;
-    position: absolute;
+    /* position: absolute;  */
     /* display: inline; */
     /* top: 30%;
     left: 60%;
@@ -354,3 +367,36 @@ button:focus-visible {
   font-size: 25px;
   font-weight: 600;
 } */
+
+.user-img {
+  border-radius: 100%;
+  margin-left: 38%;
+}
+
+.user {
+  /* position: relative; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  margin-top: 5%;
+  /* margin-left: 33%; */
+}
+
+.user-name {
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  margin-top: 2%;
+  font-weight: 500;
+  /* margin-left: 33%; */
+}
+
+.user-detail {
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  /* margin-top: 2%; */
+  /* margin-left: 33%; */
+}

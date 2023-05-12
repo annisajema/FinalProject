@@ -1,6 +1,7 @@
 // import RegisterModal from "./register-modal";
 import SigninModal from "./signin-modal";
 
+
 function Navbar() {
   return (
     <div className="App">
@@ -27,9 +28,14 @@ function Navbar() {
                   Home
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
+              <li className="nav-item ">
+                <a className="nav-link active" href="/category-page">
+                  Category
+                </a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link active" href="/promo-page">
+                  Promo
                 </a>
               </li>
               <li className="nav-item dropdown">
@@ -71,7 +77,7 @@ function Navbar() {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search">
+            {/* <form className="d-flex" role="search">
               <input
                 className="form-control me-2"
                 type="search"
@@ -81,7 +87,7 @@ function Navbar() {
               <button className="btn btn-outline-light" type="submit">
                 Search
               </button>
-            </form>
+            </form> */}
             <div>
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">

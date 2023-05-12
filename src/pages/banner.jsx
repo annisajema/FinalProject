@@ -310,7 +310,7 @@ function Banner() {
                         />
                         <div className="text-muted">
                           <small>
-                            <em>*)Displayed Image</em>
+                            <em>*Uploaded Image</em>
                           </small>
                         </div>
                         <img className="w-25 h-50 mt-1" src={imageUrl} />
@@ -388,6 +388,12 @@ function Banner() {
                       alt={imageUrl}
                       // value={activity.values.title}
                     />
+                    <div className="text-muted">
+                      <small>
+                        <em>*Uploaded Image</em>
+                      </small>
+                    </div>
+                    <img className="w-25 h-50 mt-1" src={imageUrl} />
                   </div>
                   <button className="btn mt-3" type="submit">
                     Submit

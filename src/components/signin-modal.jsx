@@ -20,6 +20,7 @@ const SigninModal = () => {
   const [email, setEmail] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [role, setRole] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -121,6 +122,8 @@ const handleProfilePictureUrl = async (e) => {
       // console.log(response.data.data.profilePictureUrl);
       setPhoneNumber(getLoggedUser.data.data.phoneNumber);
       // console.log(response.data.data.phoneNumber);
+      setRole(getLoggedUser.data.data.role);
+
     }
   };
 
@@ -334,18 +337,24 @@ const handleProfilePictureUrl = async (e) => {
                 )}
                 {token && (
                   <div>
-                    <ul className="mt-4">
+                    <ul className="mt-4 p-0">
                       {name && email && profilePictureUrl && phoneNumber && (
-                        <div className="d-flex justify-content-center mt-5 text-dark">
+                        <div className="mt-4 text-dark">
                           <img
-                            className="me-3 rounded-2 h-25 w-25"
+                            className="user-img h-25 w-25 mt-2"
                             src={profilePictureUrl}
                           />
-                          Name: {name}
+                          {/* <div className="user"> */}
+                          <div className="user-name">{name}</div>
                           <br />
-                          Email: {email}
-                          <br />
-                          Phone Number: {phoneNumber}
+                          <div className="user-detail">
+                            Email: {email}
+                            <br />
+                            Phone Number: {phoneNumber}
+                            <br />
+                            Role : {role}
+                          </div>
+                          {/* </div> */}
                         </div>
                       )}
                     </ul>
@@ -691,79 +700,56 @@ const handleProfilePictureUrl = async (e) => {
                   </div>
                   <div className="modal-body">
                     <Form>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="name"
-                          className="col-sm-2 col-form-label ps-0"
-                        >
-                          Name
-                        </label>
-                        <div className="col-sm-10">
-                          <Field
-                            className="form-control"
-                            id="username"
-                            name="name"
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name || ""}
-                          />
-                        </div>
+                      <div className="form-floating mb-2 ">
+                        <Field
+                          className="form-control"
+                          id="username"
+                          name="name"
+                          placeholder="name"
+                          type="text"
+                          onChange={(e) => setName(e.target.value)}
+                          value={name || ""}
+                        />
+                        <label htmlFor="username">Name</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="email"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          Email
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="useremail"
-                            name="email"
-                            type="text"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email || ""}
-                          />
-                        </div>
+                      <div className="form-floating mt-2 mb-2 ">
+                        <Field
+                          className="form-control"
+                          id="useremail"
+                          name="email"
+                          placeholder="email"
+                          type="text"
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email || ""}
+                        />
+                        <label htmlFor="useremail">Email</label>
                       </div>
-                      <div className="row mb-2 ">
-                        <label
+                      <div className="mt-2 mb-2">
+                        {/* <label
                           htmlFor="profilePictureUrl"
                           className="col-2 col-form-label ps-0"
                         >
                           Profile Picture
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="userprofilePictureUrl"
-                            name="profilePictureUrl"
-                            type="text"
-                            onChange={(e) =>
-                              setProfilePictureUrl(e.target.value)
-                            }
-                            value={profilePictureUrl || ""}
-                          />
-                        </div>
+                        </label> */}
+                        <input
+                          className="form-control"
+                          id="userprofilePictureUrl"
+                          name="profilePictureUrl"
+                          type="file"
+                          onChange={handleProfilePictureUrl}
+                          // value={profilePictureUrl || ""}
+                        />
                       </div>
-                      <div className="row mb-2 ">
-                        <label
-                          htmlFor="email"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          Phone Number
-                        </label>
-                        <div className="col-10">
-                          <Field
-                            className="form-control"
-                            id="userphoneNumber"
-                            name="phoneNumber"
-                            type="text"
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            value={phoneNumber || ""}
-                          />
-                        </div>
+                      <div className="form-floating mt-2 mb-2">
+                        <Field
+                          className="form-control"
+                          id="userphoneNumber"
+                          name="phoneNumber"
+                          type="text"
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          value={phoneNumber || ""}
+                        />
+                        <label htmlFor="userphoneNumber">Phone Number</label>
                       </div>
                       <button
                         className="btn mt-3"
