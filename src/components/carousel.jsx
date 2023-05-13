@@ -3,9 +3,6 @@ import axios from "axios";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
-// const SEARCH_URL =
-//   "https://api.themoviedb.org/3/search/movie?api_key=cb2df51ab2003cdd9a5aa36d34347215&language=en-US&page=1&include_adult=false";
-// const getImage = (path) => `https://image.tmdb.org/t/p/original/${path}`;
 
 function Carousel() {
   const [banners, setBanners] = useState([]);
@@ -15,7 +12,6 @@ function Carousel() {
       apiKey: `${api_key}`,
     },
   });
-//   const getPopular = url.get("api/v1/banners", { params: { api_key } });
 
   useEffect(() => {
     getBanners.then((response) => {
@@ -57,7 +53,6 @@ function Carousel() {
           ></button>
         </div>
         <div className="carousel-inner">
-          {/* <div> */}
           {banners.slice(0,3).map((banner, id) => (
             <div key={banner.id}>
               <div className="carousel-item active" data-bs-interval="3000">
@@ -69,13 +64,11 @@ function Carousel() {
                 <div className="carousel-overlay">
                   <div className="carousel-caption">
                     <div className="carousel-detail mb-0">{banner.name}</div>
-                    {/* <div className="carousel-text">{movie.overview}</div> */}
                   </div>
                 </div>
               </div>
             </div>
           ))}
-          {/* </div> */}
         </div>
         <button
           className="carousel-control-prev"

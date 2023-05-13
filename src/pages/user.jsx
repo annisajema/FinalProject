@@ -5,19 +5,14 @@ import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
-const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
 
 function User() {
   const [users, setAllUser] = useState([]);
   const [role, setRole] = useState("")
   const [usersId, setUsersId] = useState(JSON.parse(localStorage.getItem("usersId")));
-  const [imageUrl, setImageUrl] = useState("");
-//   const [userId, setUserId] = useState(
-//     JSON.parse(localStorage.getItem("userId"))
-//   );
+
 
 
   const handleGetAllUser = async () => {
@@ -56,7 +51,6 @@ function User() {
         handleGetAllUser();
         alert("Role Updated!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -104,13 +98,11 @@ function User() {
                     />
                   </td>
                   <td>{user.phoneNumber}</td>
-                  {/* <span className="row" scope="row"> */}
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
                     data-bs-target={`#modal${user.id}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handleGetAllUser(user.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +119,6 @@ function User() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                 </tr>
               );
@@ -201,9 +192,6 @@ function User() {
       </div>
 
       <Navbar />
-      {/* <div className="fs-2 m-4 d-flex justify-content-center align-items-center">
-        Create Category
-      </div> */}
 
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
@@ -269,18 +257,6 @@ function User() {
                 </Form>
               </Formik>
             </div>
-            {/* <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

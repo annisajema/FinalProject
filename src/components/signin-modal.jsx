@@ -9,8 +9,6 @@ const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const url = axios.create({ baseURL: base_url });
 
 
-// function SigninModal() {
-
 const SigninModal = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [userId, setUserId] = useState(
@@ -21,14 +19,11 @@ const SigninModal = () => {
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [role, setRole] = useState("");
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
 
 
   
 const handleProfilePictureUrl = async (e) => {
   try {
-    // const image =  e.target.files[0];
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
     const getProfilePictureUrl = await axios.post(
@@ -51,26 +46,6 @@ const handleProfilePictureUrl = async (e) => {
   }
 };
 
-  // const handleUploadImage = () => {
-  //   const data = new FormData();
-  //   data.append("files[]", previewImage);
-
-  //   fetch(axios.post(`${base_url}/api/v1/upload-image`, { body: image }))
-  //     .then(async (response) => {
-  //       const imageResponse = await response.json();
-  //       setUploadedImage(imageResponse);
-  //     })
-  //     .catch((err) => {});
-  // };
-
-  // const handleSelectImage = (event) => {
-  //   const file = event.target.files[0];
-  //   const fileReader = new FileReader();
-  //   fileReader.addEventListener("load", () => {
-  //     setPreviewImage(fileReader.result);
-  //   });
-  //   fileReader.readAsDataURL(file);
-  // };
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
@@ -155,11 +130,6 @@ const handleProfilePictureUrl = async (e) => {
         alert("Failed!");
       });
   };
-
-  // const handleLogout = () => {
-  //   setToken(null);
-  //   localStorage.removeItem("token", token);
-  // };
 
   const handleLogout = () => {
     axios
@@ -269,7 +239,7 @@ const handleProfilePictureUrl = async (e) => {
                     {({ isSubmitting, status }) => (
                       <Form>
                         {status && <div>{status}</div>}
-                        <div className="d-flex flex-column mt-5 mb-2 m-1">
+                        <div className="d-flex flex-column mt-5 pt-3 mb-2 m-1">
                           Email
                           <Field
                             className="form-control mt-1 w-100"
@@ -310,15 +280,6 @@ const handleProfilePictureUrl = async (e) => {
                               type="submit"
                               disabled={isSubmitting}
                               className="btn btn-light mb-2"
-                              // style={{
-                              //   backgroundColor: "rgb(159, 100, 214)",
-                              //   color: "white",
-                              //   borderColor: "rgb(159, 100, 214)",
-                              //   width: "100%",
-                              //   display: "flex",
-                              //   justifyContent: "center",
-                              //   alignItems: "center",
-                              // }}
                             >
                               Login
                             </button>
@@ -345,7 +306,6 @@ const handleProfilePictureUrl = async (e) => {
                             className="user-img h-25 w-25 mt-2"
                             src={profilePictureUrl}
                           />
-                          {/* <div className="user"> */}
                           <div className="user-name">{name}</div>
                           <br />
                           <div className="user-detail">
@@ -355,7 +315,6 @@ const handleProfilePictureUrl = async (e) => {
                             <br />
                             Role : {role}
                           </div>
-                          {/* </div> */}
                         </div>
                       )}
                     </ul>
@@ -363,24 +322,12 @@ const handleProfilePictureUrl = async (e) => {
                       className="btn btn-secondary mt-5 mb-2"
                       data-bs-toggle="modal"
                       data-bs-target={`#modal${token}`}
-                      // style={{
-                      //   width: "100%",
-                      //   display: "flex",
-                      //   justifyContent: "center",
-                      //   alignItems: "center",
-                      // }}
                       onClick={handleLoggedUser}
                     >
                       Update Profile
                     </button>
                     <button
                       className="btn btn-secondary mb-2"
-                      // style={{
-                      //   width: "100%",
-                      //   display: "flex",
-                      //   justifyContent: "center",
-                      //   alignItems: "center",
-                      // }}
                       onClick={handleLogout}
                     >
                       Logout
@@ -388,8 +335,6 @@ const handleProfilePictureUrl = async (e) => {
                   </div>
                 )}
               </div>
-
-              {/* <RegisterModal /> */}
             </div>
           </div>
         </div>
@@ -504,51 +449,7 @@ const handleProfilePictureUrl = async (e) => {
                       </div>
                     ) : null}
                   </div>
-                  {/* <div className="row mb-2 ">
-                      <label
-                        htmlFor="role"
-                        className="col-sm-5 col-form-label ps-0"
-                      >
-                        Role
-                      </label>
-                      <div className="col-sm-7">
-                        <input
-                          className="form-check-input"
-                          id="user"
-                          name="role"
-                          type="checkbox"
-                          onChange={register.handleChange}
-                          value={register.values.role}
-                        />
-                        <label
-                          className="form-check-label me-4"
-                          htmlFor="flexCheckDefault"
-                        >
-                          User
-                        </label>
-                        <input
-                          className="form-check-input"
-                          id="admin"
-                          name="role"
-                          type="checkbox"
-                          onChange={register.handleChange}
-                          value={register.values.role}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          Admin
-                        </label>
-                      </div>
-                    </div> */}
                   <div className="mb-2 mt-2">
-                    {/* <label
-                      htmlFor="profilePictureUrl"
-                      className="col-sm-5 col-form-label ps-0"
-                    >
-                      Profile Picture
-                    </label> */}
                     <input
                       className="form-control"
                       id="profilePictureUrl"
@@ -582,87 +483,6 @@ const handleProfilePictureUrl = async (e) => {
                       </div>
                     ) : null}
                   </div>
-                  {/* <div className="col-auto">
-                      <label htmlFor="email">Email Address</label>
-                    </div>
-                    <div className="col-auto">
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        onChange={register.handleChange}
-                        value={register.values.email}
-                      />
-                    </div> */}
-
-                  {/* <br /> */}
-                  {/* <div className="d-inline-flex align-items-center">
-                      <label htmlFor="name">Name</label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        onChange={register.handleChange}
-                        value={register.values.name}
-                      />
-                    </div> */}
-
-                  {/* <br />
-                    <label htmlFor="password">Password</label>
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      onChange={register.handleChange}
-                      value={register.values.password}
-                    />
-                    <br /> */}
-                  {/* <label htmlFor="passwordRepeat">Confirm Password</label>
-                    <input
-                      id="passwordRepeat"
-                      name="passwordRepeat"
-                      type="password"
-                      onChange={register.handleChange}
-                      value={register.values.passwordRepeat}
-                    />
-                    <br /> */}
-                  {/* <label htmlFor="role">Role</label>
-                    <input
-                      id="role"
-                      name="role"
-                      type="text"
-                      onChange={register.handleChange}
-                      value={register.values.role}
-                    />
-                    <br /> */}
-                  {/* <label htmlFor="profilePictureUrl">Profile Picture</label> */}
-                  {/* <input
-                    type="file"
-                    name="myImage"
-                    onChange={(event) => {
-                      console.log(event.target.files[0]);
-                      setProfilePicture(event);
-                    }}
-                    value={register.values.profilePictureUrl}
-                    /> */}
-                  {/* <label htmlFor="profilePictureUrl">profilePictureUrl</label> */}
-                  {/* <input
-                      id="profilePictureUrl"
-                      name="profilePictureUrl"
-                      type="file"
-                      onChange={register.handleChange}
-                      value={register.values.profilePictureUrl}
-                    />
-                    <br /> */}
-                  {/* <label htmlFor="phoneNumber">Phone Number</label>
-                    <input
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      type="text"
-                      onChange={register.handleChange}
-                      value={register.values.phoneNumber}
-                    />
-                    <br /> */}
                   <button className="btn mt-3" type="submit">
                     Submit
                   </button>
@@ -675,8 +495,6 @@ const handleProfilePictureUrl = async (e) => {
 
       {/* Modal Update */}
       <div>
-        {/* {bannersById.map((bannerById, i) => {
-              return ( */}
         <div>
           <Formik
             initialValues={{
@@ -726,12 +544,6 @@ const handleProfilePictureUrl = async (e) => {
                         <label htmlFor="useremail">Email</label>
                       </div>
                       <div className="mt-2 mb-2">
-                        {/* <label
-                          htmlFor="profilePictureUrl"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          Profile Picture
-                        </label> */}
                         <input
                           className="form-control"
                           id="userprofilePictureUrl"
@@ -766,8 +578,6 @@ const handleProfilePictureUrl = async (e) => {
             </div>
           </Formik>
         </div>
-        {/* );
-            })} */}
       </div>
     </>
   );

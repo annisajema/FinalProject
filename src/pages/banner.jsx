@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
-const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
 
@@ -25,7 +24,6 @@ function Banner() {
 
   const handleImageUrl = async (e) => {
     try {
-      // const image =  e.target.files[0];
       const formData = new FormData();
       formData.append("image", e.target.files[0]);
       const getImageUrl = await axios.post(
@@ -102,16 +100,10 @@ function Banner() {
       const imageUrl = getBannerById.data.data.imageUrl;
       const name = getBannerById.data.data.name;
       localStorage.setItem("bannerId", JSON.stringify(bannerId));
-      //   localStorage.setItem("imageUrl", JSON.stringify(Banner Image Url));
-      //   localStorage.setItem("name", JSON.stringify(Banner Name));
       setName(name);
-      // console.log(name);
       setImageUrl(imageUrl);
-      // console.log(imageUrl);
       setBannerId(bannerId);
-      // console.log(bannerId);
       setBannersById(getBannerById.data.data);
-      // console.log(getBannerById.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
@@ -137,7 +129,6 @@ function Banner() {
         handleGetBanners();
         alert("Banner Updated!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -153,7 +144,6 @@ function Banner() {
         },
       })
       .then(function (response) {
-        //  console.log(response.data.data);
         handleGetBanners();
         alert("Banner Deleted!");
         window.location.reload();
@@ -166,6 +156,7 @@ function Banner() {
 
   return (
     <div className="admin-page">
+      <Navbar />
       <div className="fs-2 text-center m-2">Banners</div>
       <button
         className="d-flex text-light mb-3"
@@ -205,13 +196,11 @@ function Banner() {
                   </td>
                   <td className="d-table-cell">{banner.createdAt}</td>
                   <td className="d-table-cell">{banner.updatedAt}</td>
-                  {/* <span className="row" scope="row"> */}
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
                     data-bs-target={`#modal${bannerId}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handleBannerById(banner.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -228,10 +217,8 @@ function Banner() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   <td className="">
-                    {/* <a href="#"> */}
                     <button onClick={() => handleDelete(banner.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -244,9 +231,7 @@ function Banner() {
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
-                  {/* </span> */}
                 </tr>
               );
             })}
@@ -254,10 +239,8 @@ function Banner() {
         </table>
       </div>
 
-      {/* MODAL */}
+      {/* Modal Update */}
       <div>
-        {/* {bannersById.map((bannerById, i) => {
-              return ( */}
         <div>
           <Formik
             initialValues={{
@@ -293,13 +276,6 @@ function Banner() {
                         <label htmlFor="idname">Name</label>
                       </div>
                       <div className="mb-2 ">
-                        {/* <label
-                          htmlFor="imageUrl"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          Image
-                        </label> */}
-
                         <input
                           className="form-control"
                           id="idimageUrl"
@@ -333,11 +309,6 @@ function Banner() {
             })} */}
       </div>
 
-      <Navbar />
-      {/* <div className="fs-2 m-4 d-flex justify-content-center align-items-center">
-        Create Category
-      </div> */}
-
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
         <div className="modal-dialog">
@@ -367,18 +338,10 @@ function Banner() {
                       name="name"
                       placeholder="Name"
                       type="text"
-                      // onChange={activity.handleChange}
-                      // value={activity.values.bannerId}
                     />
                     <label htmlFor="name-id">Name</label>
                   </div>
                   <div className="mb-2 ">
-                    {/* <label
-                      htmlFor="imageUrl"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      imageUrl
-                    </label> */}
                     <input
                       className="form-control"
                       id="imageUrlid"
@@ -401,18 +364,6 @@ function Banner() {
                 </Form>
               </Formik>
             </div>
-            {/* <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

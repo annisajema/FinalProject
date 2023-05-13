@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
-const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
 
@@ -23,7 +22,6 @@ function Promo() {
 
  const handleImageUrl = async (e) => {
    try {
-     // const image =  e.target.files[0];
      const formData = new FormData();
      formData.append("image", e.target.files[0]);
      const getImageUrl = await axios.post(
@@ -114,11 +112,8 @@ function Promo() {
       localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
       localStorage.setItem("title", JSON.stringify(title));
       setTitle(title);
-      // console.log(title);
       setImageUrl(imageUrl);
-      // console.log(imageUrl);
       setPromoId(promoId);
-      // console.log(categoryId);
       setDescription(description);
       setTermsCondition(terms_condition);
       console.log(terms_condition);
@@ -157,7 +152,6 @@ function Promo() {
         handleGetPromos();
         alert("Promo Updated!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -201,14 +195,6 @@ function Promo() {
               <th scope="col">No.</th>
               <th scope="col">ID</th>
               <th scope="col">Title</th>
-              {/* <th scope="col">description</th>
-              <th className="text-center" scope="col">
-                Image URL
-              </th>
-              <th scope="col">terms_condition</th>
-              <th scope="col">promo_code</th>
-              <th scope="col">promo_discount_price</th>
-              <th scope="col">minimum_claim_price</th> */}
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -222,14 +208,6 @@ function Promo() {
                   <th scope="row">{i + 1}</th>
                   <td>{promo.id}</td>
                   <td>{promo.title}</td>
-                  {/* <td>{promo.description}</td>
-                  <td className="text-center">
-                    <img className="w-50 h-50" src={promo.imageUrl} />
-                  </td>
-                  <td>{promo.terms_condition}</td>
-                  <td>{promo.promo_code}</td>
-                  <td>{promo.promo_discount_price}</td>
-                  <td>{promo.minimum_claim_price}</td> */}
                   <td className="d-table-cell">{promo.createdAt}</td>
                   <td className="d-table-cell">{promo.updatedAt}</td>
                   <td
@@ -237,7 +215,6 @@ function Promo() {
                     data-bs-toggle="modal"
                     data-bs-target={`#detail${promoId}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handlePromoById(promo.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -253,14 +230,12 @@ function Promo() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
                     data-bs-target={`#modal${promoId}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handlePromoById(promo.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -277,10 +252,8 @@ function Promo() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   <td className="">
-                    {/* <a href="#"> */}
                     <button onClick={() => handleDelete(promo.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -293,7 +266,6 @@ function Promo() {
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                 </tr>
               );
@@ -303,7 +275,6 @@ function Promo() {
       </div>
 
       {/* Modal Detail */}
-      {/* MOdal Lama */}
       <div
         className="modal fade"
         id={`detail${promoId}`}
@@ -314,7 +285,6 @@ function Promo() {
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div
             className="modal-content"
-            // style="background-color: rgba(13, 13, 13, 0.9)"
           >
             <div className="modal-header border-0 pt-4 pb-0">
               <h1 className="modal-title fs-5 " id="exampleModalLabel">
@@ -333,18 +303,6 @@ function Promo() {
                 className="float-start rounded-3 me-3 w-50 h-50"
                 src={imageUrl}
               />
-              {/* <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
-              >
-                Drama
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
-              >
-                Romance
-              </button> */}
               <p>
                 <b>Description</b>
                 <br />
@@ -365,8 +323,6 @@ function Promo() {
 
       {/* Modal Update*/}
       <div>
-        {/* {categoriesById.map((categoryById, i) => {
-              return ( */}
         <div>
           <Formik
             initialValues={{
@@ -414,12 +370,6 @@ function Promo() {
                         <label htmlFor="description">Description</label>
                       </div>
                       <div className="mb-2 mt-2">
-                        {/* <label
-                          htmlFor="imageUrl"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          imageUrl
-                        </label> */}
                         <input
                           className="form-control"
                           id="promoimageUrl"
@@ -497,14 +447,9 @@ function Promo() {
             </div>
           </Formik>
         </div>
-        {/* );
-            })} */}
       </div>
 
       <Navbar />
-      {/* <div className="fs-2 m-4 d-flex justify-content-center align-items-center">
-        Create Category
-      </div> */}
 
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
@@ -554,12 +499,6 @@ function Promo() {
                     <label htmlFor="promoDescription">Description</label>
                   </div>
                   <div className="mb-2 mt-2">
-                    {/* <label
-                      htmlFor="imageUrl"
-                      className="col-2 col-form-label ps-0"
-                    >
-                      image Url
-                    </label> */}
                     <input
                       className="form-control"
                       id="promoImageUrl"
@@ -618,18 +557,6 @@ function Promo() {
                 </Form>
               </Formik>
             </div>
-            {/* <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

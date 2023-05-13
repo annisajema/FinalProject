@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
-const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
 
@@ -21,12 +20,10 @@ function Category() {
   const [imageUrl, setImageUrl] = useState(
     JSON.parse(localStorage.getItem("imageUrl"))
   );
-  const [imageUrls, setImageUrls] = useState("");
   const [name, setName] = useState(JSON.parse(localStorage.getItem("name")));
 
   const handleImageUrl = async (e) => {
     try {
-      // const image =  e.target.files[0];
       const formData = new FormData();
       formData.append("image", e.target.files[0]);
       const getImageUrl = await axios.post(
@@ -87,9 +84,7 @@ function Category() {
       localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
-      // setImageUrl(imageUrl)
       setCategoriesId(categoriesId);
-      // console.log(categoryId);
       setCategories(getCategory.data.data);
     } catch (error) {
       console.log(error.message);
@@ -110,17 +105,10 @@ function Category() {
       const categoryId = getCategoryById.data.data.id;
       const imageUrl = getCategoryById.data.data.imageUrl;
       const name = getCategoryById.data.data.name;
-      // localStorage.setItem("categoryId", JSON.stringify(categoryId));
-      // localStorage.setItem("imageUrl", JSON.stringify(imageUrl));
-      // localStorage.setItem("name", JSON.stringify(name));
       setName(name);
-      // console.log(name);
       setImageUrl(imageUrl);
-      // console.log(imageUrl);
       setCategoryId(categoryId);
-      // console.log(categoryId);
       setCategoryById(getCategoryById.data.data);
-      // console.log(getCategoryById.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
@@ -146,7 +134,6 @@ function Category() {
         handleGetCategories();
         alert("Category Updated!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -162,7 +149,6 @@ function Category() {
         },
       })
       .then(function (response) {
-        //  console.log(response.data.data);
         handleGetCategories();
         alert("Category Deleted!");
         window.location.reload();
@@ -175,6 +161,7 @@ function Category() {
 
   return (
     <div className="admin-page">
+      <Navbar />
       <div className="fs-2 text-center m-2">Categories</div>
       <button
         className="d-flex text-light mb-3"
@@ -214,7 +201,6 @@ function Category() {
                   </td>
                   <td className="d-table-cell">{category.createdAt}</td>
                   <td className="d-table-cell">{category.updatedAt}</td>
-                  {/* <span className="row" scope="row"> */}
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -251,7 +237,6 @@ function Category() {
                       </svg>
                     </button>
                   </td>
-                  {/* </span> */}
                 </tr>
               );
             })}
@@ -261,8 +246,6 @@ function Category() {
 
       {/* Modal Update */}
       <div>
-        {/* {categoriesById.map((categoryById, i) => {
-              return ( */}
         <div>
           <Formik
             initialValues={{
@@ -298,13 +281,6 @@ function Category() {
                         <label htmlFor="idname">Name</label>
                       </div>
                       <div>
-                        {/* <label
-                          htmlFor="imageUrl"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          imageUrl
-                        </label> */}
-                        {/* <div className="col-10"> */}
                         <input
                           className="form-control"
                           id="idimageUrl"
@@ -336,14 +312,7 @@ function Category() {
             </div>
           </Formik>
         </div>
-        {/* );
-            })} */}
       </div>
-
-      <Navbar />
-      {/* <div className="fs-2 m-4 d-flex justify-content-center align-items-center">
-        Create Category
-      </div> */}
 
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
@@ -394,13 +363,7 @@ function Category() {
                       </small>
                     </div>
                     <img className="w-25 h-50 mt-1" src={imageUrl} />
-                    {/* <div className="text-muted">
-                      <small>
-                        <em>*Displayed Image</em>
-                      </small>
-                    </div>
-                    <img className="w-25 h-50 mt-1" src={imageUrl} /> */}
-                    {/* <label htmlFor="imageUrlid">imageUrl</label> */}
+                    
                   </div>
                   <button className="btn mt-3" type="submit">
                     Submit
@@ -408,18 +371,6 @@ function Category() {
                 </Form>
               </Formik>
             </div>
-            {/* <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

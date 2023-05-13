@@ -25,3 +25,4 @@ dist-ssr
 
 /src/pages/tes-category.jsx
 /src/pages/navbar-admin.jsx
+/src/components/register-modal.jsx

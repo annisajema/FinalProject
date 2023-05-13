@@ -1,8 +1,6 @@
 // import RegisterModal from "./register-modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import * as Yup from "yup";
-import { useFormik, Formik, Form, Field, ErrorMessage } from "formik";
 import SigninModal from "./signin-modal";
 
 
@@ -13,48 +11,8 @@ const token = localStorage.getItem("token");
 
 
 function Navbar() {
-  // const [token, setToken] = useState(localStorage.getItem("token"));
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage.getItem("userId"))
-  );
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [role, setRole] = useState("");
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  // const isAdmin = useState(JSON.parse(localStorage.getItem("role")));
-
-  
-// const handleBannerById = async (id) => {
-//   try {
-//     if (token) {
-//       const getLoggedUser = await url.get("api/v1/user", {
-//         headers: {
-//           apiKey: `${api_key}`,
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-//       const userId = getLoggedUser.data.data.id;
-//       localStorage.setItem("userId", JSON.stringify(userId));
-//       // setUserId(getLoggedUser.data.data.id);
-//       // setName(getLoggedUser.data.data.name);
-//       // console.log(response.data.data.name);
-//       // setEmail(getLoggedUser.data.data.email);
-//       // console.log(response.data.data.email);
-//       setProfilePictureUrl(getLoggedUser.data.data.profilePictureUrl);
-//       // console.log(response.data.data.profilePictureUrl);
-//       // setPhoneNumber(getLoggedUser.data.data.phoneNumber);
-//       // console.log(response.data.data.phoneNumber);
-//       // setRole(getLoggedUser.data.data.role);
-//     }
-//   } finally {
-//     // console.log(error.message);
-//     // alert("Failed!");
-//     window.location.reload()
-//   }
-// };
 
   const handleLoggedUser = async () => {
     if (token) {
@@ -67,20 +25,10 @@ function Navbar() {
       const userId = getLoggedUser.data.data.id;
       const role = getLoggedUser.data.data.role
       localStorage.setItem("userId", JSON.stringify(userId));
-      // setUserId(getLoggedUser.data.data.id);
-      // setName(getLoggedUser.data.data.name);
-      // console.log(response.data.data.name);
-      // setEmail(getLoggedUser.data.data.email);
-      // console.log(response.data.data.email);
       setProfilePictureUrl(getLoggedUser.data.data.profilePictureUrl);
-      // console.log(response.data.data.profilePictureUrl);
-      // setPhoneNumber(getLoggedUser.data.data.phoneNumber);
-      // console.log(response.data.data.phoneNumber);
       localStorage.setItem("role", JSON.stringify(role));
       setRole(role);
-      
     }
-    // window.location.reload();
   };
 
 
@@ -229,7 +177,6 @@ function Navbar() {
         </div>
       </nav>
       <SigninModal />
-      {/* <RegisterModal /> */}
     </div>
   );
 }

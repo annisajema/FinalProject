@@ -4,30 +4,11 @@ import { Link } from "react-router-dom";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
-const jwt_token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlczEyM0BnbWFpbC5jb20iLCJ1c2VySWQiOiJmNDk4M2E4OS0yZmZmLTQwZWMtODI3MS1hM2Y5MzU4OGQyYzUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY4MjQzMDIyNX0.hMVTLt7aJfmXDtA0DWBu3lqYM15tkMmfnTFE6q8Z9dc";
 
 function Home() {
   const [promos, setPromos] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [user, setUsers] = useState([]);
-  const url = axios.create({ baseURL: base_url });
   
-  // const getPopular = url.get("movie/popular", { params: { api_key } });
-  // const search = url.get("search/movie", { params: { api_key, query } });
-
-  // const getPromo = url.get("api/v1/promos", {
-  //   headers: {
-  //     apiKey: `${api_key}`,
-  //   },
-  // });
-
-  // const getUser = url.get("api/v1/user", {
-  //   headers: {
-  //     apiKey: `${api_key}`,
-  //     Authorization: `Bearer ${jwt_token}`,
-  //   },
-  // });
-
   const handleGetPromos = async () => {
     try {
       const getPromo = await axios.get(`${base_url}/api/v1/promos`, {
@@ -72,13 +53,6 @@ function Home() {
     handleGetAllData();
   }, []);
 
-  // useEffect(() => {
-  //   getUser.then((response) => {
-  //     setUsers(response.data.data);
-  //     console.log(response.data.data);
-  //   });
-  // }, []);
-
 
   return (
     <div className="App">
@@ -106,15 +80,7 @@ function Home() {
                   key={i}
                   className="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-1"
                 >
-                  {/* <div className="card" style={{width: "18rem"}} data-bs-toggle="modal"
-                      data-bs-target={`#modal${promo.id}`}>
-                        <img className="card-img" src={promo.imageUrl} alt="..."/>
-                        <div className="card-body">
-                          <h5 className="card-title">{promo.code}</h5>
-                          <p className="card-text">{promo.title}</p>
-                          <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div> */}
+                 
                   <div className="card">
                     <div
                       className="card-body p-0"
@@ -124,7 +90,6 @@ function Home() {
                       <img className="card-img" src={promo.imageUrl} />
                       <div className="overlay">
                         <div className="promo-text">{promo.promo_code}</div>
-                        {/* <div className="promo-title">{promo.title}</div> */}
                       </div>
                       <div className="m-2 d-flex">
                         <div className="promo-title">{promo.title}</div>
@@ -132,46 +97,7 @@ function Home() {
                     </div>
                   </div>
 
-                  {/* Modal */}
-                  {/* <div
-                    className="modal fade"
-                    id="exampleModal"
-                    tabindex="-1"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h1
-                            className="modal-title fs-5"
-                            id="exampleModalLabel"
-                          >
-                            Modal title
-                          </h1>
-                          <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div class="modal-body">...</div>
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button type="button" class="btn btn-primary">
-                            Save changes
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
+                  
                   <div
                     className="modal fade "
                     id={`modal${promo.id}`}
@@ -204,18 +130,7 @@ function Home() {
                             className="float-start rounded-3 me-3 w-50 h-50"
                             src={promo.imageUrl}
                           />
-                          {/* <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
-              >
-                Drama
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
-              >
-                Romance
-              </button> */}
+                          
                           <p>
                             <b>Description</b>
                             <br />
@@ -264,21 +179,10 @@ function Home() {
                   key={i}
                   className="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-1"
                 >
-                  {/* <div className="card" style={{width: "18rem"}} data-bs-toggle="modal"
-                      data-bs-target={`#modal${promo.id}`}>
-                        <img className="card-img" src={promo.imageUrl} alt="..."/>
-                        <div className="card-body">
-                          <h5 className="card-title">{promo.code}</h5>
-                          <p className="card-text">{promo.title}</p>
-                          <a href="#" className="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div> */}
                   <Link to={`/activities/${category.id}`}>
                     <div className="card">
                       <div
                         className="card-body p-0"
-                        // data-bs-toggle="modal"
-                        // data-bs-target={`#modal${category.id}`}
                       >
                         <img
                           className="card-img category-img h-100 rounded-1"
@@ -287,53 +191,11 @@ function Home() {
                         <div className="category-overlay">
                           <div className="category-text">{category.name}</div>
                         </div>
-                        {/* <div className="card-body">
-                          <div className="card-title">{category.name}</div>
-                        </div> */}
                       </div>
                     </div>
                   </Link>
 
-                  {/* Modal */}
-                  {/* <div
-                    className="modal fade"
-                    id="exampleModal"
-                    tabindex="-1"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h1
-                            className="modal-title fs-5"
-                            id="exampleModalLabel"
-                          >
-                            Modal title
-                          </h1>
-                          <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        <div class="modal-body">...</div>
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button type="button" class="btn btn-primary">
-                            Save changes
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
+                  
                   <div
                     className="modal fade "
                     id={`modal${category.id}`}
@@ -344,13 +206,7 @@ function Home() {
                     <div className="modal-dialog modal-dialog-centered modal-xl">
                       <div
                         className="modal-content"
-                        // style={{ backgroundColor: "rgba(13, 13, 13, 0.9)" }}
                       >
-                        {/* <img
-                          src={promo.imageUrl}
-                          alt={promo.title}
-                          style={{ filter: "brightness(25%)" }}
-                        /> */}
                         <div className="overview">{category.description}</div>
                         <div className="modal-header border-0 pt-4 pb-0">
                           <div
@@ -379,14 +235,8 @@ function Home() {
                                   >
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                   </svg>
-                                  {/* Score: {Math.floor(movie.popularity)} */}
                                 </div>
                               </li>
-                              {/* <li>
-                                <div className="modal-movie-id">
-                                  ID: {movie.genre}
-                                </div>
-                              </li> */}
                             </ul>
                           </div>
                           <button
@@ -398,11 +248,6 @@ function Home() {
                         </div>
 
                         <div className="modal-body">
-                          {/* <img
-                            src={getImage(movie.poster_path)}
-                            className="modal-img float-start me-3 rounded-3"
-                            alt={movie.original_title}
-                          /> */}
                         </div>
                       </div>
                     </div>

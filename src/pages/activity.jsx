@@ -6,11 +6,8 @@ import { useFormik, Formik, Field, Form } from "formik";
 // import NavbarAdmin from "../components/navbar-admin";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
-const url = axios.create({ baseURL: base_url });
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 const token = localStorage.getItem("token");
-// const categoryId = localStorage.getItem("categoryId");
-// const categoriesId = localStorage.getItem("categoriesId");
 
 function Activity() {
   const [activities, setActivities] = useState([]);
@@ -21,8 +18,6 @@ function Activity() {
   const [categoriesId, setCategoriesId] = useState(JSON.parse(localStorage.getItem("categoriesId")));
   const [newCategoriesId, setNewCategoriesId] = useState("");
   const [activitiesId, setActivitiesId] = useState("");
-  const [activityCategoryId, setActivityCategoryId] = useState("");
-  // const [imageUrls, setImageUrls] = useState(JSON.parse(localStorage.getItem("imageUrl")));
   const [imageUrls, setImageUrls] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -36,35 +31,14 @@ function Activity() {
   const [city, setCity] = useState("");
   const [location_maps, setLocationMaps] = useState("");
 
-  // const handleFileUpload = (e) => {
-  //   const image = e.target.files[0];
-  //   const formData = new FormData();
-  //   formData.append("image", e.target.files[0]);
-  //   axios
-  //     .post(`${base_url}/api/v1/upload-image`, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         apiKey: `${api_key}`,
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  // const [selectValue, setSelectValue] = useState("");
+
   const onChange = (event) => {
     const value = event.target.value;
     setCategoryId(value);
   };
 
-
   const handleImageUrl = async (e) => {
     try {
-    // const image =  e.target.files[0];
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
       const getImageUrl = await axios.post(
@@ -132,7 +106,6 @@ function Activity() {
       });
       const activitiesId = getActivity.data.data.map(({ id }) => id);
       const newCategoriesId = getActivity.data.data.map(({ categoryId }) => categoryId);
-      // localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
       setActivitiesId(activitiesId);
       console.log(activitiesId);
       setNewCategoriesId(newCategoriesId);
@@ -168,11 +141,8 @@ function Activity() {
       const city = getActivitiesById.data.data.city;
       const location_maps = getActivitiesById.data.data.location_maps;
       localStorage.setItem("activityId", JSON.stringify(activityId));
-      // localStorage.setItem("imageUrls", JSON.stringify(imageUrls));
       setImageUrls(imageUrls);
-      // console.log(imageUrl);
       setActivityId(activityId);
-      // console.log(categoryId);
       setTitle(title);
       setDescription(description);
       setPrice(price);
@@ -185,34 +155,11 @@ function Activity() {
       setCity(city);
       setLocationMaps(location_maps);
       setActivitiesById(getActivitiesById.data.data);
-      // console.log(getActivitiesById.data.data);
     } catch (error) {
       console.log(error.message);
       alert("Failed!");
     }
   };
-
-  // const handleActivitiesByCategoryId = async (categoryId) => {
-  //   try {
-  //     const getActivitiesByCategoryId = await axios.get(
-  //       `${base_url}/api/v1/activities-by-category/${categoryId}`,
-  //       {
-  //         headers: {
-  //           apiKey: `${api_key}`,
-  //         },
-  //       }
-  //     );
-  //     const activityCategoryId = getActivitiesByCategoryId.data.data.map(
-  //       ({ categoryId }) => categoryId
-  //     );
-  //     setActivityCategoryId(activityCategoryId);
-  //     console.log(activityCategoryId);
-  //     setActivityCategoryId(getActivitiesByCategoryId.data.data);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     alert("Failed!");
-  //   }
-  // };
 
   const handleEdit = (id) => {
     axios
@@ -222,7 +169,7 @@ function Activity() {
           categoryId,
           title,
           description,
-          imageUrls,
+          imageUrls: [imageUrls],
           price: parseInt(price),
           price_discount: parseInt(price_discount),
           rating: parseInt(rating),
@@ -301,7 +248,7 @@ function Activity() {
 
   return (
     <div className="admin-page">
-      {/* <NavbarAdmin /> */}
+      <Navbar />
       <div className="fs-2 text-center m-2">Activities</div>
       <button
         className="d-flex text-light mb-3"
@@ -318,17 +265,6 @@ function Activity() {
               <th scope="col">ID</th>
               <th scope="col">Category ID</th>
               <th scope="col">Title</th>
-              {/* <th scope="col">Description</th>
-              <th scope="col">Image URL</th>
-              <th scope="col">Price</th>
-              <th scope="col">Price Discount</th>
-              <th scope="col">Rating</th>
-              <th scope="col">Total Reviews</th>
-              <th scope="col">Facilities</th>
-              <th scope="col">Address</th>
-              <th scope="col">Province</th>
-              <th scope="col">City</th>
-              <th scope="col">Location Maps</th> */}
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
               <th scope="col">Action</th>
@@ -343,30 +279,13 @@ function Activity() {
                   <td>{activity.id}</td>
                   <td>{activity.categoryId}</td>
                   <td>{activity.title}</td>
-                  {/* <td>{activity.description}</td>
-                  <td className="text-center">
-                    <img className="w-50 h-50" src={activity.imageUrls} />
-                  </td>
-                  <td>{activity.price}</td>
-                  <td>{activity.price_discount}</td>
-                  <td>{activity.rating}</td>
-                  <td>{activity.total_reviews}</td>
-                  <td>{activity.facilities}</td>
-                  <td>{activity.address}</td>
-                  <td>{activity.province}</td>
-                  <td>{activity.city}</td>
-                  <td>
-                    <iframe src={activity.location_maps}></iframe>
-                  </td> */}
                   <td>{activity.createdAt}</td>
                   <td>{activity.updatedAt}</td>
-                  {/* <span className="row" scope="row"> */}
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
                     data-bs-target={`#detail${activityId}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handleActivitiesById(activity.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -382,14 +301,12 @@ function Activity() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
                     data-bs-target={`#modal${activityId}`}
                   >
-                    {/* <a href="#" className="me-2 "> */}
                     <button onClick={() => handleActivitiesById(activity.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -406,10 +323,8 @@ function Activity() {
                         />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
                   <td className="">
-                    {/* <a href="#"> */}
                     <button onClick={() => handleDelete(activity.id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -422,9 +337,7 @@ function Activity() {
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                       </svg>
                     </button>
-                    {/* </a> */}
                   </td>
-                  {/* </span> */}
                 </tr>
               );
             })}
@@ -433,7 +346,6 @@ function Activity() {
       </div>
 
       {/* Modal Detail */}
-      {/* MOdal Lama */}
       <div
         className="modal fade"
         id={`detail${activityId}`}
@@ -442,10 +354,7 @@ function Activity() {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-lg modal-dialog-centered">
-          <div
-            className="modal-content"
-            // style="background-color: rgba(13, 13, 13, 0.9)"
-          >
+          <div className="modal-content">
             <div className="modal-header border-0 pt-4 pb-0">
               <h1 className="modal-title fs-5 " id="exampleModalLabel">
                 <strong className="ps-3">{title}</strong>
@@ -463,18 +372,6 @@ function Activity() {
                 className="float-start rounded-3 me-3 w-50 h-50"
                 src={imageUrls}
               />
-              {/* <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
-              >
-                Drama
-              </button>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
-              >
-                Romance
-              </button> */}
               <p>
                 <b>Description</b>
                 <br />
@@ -501,15 +398,13 @@ function Activity() {
 
       {/* Modal Update */}
       <div>
-        {/* {activitiesById.map((categoryById, i) => {
-              return ( */}
         <div>
           <Formik
             initialValues={{
               categoryId: categoryId,
               title: "",
               description: "",
-              imageUrls: imageUrls,
+              imageUrls: [imageUrls],
               price: 0,
               price_discount: 0,
               rating: 0,
@@ -520,7 +415,6 @@ function Activity() {
               city: "",
               location_maps: "",
             }}
-            // onSubmit={handleEdit(category.id)}
           >
             <div className="modal fade" tabIndex="-1" id={`modal${activityId}`}>
               <div className="modal-dialog bg-light rounded-3">
@@ -589,12 +483,6 @@ function Activity() {
                         </label>
                       </div>
                       <div className="mb-2 mt-2">
-                        {/* <label
-                          htmlFor="imageUrl"
-                          className="col-2 col-form-label ps-0"
-                        >
-                          imageUrl
-                        </label> */}
                         <input
                           className="form-control"
                           id="activityImageUrl"
@@ -741,11 +629,6 @@ function Activity() {
             })} */}
       </div>
 
-      <Navbar />
-      {/* <div className="fs-2 m-4 d-flex justify-content-center align-items-center">
-        Create Category
-      </div> */}
-
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
         <div className="modal-dialog modal-dialog-centered">
@@ -778,8 +661,6 @@ function Activity() {
                 }}
                 onSubmit={handleActivity}
               >
-                {/* {newCategoriesId.map((newCategoryId, i) => {
-                  return ( */}
                 <Form>
                   <div className="form-floating">
                     <Field
@@ -790,9 +671,6 @@ function Activity() {
                       placeholder="Category Id"
                       type="text"
                       onChange={onChange}
-                      // onChange={handleActivitiesByCategoryId(
-                      //   newCategoryId[i]
-                      // )}
                     >
                       <option select="true">Open this select menu</option>
                       {categories.map((categoryId, i) => {
@@ -805,16 +683,6 @@ function Activity() {
                     </Field>
                     <label htmlFor="categoriesId">Category Id</label>
                   </div>
-                  {/* <div className="form-floating mb-3 mt-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="email"
-                      placeholder="Enter email"
-                      name="email"
-                    />
-                    <label for="email">Email</label>
-                  </div> */}
 
                   <div className="form-floating mb-2 mt-2">
                     <Field
@@ -837,11 +705,6 @@ function Activity() {
                     <label htmlFor="activityDescription">Description</label>
                   </div>
                   <div className="mb-2 mt-2">
-                    {/* <label
-                      htmlFor="imageUrls"
-                      className="col-2 col-form-label ps-0"
-                    >
-                    </label> */}
                     <input
                       className="form-control"
                       id="idimageUrl"
@@ -953,18 +816,6 @@ function Activity() {
                 })} */}
               </Formik>
             </div>
-            {/* <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
