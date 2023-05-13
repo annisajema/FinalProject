@@ -89,6 +89,11 @@ button:focus-visible {
   color:#5581be
 }
 
+.nav-link {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .sign-in {
   /* position: relative; */
   width: 450px;
@@ -233,9 +238,9 @@ button:focus-visible {
   margin: 0 2rem;;
 }
 
-.modal-content {
+/* .modal-content {
   border-radius: 30px;
-}
+} */
 
 /* .card-img, .card-category{
   height: 100%;
@@ -367,6 +372,12 @@ button:focus-visible {
   font-size: 25px;
   font-weight: 600;
 } */
+
+.profile-picture {
+border-radius: 100%;
+max-width: 30px;
+max-height: 30px;
+}
 
 .user-img {
   border-radius: 100%;

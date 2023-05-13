@@ -222,7 +222,7 @@ function Activity() {
           categoryId,
           title,
           description,
-          imageUrls: imageUrls,
+          imageUrls,
           price: parseInt(price),
           price_discount: parseInt(price_discount),
           rating: parseInt(rating),
@@ -509,7 +509,7 @@ function Activity() {
               categoryId: categoryId,
               title: "",
               description: "",
-              imageUrls: "",
+              imageUrls: imageUrls,
               price: 0,
               price_discount: 0,
               rating: 0,
@@ -547,7 +547,7 @@ function Activity() {
                           onChange={(e) => setCategoryId(e.target.value)}
                           // value={categoryId || ""}
                         >
-                          {/* <option select="true">Open this select menu</option> */}
+                          <option select="true">Open this select menu</option>
                           {categories.map((categoryId, i) => {
                             return (
                               <option
@@ -765,7 +765,7 @@ function Activity() {
                   categoryId: categoryId,
                   title: "",
                   description: "",
-                  imageUrls: imageUrls,
+                  imageUrls: [imageUrls],
                   price: 0,
                   price_discount: 0,
                   rating: 0,

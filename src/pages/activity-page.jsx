@@ -12,11 +12,13 @@ const token = localStorage.getItem("token");
 
 function ActivityPage() {
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const [categories, setCategories] = useState([]);
   const [activitiesByCategory, setActivitiesByCategory] = useState([]);
   const [categoriesById, setCategoryById] = useState([]);
   const [activityCategoryId, setActivityCategoryId] = useState("");
+  const [activityCategory, setActivityCategory] = useState("");
+  const [activityCategoryName, setActivityCategoryName] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [categoriesId, setCategoriesId] = useState(
     JSON.parse(localStorage.getItem("categoriesId"))
@@ -91,10 +93,17 @@ function ActivityPage() {
       const activityCategoryId = getActivitiesByCategoryId.data.data.map(
         ({ categoryId }) => categoryId
       );
-      setActivityCategoryId(activityCategoryId);
-      // console.log(activityCategoryId);
+      const activityByCategory = getActivitiesByCategoryId.data.data;
+      // const activityCategory = activitiesByCategory.map(({ category }) => category);
+      // const activityCategoryName = activityCategory.name;
+      // setActivityCategory(activityCategory);
+      // setActivityCategoryId(activityCategoryId);
+      // console.log(activityCategory);
       // setActivityCategoryId(getActivitiesByCategoryId.data.data);
-      setActivitiesByCategory(getActivitiesByCategoryId.data.data);
+      // setActivityCategoryName(activityCategoryName);
+      setActivityCategoryName(activitiesByCategory.map(({ category }) => category.name));
+      setActivitiesByCategory(activityByCategory);
+      console.log(activityCategory.name);
       console.log(setActivitiesByCategory);
     } catch (error) {
       console.log(error.message);
@@ -151,27 +160,31 @@ function ActivityPage() {
     <div className="category-page">
       <Navbar />
       {/* {id( */}
+      {/* <h4 id="dark-switch" className="pt-0 mt-0 pb-0 mb-0 text-center">
+        Activities to Do at{" "}
+        {activitiesByCategory.splice(0, 1).map(({ category }) => category.name)}
+      </h4> */}
       {activitiesByCategory.map((activity, i) => {
-              return (
-                <div className="container-fluid p-0">
-                  <div>
-                    {/* Category Card */}
-                    <div className="d-flex justify-content-center align-items-center">
-                      <div>
-                        {/* <h4 id="dark-switch" className="pt-2 pb-3 mb-0">
-                Activity
-              </h4> */}
-                        {/* <h6 id="dark-switch" className="pt-4 mb-0 float-end">
+        return (
+          <div key={i} className="container-fluid p-0">
+            <div>
+              {/* Category Card */}
+              <h4 id="dark-switch" className="pt-0 mt-0 pb-0 mb-0 text-center">
+                Activities to Do at{" "}
+                {activitiesByCategory.splice(0,1).map(({ category }) => category.name)}
+              </h4>
+              <div className="d-flex">
+                <div>
+                  {/* <h4>Activities</h4> */}
+
+                  {/* <h6 id="dark-switch" className="pt-4 mb-0 float-end">
                 More&gt;
               </h6> */}
-                      </div>
+                </div>
 
-                      <div
-                        key={i}
-                        className="col-6 col-xs-3 col-sm-3 col-md-6 col-lg-6 col-xl col-xxl"
-                      >
-                        {/* <p>{activity.category.name}</p> */}
-                        {/* <div className="card" style={{width: "18rem"}} data-bs-toggle="modal"
+                <div>
+                  {/* <p>{activity.category.name}</p> */}
+                  {/* <div className="card" style={{width: "18rem"}} data-bs-toggle="modal"
                       data-bs-target={`#modal${promo.id}`}>
                         <img className="card-img" src={promo.imageUrl} alt="..."/>
                         <div className="card-body">
@@ -180,31 +193,33 @@ function ActivityPage() {
                           <a href="#" className="btn btn-primary">Go somewhere</a>
                         </div>
                       </div> */}
-                        {/* <div className="card">
+                  {/* <div className="card">
                     <div
                       className="card-body p-0"
                       //   data-bs-toggle="modal"
                       // data-bs-target={`#modal${category.id}`}
                     > */}
-                        {/* <h6>
+                  {/* <h6>
                     What to Do at {activity.category.name}
                   </h6> */}
-                        <h4 className="mt-5">{activity.title}</h4>
-                        <img
-                          className="d-flex float-start ms-0 m-3 w-50 h-75 rounded-1"
-                          src={activity.imageUrls}
-                        />
-                        {/* <div className="category-overlay"> */}
-                        <div className="m-3">{activity.description}</div>
-                        {/* </div> */}
-                        {/* <div className="card-body">
+                  <h5 className="mt-4">
+                    {i + 1}. {activity.title}
+                  </h5>
+                  <img
+                    className="d-flex float-start ms-0 m-3 w-50 h-75 rounded-1"
+                    src={activity.imageUrls}
+                  />
+                  {/* <div className="category-overlay"> */}
+                  <div className="m-3">{activity.description}</div>
+                  {/* </div> */}
+                  {/* <div className="card-body">
                         <div className="card-title">{category.name}</div>
                       </div> */}
-                        {/* </div>
+                  {/* </div>
                   </div> */}
 
-                        {/* Modal */}
-                        {/* <div
+                  {/* Modal */}
+                  {/* <div
                     className="modal fade"
                     id="exampleModal"
                     tabindex="-1"
@@ -243,7 +258,7 @@ function ActivityPage() {
                       </div>
                     </div>
                   </div> */}
-                        {/* <div
+                  {/* <div
                     className="modal fade "
                     id={`modal${category.id}`}
                     tabIndex="-1"
@@ -280,15 +295,15 @@ function ActivityPage() {
                         </div>
                       </div>
                     </div> */}
-                        {/* </div> */}
-                      </div>
-                    </div>
-
-                    {/* Category Card */}
-                  </div>
+                  {/* </div> */}
                 </div>
-              );
-            })}
+              </div>
+
+              {/* Category Card */}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

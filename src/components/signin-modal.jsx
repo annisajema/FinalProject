@@ -96,6 +96,7 @@ const handleProfilePictureUrl = async (e) => {
       setToken(token);
       localStorage.setItem("token", token);
       setSubmitting(false);
+      window.location.reload();
     } catch (error) {
       setStatus(error.message);
       console.log(error.message);

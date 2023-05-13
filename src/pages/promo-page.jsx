@@ -173,60 +173,24 @@ function PromoPage() {
                     </div>
                   </div> */}
                   <div
-                    className="modal fade "
+                    className="modal fade"
                     id={`modal${promo.id}`}
                     tabIndex="-1"
                     aria-labelledby="movie1Label"
                     aria-hidden="true"
                   >
-                    <div className="modal-dialog modal-dialog-centered modal-xl">
+                    <div className="modal-dialog modal-lg modal-dialog-centered">
                       <div
                         className="modal-content"
-                        // style={{ backgroundColor: "rgba(13, 13, 13, 0.9)" }}
+                        // style="background-color: rgba(13, 13, 13, 0.9)"
                       >
-                        {/* <img
-                          src={promo.imageUrl}
-                          alt={promo.title}
-                          style={{ filter: "brightness(25%)" }}
-                        /> */}
-                        <div className="overview">{promo.description}</div>
                         <div className="modal-header border-0 pt-4 pb-0">
-                          <div
-                            className="modal-title fs-5"
+                          <h1
+                            className="modal-title fs-5 "
                             id="exampleModalLabel"
                           >
-                            <div className="modal-movie-title">
-                              {promo.title}
-                            </div>
-                            <ul>
-                              <li>
-                                <div className="modal-movie-id">
-                                  ID: {promo.id}
-                                </div>
-                              </li>
-                              <li>
-                                <div className="modal-movie-score">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="12"
-                                    height="12"
-                                    fill="currentColor"
-                                    className="bi bi-star-fill me-2 mb-1"
-                                    viewBox="0 0 16 16"
-                                    style={{ color: "yellow" }}
-                                  >
-                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                  </svg>
-                                  {/* Score: {Math.floor(movie.popularity)} */}
-                                </div>
-                              </li>
-                              {/* <li>
-                                <div className="modal-movie-id">
-                                  ID: {movie.genre}
-                                </div>
-                              </li> */}
-                            </ul>
-                          </div>
+                            <strong className="ps-3">{promo.title}</strong>
+                          </h1>
                           <button
                             type="button"
                             className="btn-close btn-close-signin-modal"
@@ -234,13 +198,41 @@ function PromoPage() {
                             aria-label="Close"
                           ></button>
                         </div>
-
-                        <div className="modal-body">
-                          {/* <img
-                            src={getImage(movie.poster_path)}
-                            className="modal-img float-start me-3 rounded-3"
-                            alt={movie.original_title}
-                          /> */}
+                        <div className="modal-body m-3 mt-0">
+                          <hr className="pt-0 mt-0" />
+                          <img
+                            className="float-start rounded-3 me-3 w-50 h-50"
+                            src={promo.imageUrl}
+                          />
+                          {/* <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
+              >
+                Drama
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary rounded-5 mb-2 me-2"
+              >
+                Romance
+              </button> */}
+                          <p>
+                            <b>Description</b>
+                            <br />
+                            {promo.description}
+                          </p>
+                          <div className="w-100 float-start mt-3">
+                            <b>Detail</b>
+                            <div className="w-100">
+                              Terms Condition: {promo.terms_condition}
+                            </div>
+                            <div className="w-100">
+                              Promo Code: {promo.promo_code}
+                            </div>
+                            <div className="w-100">
+                              Minimum Claim Price: {promo.minimum_claim_price}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -250,7 +242,7 @@ function PromoPage() {
             })}
           </div>
 
-          {/* Category Card */}
+          
           
         </div>
       </div>
