@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -37,9 +37,7 @@ function Promo() {
      );
      const imageUrl = getImageUrl.data.url;
      setImageUrl(imageUrl);
-     console.log(imageUrl);
    } catch (error) {
-     console.log(error.message);
      alert("Failed!");
    }
  };
@@ -69,7 +67,6 @@ function Promo() {
       .then((response) => {
         alert("Promo Created!");
         window.location.reload();
-        console.log(response);
         return response;
       })
       .catch(() => {
@@ -86,9 +83,7 @@ function Promo() {
         },
       });
       setPromos(getPromo.data.data);
-      console.log(getPromo.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -116,14 +111,11 @@ function Promo() {
       setPromoId(promoId);
       setDescription(description);
       setTermsCondition(terms_condition);
-      console.log(terms_condition);
       setPromoCode(promo_code);
       setPromoDiscountPrice(promo_discount_price);
       setMinimumClaimPrice(minimum_claim_price);
       setPromosById(getPromoById.data.data);
-      console.log(getPromoById.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -166,12 +158,16 @@ function Promo() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(function (response) {
-         console.log(response.data.data);
+      .then(() => {
         handleGetPromos();
         alert("Promo Deleted!");
         window.location.reload();
       });
+  };
+
+  const handleFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString();
   };
 
   useEffect(() => {
@@ -208,8 +204,12 @@ function Promo() {
                   <th scope="row">{i + 1}</th>
                   <td>{promo.id}</td>
                   <td>{promo.title}</td>
-                  <td className="d-table-cell">{promo.createdAt}</td>
-                  <td className="d-table-cell">{promo.updatedAt}</td>
+                  <td className="d-table-cell">
+                    {handleFormattedDate(promo.createdAt)}
+                  </td>
+                  <td className="d-table-cell">
+                    {handleFormattedDate(promo.updatedAt)}
+                  </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -329,7 +329,6 @@ function Promo() {
               title: promosById.title,
               imageUrl: promosById.imageUrl,
             }}
-            // onSubmit={handleEdit(category.id)}
           >
             <div className="modal fade" tabIndex="-1" id={`modal${promoId}`}>
               <div className="modal-dialog bg-light rounded-3">
@@ -560,6 +559,7 @@ function Promo() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
-// import NavbarAdmin from "../components/navbar-admin";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -53,13 +52,10 @@ function Activity() {
       );
       const imageUrls = getImageUrl.data.url;
       setImageUrls(imageUrls);
-      console.log(imageUrls);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
-
 
   const handleActivity = (values) => {
     axios
@@ -107,12 +103,9 @@ function Activity() {
       const activitiesId = getActivity.data.data.map(({ id }) => id);
       const newCategoriesId = getActivity.data.data.map(({ categoryId }) => categoryId);
       setActivitiesId(activitiesId);
-      console.log(activitiesId);
       setNewCategoriesId(newCategoriesId);
-      console.log(newCategoriesId);
       setActivities(getActivity.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -156,7 +149,6 @@ function Activity() {
       setLocationMaps(location_maps);
       setActivitiesById(getActivitiesById.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -191,7 +183,6 @@ function Activity() {
         handleGetActivities();
         alert("Activity Updated!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -206,8 +197,7 @@ function Activity() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(function (response) {
-        //  console.log(response.data.data);
+      .then(() => {
         handleGetActivities();
         alert("Activity Deleted!");
         window.location.reload();
@@ -224,10 +214,8 @@ function Activity() {
       const categoriesId = getCategory.data.data.map(({ id }) => id);
       localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
       setCategoriesId(categoriesId);
-      console.log(categoriesId);
       setCategories(getCategory.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -237,9 +225,13 @@ function Activity() {
       handleGetActivities();
       handleGetCategories();
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
+  };
+
+  const handleFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString();
   };
 
   useEffect(() => {
@@ -279,8 +271,8 @@ function Activity() {
                   <td>{activity.id}</td>
                   <td>{activity.categoryId}</td>
                   <td>{activity.title}</td>
-                  <td>{activity.createdAt}</td>
-                  <td>{activity.updatedAt}</td>
+                  <td>{handleFormattedDate(activity.createdAt)}</td>
+                  <td>{handleFormattedDate(activity.updatedAt)}</td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -439,7 +431,6 @@ function Activity() {
                           placeholder="categoriesId"
                           type="text"
                           onChange={(e) => setCategoryId(e.target.value)}
-                          // value={categoryId || ""}
                         >
                           <option select="true">Open this select menu</option>
                           {categories.map((categoryId, i) => {
@@ -449,7 +440,7 @@ function Activity() {
                                 key={categoryId.id}
                                 value={categoryId.id}
                               >
-                                {categoryId.id}
+                                {categoryId.name} - {categoryId.id}
                               </option>
                             );
                           })}
@@ -489,9 +480,7 @@ function Activity() {
                           name="imageUrl"
                           type="file"
                           onChange={handleImageUrl}
-                          // value={imageUrls || ""}
                         />
-                        {/* <img className="w-25 h-50" src={imageUrls} /> */}
                       </div>
                       <div className="form-floating mb-2 mt-2">
                         <Field
@@ -625,8 +614,6 @@ function Activity() {
             </div>
           </Formik>
         </div>
-        {/* );
-            })} */}
       </div>
 
       {/* Modal Create */}
@@ -711,7 +698,6 @@ function Activity() {
                       name="imageUrls"
                       type="file"
                       onChange={handleImageUrl}
-                      // value={imageUrls}
                     />
                   </div>
                   <div className="form-floating mb-2 mt-2">
@@ -757,7 +743,6 @@ function Activity() {
                     <label htmlFor="activityTotalReviews">Total Reviews</label>
                   </div>
                   <div className="form-floating mb-2 mt-2">
-                    {/* <div className="col-10"> */}
                     <Field
                       className="form-control"
                       id="activityFacilities"
@@ -766,7 +751,6 @@ function Activity() {
                       placeholder="Facilities"
                     />
                     <label htmlFor="activityFacilities">Facilities</label>
-                    {/* </div> */}
                   </div>
                   <div className="form-floating mb-2 mt-2">
                     <Field
@@ -812,13 +796,12 @@ function Activity() {
                     Submit
                   </button>
                 </Form>
-                {/* );
-                })} */}
               </Formik>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

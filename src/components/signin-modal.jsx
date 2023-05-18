@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import * as Yup from "yup";
 import { useFormik, Formik, Form, Field, ErrorMessage } from "formik";
-import RegisterModal from "./register-modal";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -39,9 +38,7 @@ const handleProfilePictureUrl = async (e) => {
     );
     const profilePictureUrls = getProfilePictureUrl.data.url;
     setProfilePictureUrl(profilePictureUrls);
-    console.log(profilePictureUrls);
   } catch (error) {
-    console.log(error.message);
     alert("Failed!");
   }
 };
@@ -67,14 +64,12 @@ const handleProfilePictureUrl = async (e) => {
         }
       );
       const token = login.data.token;
-      // console.log(login.data.token);
       setToken(token);
       localStorage.setItem("token", token);
       setSubmitting(false);
       window.location.reload();
     } catch (error) {
       setStatus(error.message);
-      console.log(error.message);
       setSubmitting(false);
     }
   };
@@ -91,13 +86,9 @@ const handleProfilePictureUrl = async (e) => {
       localStorage.setItem("userId", JSON.stringify(userId));
       setUserId(getLoggedUser.data.data.id);
       setName(getLoggedUser.data.data.name);
-      // console.log(response.data.data.name);
       setEmail(getLoggedUser.data.data.email);
-      // console.log(response.data.data.email);
       setProfilePictureUrl(getLoggedUser.data.data.profilePictureUrl);
-      // console.log(response.data.data.profilePictureUrl);
       setPhoneNumber(getLoggedUser.data.data.phoneNumber);
-      // console.log(response.data.data.phoneNumber);
       setRole(getLoggedUser.data.data.role);
 
     }
@@ -124,7 +115,6 @@ const handleProfilePictureUrl = async (e) => {
         handleLoggedUser();
         alert("Profile Updated!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -145,7 +135,6 @@ const handleProfilePictureUrl = async (e) => {
         handleLogin();
         alert("Logout Success!");
         window.location.reload();
-        // return response;
       })
       .catch(() => {
         alert("Failed!");
@@ -198,8 +187,7 @@ const handleProfilePictureUrl = async (e) => {
             },
           }
         )
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           alert("Registration success!");
           window.location.reload();
         });
@@ -219,9 +207,9 @@ const handleProfilePictureUrl = async (e) => {
         aria-labelledby="signInModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content border-0">
-            <div className="sign-in">
+            <div className="modal-body mt-0 m-3">
               <button
                 type="button"
                 className="btn-close btn-close-signin-modal float-end"
@@ -239,7 +227,7 @@ const handleProfilePictureUrl = async (e) => {
                     {({ isSubmitting, status }) => (
                       <Form>
                         {status && <div>{status}</div>}
-                        <div className="d-flex flex-column mt-5 pt-3 mb-2 m-1">
+                        <div className="d-flex flex-column mt-4 pt-3 mb-2 m-1">
                           Email
                           <Field
                             className="form-control mt-1 w-100"
@@ -286,7 +274,7 @@ const handleProfilePictureUrl = async (e) => {
                           </a>
                         </div>
                         <div
-                          className="text-center"
+                          className="text-center pb-5"
                           data-bs-toggle="modal"
                           data-bs-target="#registerModal"
                         >
@@ -303,7 +291,7 @@ const handleProfilePictureUrl = async (e) => {
                       {name && email && profilePictureUrl && phoneNumber && (
                         <div className="mt-4 text-dark">
                           <img
-                            className="user-img h-25 w-25 mt-2"
+                            className="user-img mt-2"
                             src={profilePictureUrl}
                           />
                           <div className="user-name">{name}</div>
@@ -313,7 +301,7 @@ const handleProfilePictureUrl = async (e) => {
                             <br />
                             Phone Number: {phoneNumber}
                             <br />
-                            Role : {role}
+                            Role: {role}
                           </div>
                         </div>
                       )}
@@ -350,7 +338,7 @@ const handleProfilePictureUrl = async (e) => {
       >
         <div className="modal-dialog modal-dialog-centered ">
           <div className="modal-content border-0">
-            <div className="sign-in">
+            <div className="modal-body">
               <button
                 type="button"
                 className="btn-close btn-close-signin-modal float-end"
@@ -456,7 +444,6 @@ const handleProfilePictureUrl = async (e) => {
                       name="profilePictureUrl"
                       type="file"
                       onChange={handleProfilePictureUrl}
-                      // value={register.values.profilePictureUrl}
                     />
                     {register.touched.profilePictureUrl &&
                     register.errors.profilePictureUrl ? (
@@ -503,7 +490,6 @@ const handleProfilePictureUrl = async (e) => {
               profilePictureUrl: "",
               phoneNumber: "",
             }}
-            // onSubmit={handleEdit(category.id)}
           >
             <div className="modal fade" tabIndex="-1" id={`modal${token}`}>
               <div className="modal-dialog bg-light rounded-3">
@@ -550,7 +536,6 @@ const handleProfilePictureUrl = async (e) => {
                           name="profilePictureUrl"
                           type="file"
                           onChange={handleProfilePictureUrl}
-                          // value={profilePictureUrl || ""}
                         />
                       </div>
                       <div className="form-floating mt-2 mb-2">
@@ -582,6 +567,6 @@ const handleProfilePictureUrl = async (e) => {
     </>
   );
 };
-// }
+
 
 export default SigninModal;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -39,9 +39,7 @@ function Category() {
       );
       const imageUrl = getImageUrl.data.url;
       setImageUrl(imageUrl);
-      console.log(imageUrl);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -87,7 +85,6 @@ function Category() {
       setCategoriesId(categoriesId);
       setCategories(getCategory.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -110,7 +107,6 @@ function Category() {
       setCategoryId(categoryId);
       setCategoryById(getCategoryById.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -148,11 +144,16 @@ function Category() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(function (response) {
+      .then(() => {
         handleGetCategories();
         alert("Category Deleted!");
         window.location.reload();
       });
+  };
+
+  const handleFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString();
   };
 
   useEffect(() => {
@@ -199,8 +200,12 @@ function Category() {
                       src={category.imageUrl}
                     />
                   </td>
-                  <td className="d-table-cell">{category.createdAt}</td>
-                  <td className="d-table-cell">{category.updatedAt}</td>
+                  <td className="d-table-cell">
+                    {handleFormattedDate(category.createdAt)}
+                  </td>
+                  <td className="d-table-cell">
+                    {handleFormattedDate(category.updatedAt)}
+                  </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -252,7 +257,6 @@ function Category() {
               name: categoriesById.name,
               imageUrl: categoriesById.imageUrl,
             }}
-            // onSubmit={handleEdit(category.id)}
           >
             <div className="modal fade" tabIndex="-1" id={`modal${categoryId}`}>
               <div className="modal-dialog bg-light rounded-3">
@@ -288,7 +292,6 @@ function Category() {
                           type="file"
                           onChange={handleImageUrl}
                           alt={imageUrl}
-                          // value={imageUrl || ""}
                         />
                         <div className="text-muted">
                           <small>
@@ -296,7 +299,6 @@ function Category() {
                           </small>
                         </div>
                         <img className="w-25 h-50 mt-1" src={imageUrl} />
-                        {/* </div> */}
                       </div>
                       <button
                         className="btn mt-3"
@@ -343,8 +345,6 @@ function Category() {
                       name="name"
                       placeholder="name"
                       type="text"
-                      // onChange={activity.handleChange}
-                      // value={activity.values.categoryId}
                     />
                     <label htmlFor="name-id">Name</label>
                   </div>
@@ -355,7 +355,6 @@ function Category() {
                       name="imageUrl"
                       type="file"
                       onChange={handleImageUrl}
-                      // value={activity.values.title}
                     />
                     <div className="text-muted">
                       <small>
@@ -374,6 +373,7 @@ function Category() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

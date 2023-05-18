@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -12,8 +12,6 @@ function User() {
   const [users, setAllUser] = useState([]);
   const [role, setRole] = useState("")
   const [usersId, setUsersId] = useState(JSON.parse(localStorage.getItem("usersId")));
-
-
 
   const handleGetAllUser = async () => {
     try {
@@ -28,7 +26,6 @@ function User() {
         setUsersId(usersId);
       setAllUser(getAllUser.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -57,13 +54,13 @@ function User() {
       });
   };
 
-
   useEffect(() => {
     handleGetAllUser();
   }, []);
 
   return (
     <div className="admin-page">
+      <Navbar />
       <div className="fs-2 text-center m-2">Users</div>
       <div className="table-responsive">
         <table className="table table-sm table-hover">
@@ -137,7 +134,6 @@ function User() {
                   name: "name",
                   role: "role",
                 }}
-                // onSubmit={handleEdit(category.id)}
               >
                 <div
                   className="modal fade"
@@ -158,20 +154,20 @@ function User() {
                       <div className="modal-body">
                         <Form>
                           <div className="form-floating">
-                              <Field
-                                className="form-select"
-                                as="select"
-                                id={`role${user.id}`}
-                                name="role"
-                                type="text"
-                                onChange={(e) => setRole(e.target.value)}
-                                value={role || ""}
-                              >
-                                <option select="true">Select Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="user">User</option>
-                              </Field>
-                              <label htmlFor="role">Role</label>
+                            <Field
+                              className="form-select"
+                              as="select"
+                              id={`role${user.id}`}
+                              name="role"
+                              type="text"
+                              onChange={(e) => setRole(e.target.value)}
+                              value={role || ""}
+                            >
+                              <option select="true">Select Role</option>
+                              <option value="admin">Admin</option>
+                              <option value="user">User</option>
+                            </Field>
+                            <label htmlFor="role">Role</label>
                           </div>
                           <button
                             className="btn mt-3"
@@ -190,8 +186,6 @@ function User() {
           );
         })}
       </div>
-
-      <Navbar />
 
       {/* Modal Create */}
       <div className="modal" tabIndex="-1" id="modalCreate">
@@ -228,8 +222,6 @@ function User() {
                         id="name-id"
                         name="name"
                         type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.categoryId}
                       />
                     </div>
                   </div>
@@ -246,8 +238,6 @@ function User() {
                         id="imageUrlid"
                         name="imageUrl"
                         type="text"
-                        // onChange={activity.handleChange}
-                        // value={activity.values.title}
                       />
                     </div>
                   </div>
@@ -260,6 +250,7 @@ function User() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

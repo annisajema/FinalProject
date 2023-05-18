@@ -16,7 +16,6 @@ function Carousel() {
   useEffect(() => {
     getBanners.then((response) => {
       setBanners(response.data.data);
-      console.log(response.data.data);
     });
   }, []);
 

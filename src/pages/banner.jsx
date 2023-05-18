@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
 import { useFormik, Formik, Field, Form } from "formik";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -39,9 +39,7 @@ function Banner() {
       );
       const imageUrl = getImageUrl.data.url;
       setImageUrl(imageUrl);
-      console.log(imageUrl);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -81,10 +79,8 @@ function Banner() {
       const bannersId = getBanner.data.data.map(({ id }) => id);
       localStorage.setItem("bannersId", JSON.stringify(bannersId));
       setBannersId(bannersId);
-      console.log(bannersId);
       setBanners(getBanner.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -105,7 +101,6 @@ function Banner() {
       setBannerId(bannerId);
       setBannersById(getBannerById.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -143,11 +138,16 @@ function Banner() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(function (response) {
+      .then(() => {
         handleGetBanners();
         alert("Banner Deleted!");
         window.location.reload();
       });
+  };
+
+  const handleFormattedDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString();
   };
 
   useEffect(() => {
@@ -194,8 +194,12 @@ function Banner() {
                       src={banner.imageUrl}
                     />
                   </td>
-                  <td className="d-table-cell">{banner.createdAt}</td>
-                  <td className="d-table-cell">{banner.updatedAt}</td>
+                  <td className="d-table-cell">
+                    {handleFormattedDate(banner.createdAt)}
+                  </td>
+                  <td className="d-table-cell">
+                    {handleFormattedDate(banner.updatedAt)}
+                  </td>
                   <td
                     className="pe-0"
                     data-bs-toggle="modal"
@@ -247,7 +251,6 @@ function Banner() {
               name: bannersById.name,
               imageUrl: imageUrl,
             }}
-            // onSubmit={handleEdit(category.id)}
           >
             <div className="modal fade" tabIndex="-1" id={`modal${bannerId}`}>
               <div className="modal-dialog bg-light rounded-3">
@@ -282,7 +285,6 @@ function Banner() {
                           name="imageUrl"
                           type="file"
                           onChange={handleImageUrl}
-                          // value={imageUrl || ""}
                         />
                         <div className="text-muted">
                           <small>
@@ -305,8 +307,6 @@ function Banner() {
             </div>
           </Formik>
         </div>
-        {/* );
-            })} */}
       </div>
 
       {/* Modal Create */}
@@ -349,7 +349,6 @@ function Banner() {
                       type="file"
                       onChange={handleImageUrl}
                       alt={imageUrl}
-                      // value={activity.values.title}
                     />
                     <div className="text-muted">
                       <small>
@@ -367,6 +366,7 @@ function Banner() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

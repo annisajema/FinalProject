@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
-import { useFormik, Formik, Field, Form } from "formik";
 import { Link } from "react-router-dom";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -26,10 +25,8 @@ function CategoryPage() {
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("categoriesId", JSON.stringify(categoriesId));
       setCategoriesId(categoriesId);
-      console.log(categoriesId);
       setCategories(getCategory.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -57,7 +54,6 @@ function CategoryPage() {
                   key={i}
                   className="col-6 col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 col-xxl-1"
                 >
-                  
                     <Link to={`/activities/${category.id}`}>
                       <div className="card">
                         <div
@@ -79,6 +75,7 @@ function CategoryPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   ); 
 }

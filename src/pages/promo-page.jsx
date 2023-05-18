@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
-import { useFormik, Formik, Field, Form } from "formik";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -18,9 +17,7 @@ function PromoPage() {
         },
       });
       setPromos(getPromo.data.data);
-      console.log(getPromo.data.data);
     } catch (error) {
-      console.log(error.message);
       alert("Failed!");
     }
   };
@@ -58,7 +55,6 @@ function PromoPage() {
                       <img className="card-img" src={promo.imageUrl} />
                       <div className="overlay">
                         <div className="promo-text">{promo.promo_code}</div>
-                        {/* <div className="promo-title">{promo.title}</div> */}
                       </div>
                       <div className="m-2 d-flex">
                         <div className="promo-title">{promo.title}</div>
@@ -126,6 +122,7 @@ function PromoPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

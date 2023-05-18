@@ -59,11 +59,6 @@ const router = createBrowserRouter([
     element: <User />,
     errorElement: <p>Page Not Found</p>,
   },
-  // {
-  //   path: "/tes-category",
-  //   element: <TesCategory />,
-  //   errorElement: <p>Page Not Found</p>,
-  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

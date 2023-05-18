@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import * as Yup from "yup";
-import { useFormik, Formik, Field, Form } from "formik";
 import { useParams } from "react-router-dom";
+import Footer from "../components/footer";
 
 const base_url = "https://travel-journal-api-bootcamp.do.dibimbing.id";
 const api_key = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
@@ -31,8 +30,7 @@ function ActivityPage() {
     <div className="category-page">
       <Navbar />
       <h4 id="dark-switch" className="pt-0 mt-0 pb-0 mb-0 text-center">
-        Activities to Do at{" "}
-        {activitiesByCategory.splice(0, 1).map(({ category }) => category.name)}
+        {`Activities to Do at ${activitiesByCategory.slice(0, 1).map(({ category }) => category.name)}`}
       </h4>
       {activitiesByCategory.map((activity, i) => {
         return (
@@ -52,6 +50,7 @@ function ActivityPage() {
           </div>
         );
       })}
+      <Footer />
     </div>
   );
 }
