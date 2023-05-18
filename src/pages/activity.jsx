@@ -663,7 +663,7 @@ function Activity() {
                       {categories.map((categoryId, i) => {
                         return (
                           <option key={categoryId.id} value={categoryId.id}>
-                            {categoryId.id}
+                            {categoryId.name} - {categoryId.id}
                           </option>
                         );
                       })}
