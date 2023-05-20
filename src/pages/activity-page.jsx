@@ -36,14 +36,26 @@ function ActivityPage() {
         return (
           <div key={i} className="container-fluid p-0">
             <div>
-              <div className="d-flex justify-content-center align-items-center">
+              <div className="d-flex align-items-center">
                 <div>
-                  <h5 className="mt-4">{i+1}. {activity.title}</h5>
+                  <h5 className="mt-4">
+                    {i + 1}. {activity.title}
+                  </h5>
                   <img
                     className="d-flex float-start ms-0 m-3 w-50 h-75 rounded-1"
                     src={activity.imageUrls}
                   />
-                  <div className="m-3">{activity.description}</div>
+                  <div className="mt-3">
+                    <div className="mb-2">{activity.description}</div>
+                    <div>{`Price: ${activity.price}`}</div>
+                    <div>{`Price Discount: ${activity.price_discount}`}</div>
+                    <div>{`Rating: ${activity.rating}`}</div>
+                    <div>{`Total Reviews: ${activity.total_reviews}`}</div>
+                    <div>{`Facilities: ${activity.facilities}`}</div>
+                    <div>{`Address: ${activity.address}`}</div>
+                    <div>{`Province: ${activity.province}`}</div>
+                    <div>{`City: ${activity.city}`}</div>
+                  </div>
                 </div>
               </div>
             </div>
