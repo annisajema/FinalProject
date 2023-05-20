@@ -147,10 +147,10 @@ button:focus-visible {
   position: relative;
   width: 100%;
   height: auto;
-  max-height: 350px;
+  max-height: 340px;
   min-height: 240px;
   border-radius: 2.5em;
-  object-position: 0 85%;
+  object-position: 50% 50%;
   object-fit: cover;
 }
 

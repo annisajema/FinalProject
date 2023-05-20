@@ -161,7 +161,7 @@ function Activity() {
           categoryId,
           title,
           description,
-          imageUrls: [imageUrls],
+          imageUrls,
           price: parseInt(price),
           price_discount: parseInt(price_discount),
           rating: parseInt(rating),
