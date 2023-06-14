@@ -39,7 +39,7 @@ function Navbar() {
       <nav className="navbar fixed-top navbar-expand-lg bg-light text-center">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            ROUTE 62
+            ROUTE<span className="logo-62">62</span>
           </a>
           <button
             className="navbar-toggler"

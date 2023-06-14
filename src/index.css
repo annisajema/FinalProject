@@ -31,6 +31,15 @@ body {
   min-height: 100vh;
 }
 
+@media screen and (max-width: 450px){
+body {
+  padding: 1.5rem 1.5rem;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+}
+
 body footer {
   margin-top: 50px;
   min-width: 100%;
@@ -96,6 +105,11 @@ button:focus-visible {
   padding-bottom: 0;
 }
 
+.logo-62{
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px;
+}
+
 .sign-in {
   width: 450px;
   height: 500px;
@@ -112,7 +126,7 @@ button:focus-visible {
   font-weight: 300;
   font-size: 31px;
   line-height: 37px;
-  margin-top: 15px;
+  margin-top: 26px;
 }
 
 .register-text {
@@ -147,11 +161,24 @@ button:focus-visible {
   position: relative;
   width: 100%;
   height: auto;
-  max-height: 340px;
-  min-height: 240px;
+  max-height: 30vw;
+  min-height: 30vw;
   border-radius: 2.5em;
   object-position: 50% 50%;
   object-fit: cover;
+}
+
+@media screen and (max-width: 450px){
+.carousel-item,
+.carousel-item > .carousel-img {
+  position: relative;
+  height: auto;
+  max-height: 45vw;
+  min-height: 45vw;
+  border-radius: 2.5em;
+  object-position: 50% 50%;
+  object-fit: cover;
+}
 }
 
 .carousel-detail {
@@ -199,7 +226,7 @@ button:focus-visible {
 }
 
 .admin-page {
-  margin: 0px 40px;
+  margin: 0px 10px;
 }
 
 .card-body {
@@ -286,8 +313,10 @@ height: 30px;
 }
 
 .user-img {
+  display: block;
   border-radius: 100%;
-  margin-left: 38%;
+  margin-left: auto;
+  margin-right: auto;
   width: 100px;
   height: 100px;
 }
